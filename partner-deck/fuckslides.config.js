@@ -6,6 +6,7 @@ module.exports = {
 
   slides: [
     'hero.html',
+    'phones.html',
     'cover.html',
     'platform.html',
     'solutions.html',
@@ -16,6 +17,7 @@ module.exports = {
     'use-cases.html',
     'competitive.html',
     'upgrade.html',
+    'so-why.html',
     'why-unified.html',
     'why-ai.html',
     'why-cost.html',
@@ -24,6 +26,7 @@ module.exports = {
 
   labels: [
     'Hero',
+    'Search Is Everywhere',
     'Cover',
     'The Platform',
     'Three Solutions',
@@ -34,9 +37,13 @@ module.exports = {
     'Use Cases',
     'Competitive Landscape',
     'Reasons to Upgrade',
+    'So, Why Elastic?',
     'Why Elastic · Unified',
     'Why Elastic · AI-Driven',
     'Why Elastic · Cost',
     'Thank You',
+  ],
+  disabled: [
+    ,
   ],
 };

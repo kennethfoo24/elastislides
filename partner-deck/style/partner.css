@@ -44,3 +44,9 @@
 .win .bar{display:flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-bottom:1px solid var(--ink);font:500 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--char)}
 .win .bar i{width:8px;height:8px;border:1px solid var(--ink);border-radius:50%}
 .win .bar span{margin-left:8px}
+
+/* "Why Elastic" section: light Elastic blue to set these slides apart */
+body.why{background:var(--blue-l)}
+body.why .pt,body.why .pts{border-color:rgba(11,100,221,.28)}
+body.why .pt.off{opacity:.5}
+body.why .sub,body.why .pt .d{color:var(--char)}

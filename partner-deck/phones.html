@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Search Is Everywhere</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/partner.css">
+<style>
+  .z{width:560px}
+  h1{font-size:52px;letter-spacing:-1.8px}
+  .sub{font-size:17px;max-width:470px}
+  .apps{position:absolute;left:72px;top:318px;width:500px;border-top:1px solid var(--ink);z-index:2}
+  .app{display:grid;grid-template-columns:34px 1fr;gap:14px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);position:relative;opacity:.45;transition:opacity .4s}
+  .app.on{opacity:1}
+  .app img{width:26px;height:26px;object-fit:contain}
+  .app .t{font:600 16px var(--sans);letter-spacing:-.25px}
+  .app .d{font:400 12.5px var(--sans);color:var(--grey);margin-top:1px}
+  .app i{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:var(--blue)}
+  #ph{position:absolute;left:820px;top:40px;width:300px;height:620px;z-index:2}
+  .ph{width:300px;height:620px;border:2px solid var(--ink);border-radius:42px;background:#fff;box-shadow:10px 10px 0 var(--blue);position:relative;overflow:hidden;padding:0}
+  .ph::before{content:'';position:absolute;left:50%;top:10px;width:84px;height:22px;margin-left:-42px;background:var(--ink);border-radius:12px;z-index:5}
+  .sc{position:absolute;inset:0;padding:44px 16px 16px;opacity:0;transform:translateX(30px);transition:opacity .45s,transform .45s;background:#fff;font-family:var(--sans)}
+  .sc.on{opacity:1;transform:none}
+  .hd{display:flex;align-items:center;gap:8px;font:700 19px var(--sans);letter-spacing:-.4px;height:34px}
+  .hd img{width:22px;height:22px}
+  .q{margin-top:10px;display:flex;align-items:center;gap:8px;height:40px;border-radius:10px;background:#F1F2F5;padding:0 12px;font:500 14px var(--sans);color:var(--ink)}
+  .q svg{width:15px;height:15px;flex:none}
+  .q .tx::after{content:'';display:inline-block;width:1.5px;height:15px;background:var(--ink);vertical-align:-2px;margin-left:1px;animation:cur 1s steps(1) infinite}
+  @keyframes cur{50%{opacity:0}}
+  .rs{margin-top:10px;display:flex;flex-direction:column;gap:7px}
+  .r{opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s;display:flex;align-items:center;gap:10px;font:500 13px var(--sans);padding:8px 10px;border-radius:9px;border:1px solid #ECEEF2}
+  .r.on{opacity:1;transform:none}
+  .r small{display:block;font:400 11px var(--sans);color:#69707D;margin-top:1px}
+  .r b{margin-left:auto;font:600 12px var(--sans)}
+  .r mark{background:none;font-weight:700;color:inherit}
+  .th{width:38px;height:38px;border-radius:7px;flex:none}
+  /* per app */
+  .uber .hd{font-size:22px}.uber .ic{width:30px;height:30px;border-radius:50%;background:#EEEEEE;flex:none;display:grid;place-items:center;font-size:14px}
+  .uber .go{background:#000;color:#fff;border-radius:8px;padding:5px 9px;font:600 11px var(--sans);margin-left:auto}
+  .nf{background:#141414!important;color:#fff}.nf .q{background:#2b2b2b;color:#fff}.nf .q .tx::after{background:#fff}.nf .r{border-color:#2b2b2b}.nf .r small{color:#999}.nf .hd{color:#E50914}
+  .sh .hd{color:#2E7D32}.sh .th{background:#F1F8E9}
+  .td .hd{color:#FE3C72}
+  .card{opacity:0;transition:opacity .4s;margin-top:12px;height:330px;border-radius:16px;position:relative;overflow:hidden;background:linear-gradient(160deg,#FF8A5B,#FE3C72)}
+  .card.on{opacity:1}.card .face{position:absolute;left:50%;top:44px;width:120px;height:120px;margin-left:-60px;border-radius:50%;background:rgba(255,255,255,.35)}
+  .card .face::after{content:'';position:absolute;left:50%;top:128px;width:200px;height:150px;margin-left:-100px;border-radius:100px 100px 0 0;background:rgba(255,255,255,.3)}
+  .card .info{position:absolute;left:0;right:0;bottom:0;padding:44px 14px 12px;background:linear-gradient(transparent,rgba(0,0,0,.6));color:#fff;font:700 21px var(--sans)}
+  .card .info small{display:block;font:500 12px var(--sans);opacity:.9;margin-top:2px}
+  .tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}.tags span{font:600 11px var(--sans);border:1px solid #FE3C72;color:#FE3C72;border-radius:14px;padding:4px 9px;opacity:0;transition:opacity .3s}.tags span.on{opacity:1}
+  .like{position:absolute;left:14px;top:20px;font:800 24px var(--sans);color:#4ADE80;border:3px solid #4ADE80;border-radius:8px;padding:2px 9px;transform:rotate(-14deg);opacity:0}
+  .gh .hd{color:#181717}.gh .q{font-family:var(--mono);font-size:12.5px}
+  .code{opacity:0;transition:opacity .35s;border:1px solid #D0D7DE;border-radius:8px;overflow:hidden;font:400 10.5px/1.55 var(--mono)}.code.on{opacity:1}
+  .code .f{background:#F6F8FA;padding:5px 9px;border-bottom:1px solid #D0D7DE;font:600 10.5px var(--mono);color:#0969DA}
+  .code pre{margin:0;padding:6px 9px;color:#24292F;white-space:pre}.code mark{background:#FFF8C5;font-weight:700}
+</style>
+</head>
+<body data-foot="">
+<div class="z">
+  <div class="eyebrow in1">Search &amp; AI · <b>everyday</b></div>
+  <h1 class="in2">Search is in <span class="b">every pocket.</span></h1>
+  <p class="sub in3">The experiences your customers expect: instant, relevant, and as good as the apps they use every day.</p>
+</div>
+<div class="apps in4" id="apps"></div>
+
+<div id="ph" class="in3"><div class="ph" id="screen"></div></div>
+<script src="style/eweb.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  const MAG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg>';
+  const col = c => `<div class="th" style="background:${c}"></div>`;
+  // each scene: logo, caption, typed query, and reveal items at local times
+  const S = [
+    {k:'uber', cls:'uber', logo:'uber', name:'Uber', cap:'Searching for a destination', q:'sfo airp', at:[2.0, 2.4, 2.8],
+     html:`<div class="r"><span class="ic">⌖</span><div><mark>SFO</mark> <mark>Airp</mark>ort, Terminal 2<small>San Francisco International</small></div><span class="go">Ride</span></div>
+           <div class="r"><span class="ic">⌖</span><div><mark>SFO</mark> <mark>Airp</mark>ort, Terminal 3<small>San Francisco International</small></div><span class="go">Ride</span></div>
+           <div class="r"><span class="ic">⌖</span><div>Oakland <mark>Airp</mark>ort (OAK)<small>Oakland, CA</small></div><span class="go">Ride</span></div>`},
+    {k:'netflix', cls:'nf', logo:'netflix', name:'Netflix', cap:'The instant search and suggestion bar', q:'str', at:[1.2, 1.6, 2.0],
+     html:`<div class="r">${col('#7A1F1F')}<div><mark>Str</mark>anger Things<small>Series · Sci-Fi</small></div></div>
+           <div class="r">${col('#1F4B7A')}<div><mark>Str</mark>anger Than Fiction<small>Movie · Comedy</small></div></div>
+           <div class="r">${col('#4B7A1F')}<div><mark>Str</mark>ay<small>Movie · Animation</small></div></div>
+           <div class="r">${col('#6A1F7A')}<div><mark>Str</mark>anger Things: Tales<small>Series · Animation</small></div></div>`},
+    {k:'shopify', cls:'sh', logo:'shopify', name:'Shopify', cap:'Searching the groceries', q:'organic ban', at:[2.2, 2.6, 3.0],
+     html:`<div class="r">${col('#F9E79F')}<div><mark>Organic</mark> <mark>ban</mark>anas<small>Fresh produce · 1 lb</small></div><b>$1.49</b></div>
+           <div class="r">${col('#E8DAB2')}<div><mark>Organic</mark> <mark>ban</mark>ana bread mix<small>Baking · 16 oz</small></div><b>$5.99</b></div>
+           <div class="r">${col('#D7CCC8')}<div><mark>Organic</mark> <mark>ban</mark>ana chips<small>Snacks · 8 oz</small></div><b>$3.49</b></div>`},
+    {k:'tinder', cls:'td', logo:'tinder', name:'Tinder', cap:'Finding your next swipe', q:'', at:[.8, 1.3, 1.8, 2.3],
+     html:''},
+    {k:'github', cls:'gh', logo:'github', name:'GitHub', cap:'Deep code and text search', q:'func parseConfig', at:[2.2, 2.7],
+     html:`<div class="code"><div class="f">internal/config/load.go</div><pre>12  <mark>func parseConfig</mark>(path string) {
+13    data, err := os.ReadFile(path)
+14    if err != nil { return err }</pre></div>
+           <div class="code" style="margin-top:7px"><div class="f">cmd/server/main.go</div><pre>41  cfg := <mark>parseConfig</mark>(*flagPath)
+42  srv := NewServer(cfg)</pre></div>`},
+  ];
+  const D = 4.4, ph = document.getElementById('screen'), list = document.getElementById('apps'), still = navigator.webdriver;
+  S.forEach((s, i) => {
+    list.insertAdjacentHTML('beforeend', `<div class="app"><img src="logos/app-${s.logo}.svg" alt=""><div><div class="t">${s.name}</div><div class="d">${s.cap}</div></div><i></i></div>`);
+    let body = '';
+    if (s.k === 'tinder') body = `<div class="card"><div class="face"></div><div class="like">LIKE</div><div class="info">Alex, 27<small>2 miles away · Hiking · Coffee</small></div></div><div class="tags"><span>Hiking</span><span>Coffee</span><span>Within 5 mi</span></div>`;
+    else body = `<div class="q">${MAG}<span class="tx"></span></div><div class="rs">${s.html}</div>`;
+    if (s.k === 'tinder') body = `<div class="q">${MAG}<span class="tx" style="color:#69707D">Hiking · 5 mi · 25 to 30</span></div>` + body;
+    ph.insertAdjacentHTML('beforeend', `<div class="sc ${s.cls}"><div class="hd"><img src="logos/app-${s.logo}.svg" alt="">${s.name === 'Uber' ? 'Uber' : s.name === 'Netflix' ? 'NETFLIX' : s.name === 'GitHub' ? 'GitHub' : s.name === 'Tinder' ? 'tinder' : 'shopify'}</div>${body}</div>`);
+  });
+  const sc = [...ph.querySelectorAll('.sc')], ap = [...list.querySelectorAll('.app')];
+  let cur = -1;
+  EW.loop(t0 => {
+    const T = still ? 0 : t0, idx = still ? 1 : Math.floor(T / D) % S.length, lt = still ? 3.5 : T % D;
+    if (idx !== cur){ cur = idx; sc.forEach((e, j) => e.classList.toggle('on', j === idx)); ap.forEach((e, j) => e.classList.toggle('on', j === idx)); }
+    const s = S[idx], e = sc[idx];
+    if (s.q){ const n = Math.max(0, Math.min(s.q.length, Math.floor((lt - .5) / .12))); e.querySelector('.tx').textContent = s.q.slice(0, n); }
+    const items = e.querySelectorAll('.r, .code, .card, .tags span');
+    items.forEach((it, j) => it.classList.toggle('on', lt > (s.at[Math.min(j, s.at.length - 1)] ?? 2)));
+    if (s.k === 'tinder'){ const l = e.querySelector('.like'), c = e.querySelector('.card'), k = Math.max(0, Math.min(1, (lt - 3.1) / .6));
+      l.style.opacity = k; c.style.transform = `translateX(${k * 40}px) rotate(${k * 6}deg)`; }
+    ap[idx].querySelector('i').style.width = (lt / D * 100).toFixed(1) + '%';
+    ap.forEach((a, j) => { if (j !== idx) a.querySelector('i').style.width = 0; });
+  });
+})();
+</script>
+</body>
+</html>

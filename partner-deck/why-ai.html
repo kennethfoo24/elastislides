@@ -14,7 +14,7 @@
   .ab .g{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
   .ab .g span{font:500 11px var(--mono);letter-spacing:.05em;text-transform:uppercase;text-align:center;padding:9px 4px;border:1px solid var(--line);background:var(--bg)}
   .ab .g span.k{grid-column:span 3;border-color:var(--pink);color:var(--pink);background:#fff}
-  .md{position:absolute;top:380px;width:272px;border:1px solid var(--ink);background:#fff;padding:12px 14px 14px;z-index:2}
+  .md{position:absolute;top:388px;width:272px;border:1px solid var(--ink);background:#fff;padding:12px 14px 14px;z-index:2}
   .md .tag{display:flex;justify-content:space-between}
   .md .tag i{font-style:normal;color:var(--grey);font-weight:500}
   .md .lg3{margin-top:14px;display:flex;justify-content:space-around;align-items:flex-start}
@@ -24,8 +24,13 @@
   .md .lg6 img{height:24px;max-width:74px;object-fit:contain}
   .eis{left:640px}
   .byo{left:928px}
-  .built{position:absolute;left:640px;width:560px;top:556px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;z-index:2}
-  .built .chip{border-color:var(--pink);color:var(--ink)}
+  .ab .g span.b{grid-column:span 3;border-color:var(--pink);background:#fff;font-size:10px;letter-spacing:.03em}
+  .ab .g span.b i{font-style:normal;color:var(--pink);font-weight:600}
+  .vz{position:absolute;top:498px;width:272px;height:178px;z-index:2}
+  .vz svg{width:100%;height:100%;overflow:visible}
+  .vz text{font-family:var(--mono)}
+  .vz .cap2{position:absolute;left:0;right:0;bottom:0;font:500 10px/1.3 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--char)}
+  .vz .cap2 b{color:var(--blue);font-weight:600}
   #wire{position:absolute;left:0;top:0;width:1280px;height:720px;z-index:1;pointer-events:none}
 </style>
 </head>
@@ -50,6 +55,7 @@
       <span>Chat interface</span><span>Builder UX</span><span>Instructions</span>
       <span>Skills</span><span>Tools</span><span>Plugins</span>
       <span class="k">Your data in Elasticsearch: the context every agent needs</span>
+      <span class="b"><i>Built in:</i> Attack Discovery · AI Assistant · Automatic Migration</span>
     </div>
   </div>
 </div>
@@ -70,10 +76,8 @@
   </div>
 </div>
 
-<div class="built in6">
-  <span class="tag" style="margin-right:6px">Built in</span>
-  <span class="chip">Attack Discovery</span><span class="chip">AI Assistant</span><span class="chip">Automatic Migration</span>
-</div>
+<div class="vz eis in5" id="vz1"><svg id="map" viewBox="0 0 272 150"></svg><div class="cap2"><b>10 inference sites</b> · AWS, Azure, GCP · routed to the nearest</div></div>
+<div class="vz byo in6" id="vz2"><svg id="air" viewBox="0 0 272 150"></svg><div class="cap2"><b>Air-gapped</b> · models and data never leave your walls</div></div>
 
 <svg id="wire" viewBox="0 0 1280 720"></svg>
 <script src="style/eweb.js"></script>
@@ -83,15 +87,65 @@
   document.getElementById('mk').innerHTML = EW.MARK;
   document.querySelector('#mk svg').style.cssText = 'width:26px;height:26px;display:block';
   // models feed the agent builder: hairlines from each model card up to the builder
-  const svg = document.getElementById('wire'), lines = [[776, 380], [1064, 380]];
+  const svg = document.getElementById('wire'), lines = [[776, 388], [1064, 388]];
   const pulses = lines.map(([x, y]) => {
-    EW.el('line', {x1: x, y1: y, x2: x, y2: 322, stroke: '#1D1E24', 'stroke-width': 1, 'stroke-dasharray': '2 3'}, svg);
+    EW.el('line', {x1: x, y1: y, x2: x, y2: 362, stroke: '#1D1E24', 'stroke-width': 1, 'stroke-dasharray': '2 3'}, svg);
     return EW.el('rect', {x: x - 3, y: y, width: 6, height: 6, fill: '#F04E98', opacity: 0}, svg);
   });
   EW.loop(t => {
     if (t < 1.5) return;
     pulses.forEach((p, i) => { const k = ((t - 1.5) * .6 + i * .5) % 1;
-      p.setAttribute('y', (380 - k * 58 - 3).toFixed(1)); p.setAttribute('opacity', Math.sin(k * Math.PI).toFixed(2)); });
+      p.setAttribute('y', (388 - k * 26 - 3).toFixed(1)); p.setAttribute('opacity', Math.sin(k * Math.PI).toFixed(2)); });
+  });
+
+  // EIS: dotted world map with the real inference sites pulsing
+  const map = document.getElementById('map'), still = navigator.webdriver;
+  const LL = ([lo, la]) => [(lo + 180) / 360 * 272, (84 - la) / 144 * 150];
+  const land = [
+    [[-168,66],[-150,71],[-125,70],[-95,73],[-80,70],[-62,60],[-55,50],[-67,45],[-76,38],[-81,31],[-80,25],[-90,30],[-97,26],[-97,19],[-88,16],[-83,9],[-78,8],[-86,13],[-105,20],[-110,23],[-117,32],[-124,40],[-125,49],[-135,58],[-150,60],[-165,55]],
+    [[-55,60],[-45,60],[-20,70],[-20,82],[-60,82],[-70,76]],
+    [[-78,8],[-60,10],[-50,0],[-35,-6],[-40,-22],[-48,-28],[-58,-38],[-66,-46],[-70,-54],[-74,-48],[-72,-30],[-70,-18],[-81,-6],[-80,0]],
+    [[-10,36],[-9,43],[-2,48],[-5,50],[5,52],[10,56],[10,60],[5,62],[15,70],[30,71],[40,66],[30,60],[40,55],[40,46],[28,41],[22,36],[12,38],[3,43]],
+    [[-17,21],[-10,30],[-5,36],[10,37],[32,31],[34,28],[43,12],[51,12],[40,-4],[40,-15],[35,-25],[20,-35],[18,-32],[12,-17],[9,-1],[9,4],[-8,4],[-17,14]],
+    [[40,66],[60,70],[80,73],[110,77],[140,72],[180,68],[170,60],[160,55],[140,50],[142,45],[130,35],[122,30],[120,22],[108,18],[105,10],[100,8],[104,1],[98,15],[92,22],[80,10],[73,18],[67,25],[57,25],[56,27],[50,30],[48,22],[43,13],[35,28],[35,36],[28,41],[40,46],[40,55],[50,55],[60,50]],
+    [[114,-22],[122,-18],[136,-12],[142,-11],[146,-19],[153,-27],[150,-37],[140,-38],[131,-31],[115,-34]]
+  ].map(p => p.map(LL));
+  const inside = (x, y, p) => { let c = false; for (let i = 0, j = p.length - 1; i < p.length; j = i++) if ((p[i][1] > y) !== (p[j][1] > y) && x < (p[j][0] - p[i][0]) * (y - p[i][1]) / (p[j][1] - p[i][1]) + p[i][0]) c = !c; return c; };
+  for (let x = 2; x < 272; x += 4.2) for (let y = 2; y < 150; y += 4.2) if (land.some(p => inside(x, y, p))) EW.el('circle', {cx: x, cy: y, r: 1.15, fill: '#B5BFCE'}, map);
+  const sites = [[-77.5,38.9,'aws'],[-121.2,45.6,'aws'],[-73.6,45.5,'aws'],[-0.1,51.5,'aws'],[8.7,50.1,'aws'],[8.5,47.4,'aws'],[3.8,50.4,'gcp'],[103.8,1.35,'gcp'],[139.7,35.7,'aws'],[151.2,-33.9,'aws']];
+  const pins = sites.map(([lo, la], i) => { const [x, y] = LL([lo, la]);
+    const ring = EW.el('circle', {cx: x, cy: y, r: 3, fill: 'none', stroke: '#0B64DD', 'stroke-width': 1, opacity: 0}, map);
+    const dot = EW.el('circle', {cx: x, cy: y, r: 0, fill: '#0B64DD'}, map); return {ring, dot, i}; });
+
+  // BYOLLM: a walled, air-gapped environment, with the public cloud cut off outside
+  const air = document.getElementById('air');
+  const defs = EW.el('defs', {}, air);
+  EW.el('rect', {x: 70, y: 6, width: 196, height: 128, fill: '#fff', stroke: '#1D1E24', 'stroke-width': 1.4, 'stroke-dasharray': '5 3'}, air);
+  const t1 = EW.el('text', {x: 78, y: 18, 'font-size': 8, fill: '#0B64DD', 'font-weight': 600, 'letter-spacing': '.06em'}, air); t1.textContent = 'YOUR AIR-GAPPED ENVIRONMENT';
+  const icon = (x, y, w, h, label, fill) => { EW.el('rect', {x, y, width: w, height: h, fill: fill || '#fff', stroke: '#1D1E24'}, air);
+    const t = EW.el('text', {x: x + w / 2, y: y + h + 10, 'font-size': 7.5, 'text-anchor': 'middle', fill: '#343741', 'letter-spacing': '.04em'}, air); t.textContent = label; };
+  // server rack with a model chip, data store, an Elasticsearch box, and a lock
+  icon(82, 34, 54, 44, '', '#D9E8FF'); [0, 1, 2].forEach(i => EW.el('rect', {x: 88, y: 40 + i * 12, width: 42, height: 8, fill: '#fff', stroke: '#1D1E24', 'stroke-width': .8}, air));
+  const t2 = EW.el('text', {x: 109, y: 90, 'font-size': 7.5, 'text-anchor': 'middle', fill: '#343741'}, air); t2.textContent = 'SELF-HOSTED LLM';
+  icon(150, 34, 54, 44, '', '#fff'); EW.el('ellipse', {cx: 177, cy: 46, rx: 18, ry: 6, fill: '#FEC514', stroke: '#1D1E24'}, air); EW.el('path', {d: 'M159 46v22a18 6 0 0 0 36 0V46', fill: '#FEC514', stroke: '#1D1E24'}, air);
+  const t3 = EW.el('text', {x: 177, y: 90, 'font-size': 7.5, 'text-anchor': 'middle', fill: '#343741'}, air); t3.textContent = 'YOUR DATA';
+  const es = EW.el('g', {}, air); es.innerHTML = EW.MARK.replace('<svg ', '<svg x="218" y="40" width="34" height="34" ');
+  const t4 = EW.el('text', {x: 235, y: 90, 'font-size': 7.5, 'text-anchor': 'middle', fill: '#343741'}, air); t4.textContent = 'ELASTICSEARCH';
+  const links = [[136, 56, 150, 56], [204, 56, 218, 56]].map(([x1, y1, x2, y2]) => EW.el('line', {x1, y1, x2, y2, stroke: '#0B64DD', 'stroke-width': 1.4, 'stroke-dasharray': '2 2'}, air));
+  const pk = EW.el('rect', {width: 5, height: 5, fill: '#F04E98'}, air);
+  // lock + the internet, crossed out
+  const lock = EW.el('g', {}, air); lock.innerHTML = '<rect x="161" y="106" width="16" height="12" fill="#1D1E24"/><path d="M164 106v-4a5 5 0 0 1 10 0v4" fill="none" stroke="#1D1E24" stroke-width="2"/>';
+  const lt = EW.el('text', {x: 183, y: 116, 'font-size': 8, fill: '#1D1E24', 'font-weight': 600}, air); lt.textContent = 'NO INTERNET';
+  const out = EW.el('g', {}, air);
+  out.innerHTML = '<path d="M20 74a11 11 0 0 1 3-21 14 14 0 0 1 27-3 11 11 0 0 1 4 22z" fill="#F5F7FA" stroke="#98A2B3" stroke-width="1.2"/><text x="36" y="66" font-size="8" text-anchor="middle" fill="#98A2B3">CLOUD</text>';
+  const wall = EW.el('line', {x1: 70, y1: 6, x2: 70, y2: 134, stroke: '#F04E98', 'stroke-width': 3, opacity: 0}, air);
+  const x1 = EW.el('path', {d: 'M18 36L56 94M56 36L18 94', stroke: '#F04E98', 'stroke-width': 2.6, opacity: 0}, air);
+  EW.loop(t => {
+    pins.forEach(p => { const k = still ? 1 : Math.min(1, Math.max(0, (t - .9 - p.i * .09) / .4)); p.dot.setAttribute('r', (3.2 * k).toFixed(2));
+      const q = (((t - 1.6 + p.i * .35) % 2.2) + 2.2) % 2.2 / 2.2; p.ring.setAttribute('r', (3 + q * 9).toFixed(1)); p.ring.setAttribute('opacity', (t < 1.4 || still ? 0 : (1 - q) * .7).toFixed(2)); });
+    const kw = Math.min(1, Math.max(0, (t - 1.3) / .5)); wall.setAttribute('opacity', still ? 1 : kw); x1.setAttribute('opacity', still ? 1 : kw);
+    const q = (t * .5) % 1, seg = q < .5 ? [136, 150, q * 2] : [204, 218, (q - .5) * 2];
+    pk.setAttribute('x', (seg[0] + (seg[1] - seg[0]) * seg[2] - 2.5).toFixed(1)); pk.setAttribute('y', 53.5);
   });
 })();
 </script>

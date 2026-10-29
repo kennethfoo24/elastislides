@@ -81,10 +81,11 @@
   const pts = [1, 2, 3].map(i => document.getElementById('p' + i)), cap = document.getElementById('cap'), prog = document.getElementById('prog');
   const CAPS = ['<b>01</b> · within observability', '<b>02</b> · within security', '<b>03</b> · across solutions', '<b>✓</b> · one platform'];
   const ty = (g, dy, op) => { g.setAttribute('transform', `translate(0,${dy.toFixed(2)})`); g.setAttribute('opacity', op.toFixed(3)); };
-  const END = 6.6, t0 = performance.now() - (navigator.webdriver ? END * 1000 + 1000 : 0);
+  const END = 6.6, REPLAY = 3, still = navigator.webdriver; let t0 = performance.now() - (still ? END * 1000 + 1000 : 0);
 
   EW.loop(() => {
-    const t = (performance.now() - t0) / 1000;
+    let t = (performance.now() - t0) / 1000;
+    if (!still && t > END + REPLAY){ t0 = performance.now(); t = 0; }
     const pk1 = clamp(t / .6);
     ty(plat, -60 * s * (1 - back(pk1)), clamp(pk1 * 2.5)); shadow.setAttribute('opacity', pk1);
     // act 1 and act 2: each group drops in apart, closes up, then fuses into one solution block

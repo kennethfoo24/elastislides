@@ -18,7 +18,6 @@
   .res span{font:400 12px var(--mono);color:var(--grey)}
   .also{margin-top:6px;font:400 11.5px/1.45 var(--sans);color:var(--char)}
   .also b{font-weight:600}
-  .fn{position:absolute;left:72px;right:72px;bottom:62px;font:400 9.5px/1.4 var(--mono);color:var(--grey-l);letter-spacing:.01em;z-index:2}
 </style>
 </head>
 <body data-foot="">
@@ -31,28 +30,26 @@
 <div class="cols3">
   <div class="col s-search in3">
     <div class="sol"><img src="logos/sol-search.png" alt=""><span class="nm">Search &amp; AI</span><span class="k">01</span></div>
-    <div class="rep">The Forrester Wave™<br><i>Cognitive Search Platforms, Q4 2025</i></div>
-    <svg class="chart" data-kind="wave" data-hi="leaders" viewBox="0 0 330 236"></svg>
-    <div class="res"><b>Leader</b><span>Forrester Wave™</span></div>
-    <div class="also"><b>Also a Leader:</b> IDC MarketScape, Worldwide General-Purpose Knowledge Discovery 2025</div>
+    <div class="rep">2026 Gartner® Magic Quadrant™<br><i>Enterprise AI Search</i></div>
+    <svg class="chart" data-kind="mq" data-hi="leaders" viewBox="0 0 330 236"></svg>
+    <div class="res"><b>Leader</b><span>Gartner® 2026</span></div>
+    <div class="also"><b>Also a Leader:</b> The Forrester Wave™, Cognitive Search Platforms, Q4 2025</div>
   </div>
   <div class="col s-obs in4">
     <div class="sol"><img src="logos/sol-observability.png" alt=""><span class="nm">Observability</span><span class="k">02</span></div>
-    <div class="rep">2025 Gartner® Magic Quadrant™<br><i>Observability Platforms</i></div>
+    <div class="rep">2026 Gartner® Magic Quadrant™<br><i>Observability Platforms</i></div>
     <svg class="chart" data-kind="mq" data-hi="leaders" viewBox="0 0 330 236"></svg>
-    <div class="res"><b>Leader</b><span>Second year running</span></div>
+    <div class="res"><b>Leader</b><span>Gartner® 2026</span></div>
     <div class="also">Recognized for both Ability to Execute and Completeness of Vision.</div>
   </div>
   <div class="col s-sec in5">
     <div class="sol"><img src="logos/sol-security.png" alt=""><span class="nm">Security</span><span class="k">03</span></div>
-    <div class="rep">2025 Gartner® Magic Quadrant™<br><i>Security Information and Event Management</i></div>
-    <svg class="chart" data-kind="mq" data-hi="visionaries" viewBox="0 0 330 236"></svg>
-    <div class="res"><b>Visionary</b><span>Gartner® SIEM</span></div>
+    <div class="rep">2026 IDC MarketScape<br><i>Worldwide SIEM</i></div>
+    <svg class="chart" data-kind="ms" data-hi="leaders" viewBox="0 0 330 236"></svg>
+    <div class="res"><b>Leader</b><span>IDC MarketScape 2026</span></div>
     <div class="also"><b>Also a Leader:</b> The Forrester Wave™, Security Analytics Platforms, Q2 2025</div>
   </div>
 </div>
-
-<div class="fn">Schematic for illustration only: not the analysts' graphics, and positions are not to scale. Gartner and Magic Quadrant are registered trademarks of Gartner, Inc. The Forrester Wave™ is a trademark of Forrester Research, Inc. Analysts do not endorse any vendor, product or service depicted in their research.</div>
 
 <script src="style/eweb.js"></script>
 <script src="js/fuckslides.js"></script>
@@ -65,17 +62,18 @@
     const el = (t, a, p) => EW.el(t, a, p || svg), t0 = .55 + ci * .18;
     const txt = (s, a) => { const e = el('text', Object.assign({'font-size': 9.5, 'letter-spacing': '.06em', fill: '#69707D'}, a)); e.textContent = s; return e; };
     let spot;
-    if (svg.dataset.kind === 'mq'){
+    if (svg.dataset.kind !== 'wave'){
       const q = {challengers: [0, 0], leaders: [1, 0], niche: [0, 1], visionaries: [1, 1]};
-      const names = {challengers: 'CHALLENGERS', leaders: 'LEADERS', niche: 'NICHE PLAYERS', visionaries: 'VISIONARIES'};
+      const ms = svg.dataset.kind === 'ms';
+      const names = ms ? {challengers: 'MAJOR PLAYERS', leaders: 'LEADERS', niche: 'PARTICIPANTS', visionaries: 'CONTENDERS'} : {challengers: 'CHALLENGERS', leaders: 'LEADERS', niche: 'NICHE PLAYERS', visionaries: 'VISIONARIES'};
       Object.entries(q).forEach(([k, [c, r]]) => {
         const on = k === svg.dataset.hi, x = X0 + c * W / 2, y = Y0 + r * H / 2;
         const cell = el('rect', {x, y, width: W / 2, height: H / 2, fill: on ? '#D9E8FF' : '#F5F7FA', stroke: on ? '#0B64DD' : '#D3DAE6', 'stroke-width': on ? 1.6 : 1});
         txt(names[k], {x: x + (c ? W / 2 - 8 : 8), y: y + 16, 'text-anchor': c ? 'end' : 'start', fill: on ? '#0B64DD' : '#98A2B3', 'font-weight': on ? 600 : 500});
         if (on){ cell.setAttribute('opacity', 0); anim.push({t: t0 + .3, f: k2 => cell.setAttribute('opacity', ease(k2))}); spot = [x + W / 4, y + H / 4 + 8]; }
       });
-      txt('ABILITY TO EXECUTE →', {x: 0, y: 0, transform: `translate(${X0 - 12},${Y0 + H}) rotate(-90)`});
-      txt('COMPLETENESS OF VISION →', {x: X0, y: Y0 + H + 22});
+      txt(ms ? 'CAPABILITIES →' : 'ABILITY TO EXECUTE →', {x: 0, y: 0, transform: `translate(${X0 - 12},${Y0 + H}) rotate(-90)`});
+      txt(ms ? 'STRATEGIES →' : 'COMPLETENESS OF VISION →', {x: X0, y: Y0 + H + 22});
     } else {
       // Forrester Wave: quarter-circle bands out from the bottom-left corner
       const cx = X0, cy = Y0 + H, R = Math.hypot(W, H), bands = [['LEADERS', 1], ['STRONG PERFORMERS', .74], ['CONTENDERS', .5], ['CHALLENGERS', .28]];
