@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Elastic</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/partner.css">
+<style>
+  .lock{position:absolute;left:0;right:0;top:92px;display:flex;align-items:center;justify-content:center;gap:34px;z-index:2}
+  .mk svg{width:268px;height:268px;display:block;overflow:visible}
+  .mk path{transform-box:fill-box;transform-origin:center;animation:piece .7s cubic-bezier(.2,.7,.2,1.25) both}
+  .mk path:nth-child(1){animation:fade .5s ease both}
+  .mk path:nth-child(2){animation-delay:.15s}
+  .mk path:nth-child(3){animation-delay:.25s}
+  .mk path:nth-child(4){animation-delay:.33s}
+  .mk path:nth-child(5){animation-delay:.41s}
+  .mk path:nth-child(6){animation-delay:.49s}
+  .mk path:nth-child(7){animation-delay:.57s}
+  .mk path:nth-child(8){animation-delay:.65s}
+  @keyframes piece{from{opacity:0;transform:scale(.4) translateY(-14px)}to{opacity:1;transform:none}}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .wm{font:600 212px/1 var(--sans);letter-spacing:-9px;color:var(--ink);padding-bottom:22px;animation:ew-wipe .9s cubic-bezier(.6,0,.2,1) .55s both}
+  .who{position:absolute;left:0;right:0;top:470px;display:flex;flex-direction:column;align-items:center;z-index:2}
+  .who .rule{width:72px;height:3px;background:var(--blue);margin-bottom:26px}
+  .who .nm{font:600 40px var(--sans);letter-spacing:-1.2px}
+  .who .ti{margin-top:12px;font:500 14px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--grey)}
+</style>
+</head>
+<body data-foot="none">
+<div class="lock">
+  <span class="mk" id="mk"></span>
+  <span class="wm">elastic</span>
+</div>
+<div class="who">
+  <div class="rule in4"></div>
+  <div class="nm in5">Kenneth Foo</div>
+  <div class="ti in6">Manager, Partner Solutions Architecture</div>
+</div>
+<script src="style/eweb.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+  document.getElementById('mk').innerHTML = EW.MARK;
+  EW.dots({x: 0, y: 380, w: 1280, h: 340, gap: 10, seed: 12, blobsList: [{x: 160, y: 260, r: 260}, {x: 1120, y: 240, r: 280}], thr: .6});
+</script>
+</body>
+</html>

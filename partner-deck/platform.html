@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Platform</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/partner.css">
+<style>
+  h1{font-size:48px;letter-spacing:-1.7px}
+  .sub{font-size:17px;max-width:900px;margin-top:10px}
+  .lane{position:absolute;z-index:2}
+  .lane>.tag{margin-bottom:12px}
+  /* any data: the source logos */
+  .src{left:72px;top:222px;width:262px}
+  .cloud{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+  .cloud div{height:46px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;padding:0 6px;animation:ew-in .5s cubic-bezier(.2,.7,.2,1) both}
+  .cloud img{max-height:24px;max-width:52px;object-fit:contain}
+  .cloud img.w{max-height:14px}
+  /* platform */
+  .plat{left:384px;top:222px;width:520px}
+  .tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+  .tabs div{font:600 10px var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:9px 6px 8px;border:1px solid var(--ink);border-bottom:0;background:#fff;border-top:4px solid var(--c);display:flex;align-items:center;gap:6px;white-space:nowrap}
+  .tabs div img{height:14px;width:14px;object-fit:contain}
+  .tabs .byo{border:1px dashed var(--ink);border-bottom:0;color:var(--grey);font-weight:500;justify-content:center}
+  .core{border:1px solid var(--ink);box-shadow:8px 8px 0 var(--blue);background:#fff;padding:14px 14px 16px}
+  .core .nm{font:600 18px var(--sans);letter-spacing:-.3px;display:flex;align-items:center;justify-content:center;gap:9px}
+  .core .nm img{height:20px}
+  .caps{margin-top:14px;display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .cap{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+  .cap img{height:34px;width:38px;object-fit:contain}
+  .cap span{font:600 9.5px/1.25 var(--mono);letter-spacing:.03em;text-transform:uppercase;color:var(--ink)}
+  /* deployment options, underneath the platform */
+  .dep{left:384px;top:470px;width:520px;display:grid;grid-template-columns:repeat(3,1fr)}
+  .dep div{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .dep i{width:64px;height:64px;border-radius:50%;border:2.5px solid var(--ink);display:flex;align-items:center;justify-content:center;background:#fff}
+  .dep i img{width:36px;height:36px;object-fit:contain}
+  .dep span{font:600 11px var(--mono);letter-spacing:.05em;text-transform:uppercase}
+  .dep .on i{border-color:var(--blue);box-shadow:0 0 0 5px var(--blue-l)}
+  .dep .on span{color:var(--blue)}
+  /* AI experiences: the product screens */
+  .out{left:950px;top:222px;width:258px;height:380px}
+  .shot{position:absolute;border:1px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--blue)}
+  .shot img{display:block;width:100%}
+  .shot.a{left:0;top:30px;width:214px}
+  .shot.b{left:58px;top:188px;width:200px;box-shadow:6px 6px 0 var(--pink)}
+  .out .cap2{position:absolute;font:500 10px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--grey)}
+  #flow{position:absolute;left:0;top:0;width:1280px;height:720px;z-index:1;pointer-events:none}
+</style>
+</head>
+<body data-foot="">
+<div class="z">
+  <div class="eyebrow in1">The platform · <b>Elasticsearch</b></div>
+  <h1 class="in2">Any data in. <span class="b">AI experiences out.</span></h1>
+  <p class="sub in3">Every solution runs on the same Elasticsearch platform, so customers can start with one and add the next.</p>
+</div>
+
+<div class="lane src">
+  <div class="tag in2">01 · Any data</div>
+  <div class="cloud" id="cloud"></div>
+</div>
+
+<div class="lane plat in3">
+  <div class="tabs">
+    <div class="byo">Build your own</div>
+    <div class="s-search"><img src="logos/sol-search.png" alt="">Search &amp; AI</div>
+    <div class="s-obs"><img src="logos/sol-observability.png" alt="">Observability</div>
+    <div class="s-sec"><img src="logos/sol-security.png" alt="">Security</div>
+  </div>
+  <div class="core">
+    <div class="nm"><img src="logos/es-icon.png" alt="">Elasticsearch platform</div>
+    <div class="caps">
+      <div class="cap"><img src="logos/cap-ingest.png" alt=""><span>Ingestion</span></div>
+      <div class="cap"><img src="logos/cap-process.png" alt=""><span>Processing</span></div>
+      <div class="cap"><img src="logos/cap-store.png" alt=""><span>Storage</span></div>
+      <div class="cap"><img src="logos/cap-search.png" alt=""><span>Search</span></div>
+      <div class="cap"><img src="logos/cap-aiml.png" alt=""><span>AI &amp; ML</span></div>
+      <div class="cap"><img src="logos/cap-visualize.png" alt=""><span>Visual&shy;ization</span></div>
+      <div class="cap"><img src="logos/cap-agents.png" alt=""><span>AI agents &amp; workflows</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="lane dep in5">
+  <div><i><img src="logos/dep-self.png" alt=""></i><span>Self-managed</span></div>
+  <div><i><img src="logos/dep-hosted.png" alt=""></i><span>Elastic Cloud Hosted</span></div>
+  <div class="on"><i><img src="logos/dep-serverless.png" alt=""></i><span>Elastic Cloud Serverless</span></div>
+</div>
+
+<div class="lane out in4">
+  <div class="tag">02 · AI experiences</div>
+  <div class="shot a"><img src="logos/shot-chat.png" alt="AI assistant chat"></div>
+  <div class="shot b"><img src="logos/shot-attack.png" alt="Attack Discovery"></div>
+</div>
+
+<svg id="flow" viewBox="0 0 1280 720"></svg>
+<script src="style/eweb.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  // The source logos, in the order of the original slide; wide wordmarks get a shorter cap
+  const L = [['src-microsoft', 1], ['src-cisco'], ['src-azure', 1], ['src-gdrive'], ['src-splunk'], ['src-zoom', 1], ['src-linux'], ['src-prometheus'],
+    ['src-oracle', 1], ['src-github'], ['src-aws'], ['src-dropbox', 1], ['src-sharepoint'], ['src-kubernetes'], ['src-confluence'], ['src-salesforce'],
+    ['src-gcp'], ['src-gitlab'], ['src-crowdstrike', 1], ['src-exchange'], ['src-paloalto', 1], ['src-slack']];
+  const cloud = document.getElementById('cloud');
+  L.forEach(([n, w], i) => { const d = document.createElement('div'); d.style.animationDelay = (.2 + i * .035).toFixed(2) + 's';
+    d.innerHTML = `<img src="logos/${n}.png" alt="${n.slice(4)}"${w ? ' class="w"' : ''}>`; cloud.appendChild(d); });
+
+  // Tiny cubes are data: multi-color raw data flows in, uniform blue results flow out
+  const svg = document.getElementById('flow'), RAW = ['#FEC514', '#F04E98', '#FF7E62', '#48EFCF', '#0B64DD', '#B5BFCE'];
+  const paths = [
+    {d: 'M338,262 C362,262 360,330 382,330', raw: true}, {d: 'M338,420 C362,420 360,350 382,350', raw: true},
+    {d: 'M916,322 C934,322 930,290 948,290', raw: false}, {d: 'M916,350 C936,350 990,400 1004,410', raw: false},
+  ].map((p, i) => {
+    p.el = EW.el('path', {d: p.d, fill: 'none', stroke: p.raw ? '#B5BFCE' : '#0B64DD', 'stroke-width': 1.4, 'stroke-dasharray': '2 3'}, svg);
+    p.L = p.el.getTotalLength(); p.ph = i * .29;
+    p.dots = [0, 1, 2].map(j => EW.el('rect', {width: 6, height: 6, fill: p.raw ? RAW[(i * 3 + j) % RAW.length] : '#0B64DD', opacity: 0}, svg));
+    return p;
+  });
+  EW.loop(t => {
+    if (t < 1.3) return;
+    paths.forEach(p => p.dots.forEach((d, j) => {
+      const k = ((t - 1.3) * .5 + p.ph + j / 3) % 1, q = p.el.getPointAtLength(k * p.L);
+      d.setAttribute('x', (q.x - 3).toFixed(1)); d.setAttribute('y', (q.y - 3).toFixed(1));
+      d.setAttribute('opacity', Math.min(1, Math.sin(k * Math.PI) * 1.6).toFixed(2));
+    }));
+  });
+})();
+</script>
+</body>
+</html>

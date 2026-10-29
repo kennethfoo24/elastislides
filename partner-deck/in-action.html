@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>In Action</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/partner.css">
+<style>
+  h1{font-size:46px;letter-spacing:-1.6px}
+  .sub{font-size:17px;max-width:900px;margin-top:8px}
+  .cols3{top:204px;bottom:56px}
+  .dg{margin-top:14px;width:100%;height:400px;overflow:visible}
+  .dg text{font-family:var(--mono)}
+</style>
+</head>
+<body data-foot="">
+<div class="z">
+  <div class="eyebrow in1">Key features in action</div>
+  <h1 class="in2">What it looks like, <span class="b">end to end.</span></h1>
+  <p class="sub in3">Every feature from the last slide, working together in one picture per solution.</p>
+</div>
+
+<div class="cols3">
+  <div class="col s-search in3">
+    <div class="sol"><img src="logos/sol-search.png" alt=""><span class="nm">Search &amp; AI</span><span class="k">01</span></div>
+    <svg class="dg" id="dS" viewBox="0 0 360 400"></svg>
+  </div>
+  <div class="col s-obs in4">
+    <div class="sol"><img src="logos/sol-observability.png" alt=""><span class="nm">Observability</span><span class="k">02</span></div>
+    <svg class="dg" id="dO" viewBox="0 0 360 400"></svg>
+  </div>
+  <div class="col s-sec in5">
+    <div class="sol"><img src="logos/sol-security.png" alt=""><span class="nm">Security</span><span class="k">03</span></div>
+    <svg class="dg" id="dX" viewBox="0 0 360 400"></svg>
+  </div>
+</div>
+
+<script src="style/eweb.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  const INK = '#1D1E24', CHAR = '#343741', GREY = '#69707D', LINE = '#D3DAE6', BLUE = '#0B64DD', RED = '#E0352B', TEAL = '#02BCB7', PINK = '#F04E98';
+  const RAW = ['#FEC514', '#F04E98', '#FF7E62', '#48EFCF', '#0B64DD'];
+  const ease = EW.ease, clamp = k => Math.max(0, Math.min(1, k));
+  const steps = [];   // {t, f(k, t)}: each runs once its time arrives
+  const at = (t, f, dur) => steps.push({t, f, dur: dur || .5});
+
+  // drawing kit
+  const kit = svg => {
+    const el = (t, a, p) => EW.el(t, a, p || svg);
+    const text = (s, x, y, o, p) => { const e = el('text', Object.assign({x, y, 'font-size': 9.5, 'letter-spacing': '.05em', fill: INK, 'font-weight': 600}, o), p); e.textContent = s; return e; };
+    const sans = (s, x, y, o, p) => text(s, x, y, Object.assign({'font-family': 'Inter, sans-serif', 'font-size': 10.5, 'font-weight': 400, fill: GREY, 'letter-spacing': 0}, o), p);
+    const box = (x, y, w, h, t, s, o) => { o = o || {}; const g = el('g', {opacity: 0});
+      el('rect', {x, y, width: w, height: h, fill: o.fill || '#fff', stroke: o.stroke || INK, 'stroke-width': 1, 'stroke-dasharray': o.dash || ''}, g);
+      if (o.c) el('rect', {x, y, width: 3, height: h, fill: o.c}, g);
+      const cx = o.center ? x + w / 2 : x + (o.c ? 11 : 8), an = o.center ? 'middle' : 'start';
+      const ty = o.top ? y + 16 : s ? y + h / 2 - 2 : y + h / 2 + 3.5;
+      if (t) text(t, cx, ty, {'text-anchor': an}, g);
+      if (s) sans(s, cx, o.top ? y + 30 : y + h / 2 + 11, {'text-anchor': an}, g);
+      return g; };
+    const line = (d, o) => el('path', Object.assign({d, fill: 'none', stroke: INK, 'stroke-width': 1, 'stroke-dasharray': '2 3', opacity: 0}, o));
+    const show = (node, t) => at(t, k => { node.setAttribute('opacity', ease(k)); node.setAttribute('transform', `translate(0,${(6 * (1 - ease(k))).toFixed(1)})`); }, .45);
+    const flow = (path, colors, t, speed, n) => { const L = path.getTotalLength(), dots = Array.from({length: n || 2}, (_, j) => el('rect', {width: 5, height: 5, fill: colors[j % colors.length], opacity: 0}));
+      at(t, (k, tt) => dots.forEach((d, j) => { const q = ((tt - t) * (speed || .7) + j / dots.length) % 1, p = path.getPointAtLength(q * L);
+        d.setAttribute('x', (p.x - 2.5).toFixed(1)); d.setAttribute('y', (p.y - 2.5).toFixed(1)); d.setAttribute('opacity', Math.min(1, Math.sin(q * Math.PI) * 1.8).toFixed(2)); }), 1e9); };
+    return {el, text, sans, box, line, show, flow};
+  };
+
+  // ── Search & AI: sources → embeddings → unified datastore → hybrid search → RAG → answer
+  (function(){
+    const k = kit(document.getElementById('dS')), {el, text, sans, box, line, show, flow} = k;
+    ['Docs', 'Tickets', 'Wiki', 'Product DB'].forEach((s, i) => { const x = i * 94; const b = box(x, 0, 78, 26, s.toUpperCase(), '', {center: true, stroke: LINE}); show(b, .5 + i * .06);
+      const p = line(`M${x + 39},26 C${x + 39},44 180,40 180,58`); show(p, .7); flow(p, [RAW[i], RAW[(i + 2) % 5]], 1.2, .6); });
+    show(box(60, 58, 240, 40, 'Embedding models', 'ELSER, Jina or bring your own', {c: '#FEC514'}), .8);
+    const a1 = line('M180,98 L180,118'); show(a1, .9);
+    const ix = box(20, 118, 320, 70, 'Unified datastore', '', {c: '#FEC514', top: true}); show(ix, 1.0);
+    show(box(32, 144, 142, 36, 'Text index', 'Keyword · BM25', {fill: '#F5F7FA', stroke: LINE}), 1.1);
+    show(box(186, 144, 142, 36, 'Vector database', 'Semantic · kNN', {fill: '#F5F7FA', stroke: LINE}), 1.15);
+    const a2 = line('M103,188 C103,204 180,196 180,214'), a3 = line('M257,188 C257,204 180,196 180,214'); show(a2, 1.2); show(a3, 1.2);
+    flow(a2, [BLUE], 1.6, .8, 1); flow(a3, [BLUE], 1.6, .8, 1);
+    show(box(60, 214, 240, 40, 'Hybrid search', 'Keyword + semantic, fused with RRF', {c: '#FEC514'}), 1.25);
+    const q = box(0, 222, 46, 24, 'QUERY', '', {center: true, stroke: BLUE}); show(q, 1.3);
+    const qa = line('M46,234 L60,234', {stroke: BLUE}); show(qa, 1.3);
+    const a4 = line('M180,254 L180,274'); show(a4, 1.35); flow(a4, [BLUE], 1.8, .9, 1);
+    show(box(60, 274, 240, 40, 'RAG', 'Top results ground the LLM prompt', {c: '#FEC514'}), 1.4);
+    const a5 = line('M180,314 L180,334'); show(a5, 1.45);
+    // the answer, typed out
+    const ans = el('g', {opacity: 0}); el('rect', {x: 20, y: 334, width: 320, height: 58, fill: '#fff', stroke: BLUE, 'stroke-width': 1.2}, ans);
+    el('rect', {x: 20, y: 334, width: 4, height: 58, fill: BLUE}, ans);
+    const t1 = sans('', 32, 354, {fill: INK, 'font-size': 11.5, 'font-weight': 500}, ans);
+    text('SOURCES · WIKI · TICKETS', 32, 380, {fill: BLUE, 'font-size': 9}, ans);
+    show(ans, 1.5);
+    const msg = 'Reset your VPN token from the IT portal, then…';
+    at(1.6, kk => { t1.textContent = msg.slice(0, Math.round(msg.length * kk)); }, 1.2);
+  })();
+
+  // ── Observability: one request, seen as DEM, LLM, trace, logs, infra metrics, all through OpenTelemetry
+  (function(){
+    const {el, text, sans, box, line, show, flow} = kit(document.getElementById('dO'));
+    show(box(0, 0, 74, 26, 'USERS', '', {center: true}), .5);
+    const dem = text('DEM · RUM + SYNTHETICS', 84, 17, {fill: PINK, 'font-size': 8.5, opacity: 0}); show(dem, .6);
+    const svcs = [['Frontend', 0], ['Checkout', 94], ['Payment', 188], ['Database', 282]];
+    const sb = svcs.map(([n, x], i) => { const b = box(x, 44, 78, 30, n.toUpperCase(), '', {center: true}); show(b, .6 + i * .06); return b; });
+    const u = line('M37,26 L37,44'); show(u, .7); flow(u, [PINK], 1.2, .9, 1);
+    [[78, 94], [172, 188], [266, 282]].forEach(([a, b]) => { const p = line(`M${a},59 L${b},59`); show(p, .8); });
+    const llm = box(282, 0, 78, 26, 'LLM', '', {center: true, stroke: PINK}); show(llm, .8);
+    const lp = line('M133,44 C133,20 250,13 282,13', {stroke: PINK}); show(lp, .85); flow(lp, [PINK], 1.4, .7, 1);
+    // APM: the trace waterfall
+    const h1 = text('APM · DISTRIBUTED TRACE', 0, 98, {fill: GREY, 'font-weight': 500, opacity: 0}); show(h1, .9);
+    const spans = [[0, 360, 'frontend'], [36, 300, 'checkout'], [80, 230, 'payment'], [110, 150, 'db query']];
+    spans.forEach(([x, w, n], i) => { const y = 106 + i * 15, r = el('rect', {x, y, width: 0, height: 10, fill: i === 2 ? RED : BLUE, opacity: i === 2 ? .85 : .9 - i * .15});
+      const tl = text(n, x + 4, y + 8, {fill: '#fff', 'font-size': 7.5, opacity: 0});
+      at(1.0 + i * .12, kk => { r.setAttribute('width', (w * ease(kk)).toFixed(1)); tl.setAttribute('opacity', ease(kk)); }, .5); });
+    // logs streaming in
+    const h2 = text('LOG ANALYTICS', 0, 186, {fill: GREY, 'font-weight': 500, opacity: 0}); show(h2, 1.0);
+    [['INFO ', 'checkout', 'order created'], ['WARN ', 'payment ', 'retry 1/3'], ['ERROR', 'payment ', 'gateway timeout'], ['INFO ', 'frontend', '503 returned']].forEach(([lv, s, m], i) => {
+      const e = text(`12:01:0${7 + (i > 1)} ${lv} ${s} ${m}`, 0, 202 + i * 14, {'font-weight': 400, 'font-size': 9, fill: lv === 'ERROR' ? RED : CHAR, opacity: 0, 'xml:space': 'preserve'}); show(e, 1.1 + i * .12); });
+    // infrastructure metrics: nodes with sparklines, one spiking
+    const h3 = text('INFRASTRUCTURE · KUBERNETES', 0, 272, {fill: GREY, 'font-weight': 500, opacity: 0}); show(h3, 1.2);
+    [0, 92, 184, 276].forEach((x, i) => { const g = box(x, 280, 84, 40, '', '', {stroke: LINE}); show(g, 1.25 + i * .05);
+      text(`NODE-${i + 1}`, x + 6, 292, {'font-size': 8, fill: GREY, 'font-weight': 500}, g);
+      const pts = Array.from({length: 12}, (_, j) => `${x + 6 + j * 6.5},${314 - (i === 2 && j > 7 ? 14 + j : 4 + ((j * 7 + i * 3) % 6))}`).join(' ');
+      el('polyline', {points: pts, fill: 'none', stroke: i === 2 ? RED : BLUE, 'stroke-width': 1.3}, g); });
+    // OpenTelemetry band into Elastic
+    const ot = box(0, 334, 360, 24, 'OPENTELEMETRY  →  ELASTIC', '', {center: true, dash: '3 3'}); show(ot, 1.35);
+    const op = el('path', {d: 'M6,346 L354,346', fill: 'none', stroke: 'none'}); flow(op, [BLUE, PINK, TEAL], 1.5, .45, 3);
+    // AIOps finds the culprit
+    const ai = box(0, 366, 360, 30, 'AIOPS · ROOT CAUSE: PAYMENT → GATEWAY TIMEOUT', '', {center: true, stroke: RED, fill: '#FDECEA'}); show(ai, 2.0);
+    const pr = el('rect', {x: 188, y: 44, width: 78, height: 30, fill: 'none', stroke: RED, 'stroke-width': 1.5, opacity: 0});
+    at(2.0, (kk, tt) => { const p = ((tt - 2.0) % 1.6) / 1.6; pr.setAttribute('opacity', (1 - p).toFixed(2)); pr.setAttribute('transform', `translate(${227 * -p * .12},${59 * -p * .12}) scale(${1 + p * .12})`); }, 1e9);
+  })();
+
+  // ── Security: sources → SIEM → Attack Discovery → SOAR, acting back on the endpoint
+  (function(){
+    const {el, text, sans, box, line, show, flow} = kit(document.getElementById('dX'));
+    const src = [['Endpoints', 'XDR · EDR'], ['Cloud', 'Workloads'], ['Network', 'Flows'], ['Identity', 'UEBA']];
+    src.forEach(([n, s], i) => { const x = i * 93; show(box(x, 0, 81, 38, n.toUpperCase(), s, {center: true}), .5 + i * .06);
+      const p = line(`M${x + 40},38 C${x + 40},56 180,52 180,72`); show(p, .7); flow(p, [RED, '#FF7E62'], 1.2, .55 + i * .05, 2); });
+    show(box(30, 72, 300, 46, 'SIEM', 'Detection rules on all your data', {c: '#FF7E62'}), .8);
+    const cnt = text('0', 318, 100, {'text-anchor': 'end', 'font-size': 18, fill: RED, opacity: 0}); show(cnt, .9);
+    text('ALERTS', 318, 111, {'text-anchor': 'end', 'font-size': 7.5, fill: GREY, 'font-weight': 500});
+    at(1.0, kk => { cnt.textContent = Math.round(12 * ease(kk)); }, 1.0);
+    const a1 = line('M180,118 L180,138'); show(a1, 1.0);
+    show(box(30, 138, 300, 76, 'AGENTIC SOC · ATTACK DISCOVERY', '', {c: '#FF7E62', top: true}), 1.05);
+    // twelve alerts collapse into one attack
+    const sq = Array.from({length: 12}, (_, i) => el('rect', {x: 44 + i * 18, y: 166, width: 12, height: 12, fill: RED, opacity: 0}));
+    const one = el('g', {opacity: 0}); el('rect', {x: 156, y: 160, width: 48, height: 24, fill: RED}, one); text('1 ATTACK', 180, 175.5, {'text-anchor': 'middle', fill: '#fff', 'font-size': 8.5}, one);
+    const cap = sans('12 alerts → 1 attack, explained', 44, 202, {opacity: 0}); show(cap, 1.3);
+    at(1.1, kk => sq.forEach((s, i) => s.setAttribute('opacity', ease(clamp(kk * 3 - i * .15)))), .8);
+    at(1.8, kk => { const e = ease(kk); sq.forEach((s, i) => { s.setAttribute('x', (44 + i * 18 + (174 - (44 + i * 18)) * e).toFixed(1)); s.setAttribute('opacity', (1 - e).toFixed(2)); }); one.setAttribute('opacity', e); }, .6);
+    const a2 = line('M180,214 L180,234'); show(a2, 1.4);
+    show(box(30, 234, 300, 98, 'SOAR & WORKFLOWS', '', {c: '#FF7E62', top: true}), 1.45);
+    ['Isolate host-42', 'Disable user j.doe', 'Open ticket SEC-1187'].forEach((s, i) => {
+      const g = el('g', {opacity: 0}); el('rect', {x: 44, y: 258 + i * 22, width: 12, height: 12, fill: 'none', stroke: TEAL, 'stroke-width': 1.3}, g);
+      el('path', {d: `M46.5,${264 + i * 22} l3,3 l5,-6`, fill: 'none', stroke: TEAL, 'stroke-width': 1.6}, g);
+      sans(s, 64, 268 + i * 22, {fill: INK, 'font-size': 11, 'font-weight': 500}, g); show(g, 2.1 + i * .18); });
+    // the response goes back to the endpoint
+    const back = line('M30,266 L12,266 L12,46 L40,46 L40,38', {stroke: TEAL, 'stroke-width': 1.3}); show(back, 2.3); flow(back, [TEAL], 2.5, .5, 1);
+    const iso = el('g', {opacity: 0}); el('rect', {x: 2, y: -7, width: 58, height: 14, fill: TEAL}, iso); text('ISOLATED', 31, 3, {'text-anchor': 'middle', fill: '#fff', 'font-size': 8}, iso); show(iso, 2.6);
+    show(box(30, 346, 300, 46, 'AI AGENT DETECTION & RESPONSE', 'Autonomous, or analyst approves each step', {c: '#FF7E62', dash: '3 3'}), 1.55);
+    const a3 = line('M180,332 L180,346'); show(a3, 1.55);
+  })();
+
+  // one clock for every panel; the PDF export (webdriver) jumps straight to the end state
+  const t0 = performance.now() - (navigator.webdriver ? 20000 : 0);
+  EW.loop(() => { const t = (performance.now() - t0) / 1000; steps.forEach(s => { if (t >= s.t) s.f(s.dur >= 1e9 ? 0 : clamp((t - s.t) / s.dur), t); }); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Why Elastic: Cost Efficiency</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/partner.css">
+<style>
+  .r{position:absolute;left:620px;width:588px;z-index:2}
+  .big{top:96px;height:180px;display:grid;grid-template-columns:236px 1fr;gap:18px}
+  .st{border:1px solid var(--ink);box-shadow:8px 8px 0 var(--blue);background:#fff;padding:16px 18px;display:flex;flex-direction:column}
+  .st .pre{font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--grey)}
+  .st .stat{font-size:76px;margin-top:6px}
+  .st p{font-size:13px;line-height:1.4;color:var(--char);margin-top:auto}
+  .st p b{font-weight:600;color:var(--ink)}
+  .tiers{border:1px solid var(--line);background:#fff;padding:14px 16px;display:flex;flex-direction:column}
+  .tiers .bars{margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;align-items:end;height:74px}
+  .tiers .bars i{display:block;background:var(--blue);transform-origin:bottom;animation:grow .9s cubic-bezier(.2,.7,.2,1) both}
+  .tiers .bars i:nth-child(1){height:100%;animation-delay:.5s}
+  .tiers .bars i:nth-child(2){height:62%;background:#3D86E8;animation-delay:.6s}
+  .tiers .bars i:nth-child(3){height:34%;background:#7FAEEF;animation-delay:.7s}
+  .tiers .bars i:nth-child(4){height:14%;background:#B7D2F6;animation-delay:.8s}
+  @keyframes grow{from{transform:scaleY(0)}to{transform:none}}
+  .tiers .lbl{margin-top:6px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font:600 10.5px var(--mono);letter-spacing:.05em;text-transform:uppercase;text-align:center}
+  .tiers .snap{margin-top:8px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .tiers .snap span{grid-column:3 / span 2;border-top:1.5px solid var(--teal-d);padding-top:5px;font:500 10px var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--teal-d);text-align:center}
+  .tiers .cap{font:400 10.5px var(--mono);color:var(--grey);letter-spacing:.02em}
+  .no{top:312px}
+  .no .tag{margin-bottom:10px}
+  .no .g{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink)}
+  .no .g>div{padding:12px 16px 0;border-left:1px solid var(--line)}
+  .no .g>div:first-child{padding-left:0;border-left:0}
+  .no .sol{border-bottom-width:2px;padding-bottom:9px}
+  .no .sol .nm{font-size:15px}
+  .no .sol img{height:18px;width:18px}
+  .no ul{list-style:none;margin-top:10px}
+  .no li{font:400 12.5px/1.35 var(--sans);color:var(--char);padding:5px 0;display:flex;gap:8px}
+  .no li::before{content:'✕';font:600 11px var(--mono);color:var(--grey-l);padding-top:1px}
+  .fn{position:absolute;left:620px;width:588px;top:500px;font:400 10.5px/1.4 var(--mono);color:var(--grey);letter-spacing:.02em;z-index:2}
+</style>
+</head>
+<body class="why" data-foot="">
+<div class="z">
+  <div class="eyebrow in1">Why Elastic · <b>Cost efficiency</b></div>
+  <h1 class="in2">Keep more data. <span class="b">Pay for less.</span></h1>
+  <p class="sub in3">Resource-based pricing plus storage efficiency, so customers stop choosing which data to throw away.</p>
+  <div class="pts">
+    <div class="pt in3"><span class="n">01</span><div><div class="t">Single resource-based pricing</div><div class="d">One model across search, observability and security.</div></div></div>
+    <div class="pt in4"><span class="n">02</span><div><div class="t">Fast access, even from archive tiers</div><div class="d">Cold and frozen data stays searchable.</div></div></div>
+    <div class="pt in5"><span class="n">03</span><div><div class="t">Searchable snapshots</div><div class="d">Query object storage directly. No rehydration needed.</div></div></div>
+  </div>
+</div>
+
+<div class="r big">
+  <div class="st in3">
+    <span class="pre">LogsDB · index size</span>
+    <span class="stat" id="pct">75%</span>
+    <p><b>Up to 75% smaller</b> log indices than standard indexing.</p>
+  </div>
+  <div class="tiers in4">
+    <div class="tag">Elastic data tiers <i>· storage cost</i></div>
+    <div class="bars"><i></i><i></i><i></i><i></i></div>
+    <div class="lbl"><span>Hot</span><span>Warm</span><span>Cold</span><span>Frozen</span></div>
+    <div class="snap"><span>Searchable snapshots</span></div>
+  </div>
+</div>
+
+<div class="r no in5">
+  <div class="tag">Pay for resources. Not for…</div>
+  <div class="g">
+    <div class="s-search"><div class="sol"><img src="logos/sol-search.png" alt=""><span class="nm">Search &amp; AI</span></div>
+      <ul><li>Queries</li><li>Documents</li><li>Users</li></ul></div>
+    <div class="s-obs"><div class="sol"><img src="logos/sol-observability.png" alt=""><span class="nm">Observability</span></div>
+      <ul><li>Agents or users (APM)</li><li>Ingest (logs)</li><li>Hosts (metrics)</li></ul></div>
+    <div class="s-sec"><div class="sol"><img src="logos/sol-security.png" alt=""><span class="nm">Security</span></div>
+      <ul><li>Users or ingest (SIEM)</li><li>Endpoints (endpoint security)</li></ul></div>
+  </div>
+</div>
+<div class="fn in6">Resource-based pricing applies to Self-managed and Elastic Cloud Hosted. Elastic Cloud Serverless is priced on usage.</div>
+
+<script src="style/eweb.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>EW.count(document.getElementById('pct'), 75, {post: '%', delay: .5, dur: 1.1});</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Elastic for Partners</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/partner.css">
+<style>
+  h1{font-size:84px;line-height:.98;letter-spacing:-3.4px;margin-top:130px}
+  .sub{font-size:20px;max-width:480px;margin-top:26px}
+  .trio{margin-top:34px;display:flex;gap:8px}
+  .trio .chip{gap:8px}
+  .trio .sw{width:9px;height:9px}
+  #hero{left:560px;top:0;width:720px;height:720px}
+</style>
+</head>
+<body data-foot="">
+<div class="z">
+  <div class="eyebrow in1">Elastic · <b>Partner enablement</b></div>
+  <h1 class="in2">One platform.<br><span class="b">Three solutions.</span></h1>
+  <div class="trio in3">
+    <span class="chip"><i class="sw" style="background:var(--yellow)"></i>Search &amp; AI</span>
+    <span class="chip"><i class="sw" style="background:var(--pink)"></i>Observability</span>
+    <span class="chip"><i class="sw" style="background:var(--orange)"></i>Security</span>
+  </div>
+</div>
+<svg id="hero" class="iso" viewBox="0 0 720 720"></svg>
+<script src="style/eweb.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 640, y: 120, w: 640, h: 520, seed: 4, blobs: 6, thr: .5});
+  // hero svg starts at x=560, so scene origin 300 lands at slide x=860
+  const sc = EW.iso(document.getElementById('hero'), {ox: 300, oy: 380, s: .7});
+  sc.rect({x: -30, y: -30, w: 390, d: 260, z: 0, delay: .1});
+  sc.box({x: 0, y: 0, w: 330, d: 200, h: 46, c: 'blue', delay: .15, drop: 120, order: -1000});
+  // three solutions in a row; each sits a step lower on screen, so the leaders clear the next cube
+  const sols = [['yellow', 'Search & AI', 'Search, RAG, vectors'], ['pink', 'Observability', 'Logs, metrics, traces'], ['orange', 'Security', 'SIEM, XDR, SOAR']];
+  sols.forEach(([c, t, s], i) => {
+    const x = 20 + i * 100;
+    const h = 130 - i * 30;
+    sc.box({x, y: 50, w: 90, d: 100, h, z: 46, c, delay: .55 + i * .14, drop: 110});
+    sc.label({at: [x + 90, 50, 46 + h], side: 'r', len: 150 - i * 60, title: t, sub: s, delay: 1.2 + i * .12});
+  });
+  sc.label({at: [330, 110, 23], side: 'r', len: 40, title: 'Elasticsearch', sub: 'The platform underneath', delay: 1.6});
+  sc.run();
+})();
+</script>
+</body>
+</html>

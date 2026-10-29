@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Thank You</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/partner.css">
+<style>
+  h1{font-size:112px;line-height:.92;letter-spacing:-4.6px;margin-top:110px}
+  .sub{font-size:20px;max-width:460px;margin-top:26px}
+  .recap{margin-top:30px;display:flex;flex-direction:column;gap:8px;width:440px}
+  .recap div{display:grid;grid-template-columns:28px 1fr;font:600 15px var(--sans);letter-spacing:-.2px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  .recap span{font:600 12px var(--mono);color:var(--blue);padding-top:2px}
+  .cta{margin-top:26px}
+  #hero{left:560px;top:0;width:720px;height:720px}
+</style>
+</head>
+<body data-foot="">
+<div class="z">
+  <div class="eyebrow in1">Elastic · <b>Partner enablement</b></div>
+  <h1 class="in2">Thank<br><span class="b">you.</span></h1>
+  <div class="recap">
+    <div class="in3"><span>01</span>Unified platform: data, context, action</div>
+    <div class="in4"><span>02</span>AI-driven: any model, any deployment</div>
+    <div class="in5"><span>03</span>Cost efficient: pay for resources, keep more data</div>
+  </div>
+  <div class="cta in6"><a class="btn" href="https://www.elastic.co/partners" target="_blank" rel="noopener" style="text-decoration:none;pointer-events:auto;cursor:pointer;position:relative;z-index:6">elastic.co/partners&nbsp;&nbsp;↗</a></div>
+</div>
+<svg id="hero" class="iso" viewBox="0 0 720 720"></svg>
+<script src="style/eweb.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 640, y: 120, w: 640, h: 520, seed: 4, blobs: 6, thr: .5});
+  // the cover scene, assembled: three solutions docked side by side on the platform
+  const sc = EW.iso(document.getElementById('hero'), {ox: 300, oy: 380, s: .7});
+  sc.rect({x: -30, y: -30, w: 390, d: 260, z: 0, delay: .05});
+  sc.box({x: 0, y: 0, w: 330, d: 200, h: 46, c: 'blue', delay: .1, drop: 60, snap: false, order: -1000});
+  [['yellow', 'Search & AI'], ['pink', 'Observability'], ['orange', 'Security']].forEach(([c, t], i) => {
+    const x = 20 + i * 100;
+    sc.box({x, y: 50, w: 90, d: 100, h: 100, z: 46, c, delay: .35 + i * .1, drop: 60});
+    sc.label({at: [x + 90, 50, 146], side: 'r', len: 150 - i * 60, title: t, delay: 1.0 + i * .1});
+  });
+  sc.label({at: [330, 110, 23], side: 'r', len: 40, title: 'Elasticsearch', sub: 'One platform', delay: 1.35});
+  const [cx, cy] = sc.P(165, 100, 46);
+  const ring = EW.el('ellipse', {cx, cy, rx: 10, ry: 5.8, fill: 'none', stroke: '#0B64DD', 'stroke-width': 1.2, opacity: 0}, sc.floor);
+  sc.run();
+  EW.loop(t => {
+    if (t < 1.6) return;
+    const k = ((t - 1.6) % 2.8) / 2.8, r = 120 + k * 140;
+    ring.setAttribute('rx', r); ring.setAttribute('ry', r * .58); ring.setAttribute('opacity', (1 - k) * .5);
+  });
+})();
+</script>
+</body>
+</html>

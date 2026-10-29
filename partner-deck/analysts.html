@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Analyst Recognition</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/partner.css">
+<style>
+  h1{font-size:46px;letter-spacing:-1.6px}
+  .sub{font-size:17px;max-width:900px}
+  .cols3{top:218px;bottom:96px}
+  .rep{margin-top:12px;font:600 11px/1.4 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--ink);min-height:31px}
+  .rep i{font-style:normal;font-weight:400;color:var(--grey)}
+  .chart{margin-top:10px;width:100%;height:236px;overflow:visible}
+  .chart text{font-family:var(--mono)}
+  .res{margin-top:10px;display:flex;align-items:baseline;gap:10px}
+  .res b{font:600 22px var(--sans);letter-spacing:-.5px;color:var(--blue)}
+  .res span{font:400 12px var(--mono);color:var(--grey)}
+  .also{margin-top:6px;font:400 11.5px/1.45 var(--sans);color:var(--char)}
+  .also b{font-weight:600}
+  .fn{position:absolute;left:72px;right:72px;bottom:62px;font:400 9.5px/1.4 var(--mono);color:var(--grey-l);letter-spacing:.01em;z-index:2}
+</style>
+</head>
+<body data-foot="">
+<div class="z">
+  <div class="eyebrow in1">Analyst recognition</div>
+  <h1 class="in2">Where Elastic sits, <span class="b">in the reports buyers read.</span></h1>
+  <p class="sub in3">Name the report in the room. Each solution is independently evaluated in its own market.</p>
+</div>
+
+<div class="cols3">
+  <div class="col s-search in3">
+    <div class="sol"><img src="logos/sol-search.png" alt=""><span class="nm">Search &amp; AI</span><span class="k">01</span></div>
+    <div class="rep">The Forrester Wave™<br><i>Cognitive Search Platforms, Q4 2025</i></div>
+    <svg class="chart" data-kind="wave" data-hi="leaders" viewBox="0 0 330 236"></svg>
+    <div class="res"><b>Leader</b><span>Forrester Wave™</span></div>
+    <div class="also"><b>Also a Leader:</b> IDC MarketScape, Worldwide General-Purpose Knowledge Discovery 2025</div>
+  </div>
+  <div class="col s-obs in4">
+    <div class="sol"><img src="logos/sol-observability.png" alt=""><span class="nm">Observability</span><span class="k">02</span></div>
+    <div class="rep">2025 Gartner® Magic Quadrant™<br><i>Observability Platforms</i></div>
+    <svg class="chart" data-kind="mq" data-hi="leaders" viewBox="0 0 330 236"></svg>
+    <div class="res"><b>Leader</b><span>Second year running</span></div>
+    <div class="also">Recognized for both Ability to Execute and Completeness of Vision.</div>
+  </div>
+  <div class="col s-sec in5">
+    <div class="sol"><img src="logos/sol-security.png" alt=""><span class="nm">Security</span><span class="k">03</span></div>
+    <div class="rep">2025 Gartner® Magic Quadrant™<br><i>Security Information and Event Management</i></div>
+    <svg class="chart" data-kind="mq" data-hi="visionaries" viewBox="0 0 330 236"></svg>
+    <div class="res"><b>Visionary</b><span>Gartner® SIEM</span></div>
+    <div class="also"><b>Also a Leader:</b> The Forrester Wave™, Security Analytics Platforms, Q2 2025</div>
+  </div>
+</div>
+
+<div class="fn">Schematic for illustration only: not the analysts' graphics, and positions are not to scale. Gartner and Magic Quadrant are registered trademarks of Gartner, Inc. The Forrester Wave™ is a trademark of Forrester Research, Inc. Analysts do not endorse any vendor, product or service depicted in their research.</div>
+
+<script src="style/eweb.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  // Plot area: 36..318 x, 6..206 y. Axis captions sit outside it.
+  const X0 = 36, Y0 = 6, W = 282, H = 200, ease = EW.ease;
+  const anim = [];
+  document.querySelectorAll('.chart').forEach((svg, ci) => {
+    const el = (t, a, p) => EW.el(t, a, p || svg), t0 = .55 + ci * .18;
+    const txt = (s, a) => { const e = el('text', Object.assign({'font-size': 9.5, 'letter-spacing': '.06em', fill: '#69707D'}, a)); e.textContent = s; return e; };
+    let spot;
+    if (svg.dataset.kind === 'mq'){
+      const q = {challengers: [0, 0], leaders: [1, 0], niche: [0, 1], visionaries: [1, 1]};
+      const names = {challengers: 'CHALLENGERS', leaders: 'LEADERS', niche: 'NICHE PLAYERS', visionaries: 'VISIONARIES'};
+      Object.entries(q).forEach(([k, [c, r]]) => {
+        const on = k === svg.dataset.hi, x = X0 + c * W / 2, y = Y0 + r * H / 2;
+        const cell = el('rect', {x, y, width: W / 2, height: H / 2, fill: on ? '#D9E8FF' : '#F5F7FA', stroke: on ? '#0B64DD' : '#D3DAE6', 'stroke-width': on ? 1.6 : 1});
+        txt(names[k], {x: x + (c ? W / 2 - 8 : 8), y: y + 16, 'text-anchor': c ? 'end' : 'start', fill: on ? '#0B64DD' : '#98A2B3', 'font-weight': on ? 600 : 500});
+        if (on){ cell.setAttribute('opacity', 0); anim.push({t: t0 + .3, f: k2 => cell.setAttribute('opacity', ease(k2))}); spot = [x + W / 4, y + H / 4 + 8]; }
+      });
+      txt('ABILITY TO EXECUTE →', {x: 0, y: 0, transform: `translate(${X0 - 12},${Y0 + H}) rotate(-90)`});
+      txt('COMPLETENESS OF VISION →', {x: X0, y: Y0 + H + 22});
+    } else {
+      // Forrester Wave: quarter-circle bands out from the bottom-left corner
+      const cx = X0, cy = Y0 + H, R = Math.hypot(W, H), bands = [['LEADERS', 1], ['STRONG PERFORMERS', .74], ['CONTENDERS', .5], ['CHALLENGERS', .28]];
+      el('clipPath', {id: 'wc' + ci}, el('defs', {})).appendChild(EW.el('rect', {x: X0, y: Y0, width: W, height: H}));
+      const g = el('g', {'clip-path': `url(#wc${ci})`});
+      bands.forEach(([n, f]) => {
+        const r = R * f, on = n === 'LEADERS';
+        const c = el('circle', {cx, cy, r, fill: on ? '#D9E8FF' : (f > .6 ? '#F5F7FA' : f > .4 ? '#EEF1F6' : '#E6EAF0'), stroke: on ? '#0B64DD' : '#D3DAE6', 'stroke-width': on ? 1.6 : 1}, g);
+        if (on){ c.setAttribute('opacity', 0); anim.push({t: t0 + .3, f: k2 => c.setAttribute('opacity', ease(k2))}); }
+      });
+      el('rect', {x: X0, y: Y0, width: W, height: H, fill: 'none', stroke: '#D3DAE6'});
+      txt('LEADERS', {x: X0 + W - 8, y: Y0 + 16, 'text-anchor': 'end', fill: '#0B64DD', 'font-weight': 600});
+      txt('STRONG PERFORMERS', {x: X0 + 8, y: Y0 + H * .2, fill: '#98A2B3', 'font-weight': 500});
+      txt('CONTENDERS', {x: X0 + 8, y: Y0 + H * .6, fill: '#98A2B3', 'font-weight': 500});
+      txt('CHALLENGERS', {x: X0 + 8, y: Y0 + H - 10, fill: '#98A2B3', 'font-weight': 500});
+      txt('CURRENT OFFERING →', {x: 0, y: 0, transform: `translate(${X0 - 12},${Y0 + H}) rotate(-90)`});
+      txt('STRATEGY →', {x: X0, y: Y0 + H + 22});
+      spot = [X0 + W * .82, Y0 + H * .26];
+    }
+    // Elastic in its cell: a pulse ring and the mark dropping in
+    const ring = el('circle', {cx: spot[0], cy: spot[1], r: 14, fill: 'none', stroke: '#0B64DD', 'stroke-width': 1.2, opacity: 0});
+    const mk = el('g', {opacity: 0});
+    mk.innerHTML = EW.MARK.replace('<svg ', `<svg x="${spot[0] - 14}" y="${spot[1] - 14}" width="28" height="28" `);
+    const lb = txt('ELASTIC', {x: spot[0], y: spot[1] + 30, 'text-anchor': 'middle', fill: '#1D1E24', 'font-weight': 600, opacity: 0, stroke: '#fff', 'stroke-width': 4, 'paint-order': 'stroke'});
+    anim.push({t: t0 + .55, f: k2 => { mk.setAttribute('opacity', Math.min(1, k2 * 2)); mk.setAttribute('transform', `translate(0,${(-24 * (1 - EW.back(k2))).toFixed(1)})`); lb.setAttribute('opacity', ease(k2 * 1.4 - .4)); }});
+    anim.push({t: t0 + 1.2, loop: true, f: (k2, t) => { const k = ((t - t0 - 1.2) % 2.4) / 2.4; ring.setAttribute('r', 14 + k * 30); ring.setAttribute('opacity', ((1 - k) * .6).toFixed(2)); }});
+  });
+  EW.loop(t => anim.forEach(a => { if (t < a.t) return; const k = Math.min(1, (t - a.t) / .6); a.f(a.loop ? k : k, t); }));
+})();
+</script>
+</body>
+</html>

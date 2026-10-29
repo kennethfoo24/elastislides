@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Personas</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/partner.css">
+<style>
+  h1{font-size:46px;letter-spacing:-1.6px}
+  .sub{font-size:17px}
+  .cols3{top:250px;bottom:84px}
+  .who{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+  .who:last-child{border-bottom:0}
+  .av{width:34px;height:34px;border:1px solid var(--ink);display:flex;align-items:center;justify-content:center;font:600 11px var(--mono);letter-spacing:.02em;background:#fff;box-shadow:3px 3px 0 var(--c)}
+  .who .t{font:600 15px/1.2 var(--sans);letter-spacing:-.2px}
+  .who .d{font:400 11px/1.35 var(--mono);color:var(--grey);margin-top:3px;letter-spacing:.01em}
+</style>
+</head>
+<body data-foot="">
+<div class="z">
+  <div class="eyebrow in1">Key personas by solution</div>
+  <h1 class="in2">Know who you're talking to. <span class="b">Know which solution to lead with.</span></h1>
+  <p class="sub in3">Same platform, different buyers. Match the title on the business card to the solution.</p>
+</div>
+
+<div class="cols3">
+  <div class="col s-search in3">
+    <div class="sol"><img src="logos/sol-search.png" alt=""><span class="nm">Search &amp; AI</span><span class="k">01</span></div>
+    <div class="who"><span class="av">SD</span><div><div class="t">Search app developers</div><div class="d">Relevance, speed, simple APIs</div></div></div>
+    <div class="who"><span class="av">ML</span><div><div class="t">AI / ML engineers</div><div class="d">Vectors, RAG, model choice</div></div></div>
+    <div class="who"><span class="av">CS</span><div><div class="t">Customer support</div><div class="d">Self-service, faster answers</div></div></div>
+    <div class="who"><span class="av">PM</span><div><div class="t">Product managers</div><div class="d">Search experience, conversion</div></div></div>
+  </div>
+  <div class="col s-obs in4">
+    <div class="sol"><img src="logos/sol-observability.png" alt=""><span class="nm">Observability</span><span class="k">02</span></div>
+    <div class="who"><span class="av">SRE</span><div><div class="t">SREs</div><div class="d">Uptime, MTTR, alert noise</div></div></div>
+    <div class="who"><span class="av">DO</span><div><div class="t">DevOps engineers</div><div class="d">Deploys, pipelines, Kubernetes</div></div></div>
+    <div class="who"><span class="av">DEV</span><div><div class="t">Developers</div><div class="d">Traces, errors, performance</div></div></div>
+    <div class="who"><span class="av">IE</span><div><div class="t">Infrastructure engineers</div><div class="d">Hosts, cloud, capacity</div></div></div>
+    <div class="who"><span class="av">NE</span><div><div class="t">Network engineers</div><div class="d">Flows, devices, latency</div></div></div>
+    <div class="who"><span class="av">DBE</span><div><div class="t">Database engineers</div><div class="d">Slow queries, availability</div></div></div>
+  </div>
+  <div class="col s-sec in5">
+    <div class="sol"><img src="logos/sol-security.png" alt=""><span class="nm">Security</span><span class="k">03</span></div>
+    <div class="who"><span class="av">SA</span><div><div class="t">Security analysts</div><div class="d">Threat hunting, investigations</div></div></div>
+    <div class="who"><span class="av">SOC</span><div><div class="t">SOC analysts</div><div class="d">Alert volume, triage time</div></div></div>
+    <div class="who"><span class="av">CSE</span><div><div class="t">Cloud security engineers</div><div class="d">Cloud posture, workloads</div></div></div>
+    <div class="who"><span class="av">NS</span><div><div class="t">NetSec engineers</div><div class="d">Network threats, segmentation</div></div></div>
+    <div class="who"><span class="av">CA</span><div><div class="t">Compliance &amp; auditors</div><div class="d">Retention, audit trails, reporting</div></div></div>
+  </div>
+</div>
+<script src="style/eweb.js"></script>
+<script src="js/fuckslides.js"></script>
+</body>
+</html>

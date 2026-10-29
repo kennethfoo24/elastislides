@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Why Elastic: AI-Driven</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/partner.css">
+<style>
+  .ab{position:absolute;left:640px;top:96px;width:560px;--c:var(--pink);z-index:2}
+  .ab .in{padding:16px 18px 18px}
+  .ab .nm{display:flex;align-items:center;gap:10px;font:600 20px var(--sans);letter-spacing:-.4px}
+  .ab .nm svg{width:26px;height:26px}
+  .ab .nm .mono{margin-left:auto;font-size:10.5px;letter-spacing:.06em;color:var(--grey);font-weight:500;text-transform:uppercase}
+  .ab .g{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .ab .g span{font:500 11px var(--mono);letter-spacing:.05em;text-transform:uppercase;text-align:center;padding:9px 4px;border:1px solid var(--line);background:var(--bg)}
+  .ab .g span.k{grid-column:span 3;border-color:var(--pink);color:var(--pink);background:#fff}
+  .md{position:absolute;top:380px;width:272px;border:1px solid var(--ink);background:#fff;padding:12px 14px 14px;z-index:2}
+  .md .tag{display:flex;justify-content:space-between}
+  .md .tag i{font-style:normal;color:var(--grey);font-weight:500}
+  .md .lg3{margin-top:14px;display:flex;justify-content:space-around;align-items:flex-start}
+  .md .lg3 div{display:flex;flex-direction:column;align-items:center;gap:6px;font:500 10px var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--char)}
+  .md .lg3 img{height:30px;width:30px;object-fit:contain}
+  .md .lg6{margin-top:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px 6px;align-items:center;justify-items:center}
+  .md .lg6 img{height:24px;max-width:74px;object-fit:contain}
+  .eis{left:640px}
+  .byo{left:928px}
+  .built{position:absolute;left:640px;width:560px;top:556px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;z-index:2}
+  .built .chip{border-color:var(--pink);color:var(--ink)}
+  #wire{position:absolute;left:0;top:0;width:1280px;height:720px;z-index:1;pointer-events:none}
+</style>
+</head>
+<body class="why" data-foot="">
+<div class="z">
+  <div class="eyebrow in1">Why Elastic · <b>AI-driven</b></div>
+  <h1 class="in2">Agentic AI, <span class="b">on any model.</span></h1>
+  <p class="sub in3">Customers build their own agents on their own data, with the model and deployment they choose.</p>
+  <div class="pts">
+    <div class="pt in3"><span class="n">01</span><div><div class="t">Any model, any deployment</div><div class="d">Managed models via EIS, or bring your own LLM.</div></div></div>
+    <div class="pt in4"><span class="n">02</span><div><div class="t">UI-friendly AI Agent Builder</div><div class="d">Instructions, skills, tools and plugins, no heavy coding.</div></div></div>
+    <div class="pt in5"><span class="n">03</span><div><div class="t">Agentic SOC and agentic SRE</div><div class="d">Agents that investigate, with humans in the loop.</div></div></div>
+    <div class="pt in6"><span class="n">04</span><div><div class="t">AI baked into every solution</div><div class="d">Not a separate product to buy and integrate.</div></div></div>
+  </div>
+</div>
+
+<div class="ab win in3">
+  <div class="bar"><i></i><i></i><i></i><span>Kibana · Agent Builder</span></div>
+  <div class="in">
+    <div class="nm"><span id="mk"></span>AI Agent Builder<span class="mono">Build · test · deploy</span></div>
+    <div class="g">
+      <span>Chat interface</span><span>Builder UX</span><span>Instructions</span>
+      <span>Skills</span><span>Tools</span><span>Plugins</span>
+      <span class="k">Your data in Elasticsearch: the context every agent needs</span>
+    </div>
+  </div>
+</div>
+
+<div class="md eis in4">
+  <div class="tag">Elastic Inference Service<i>Managed</i></div>
+  <div class="lg3">
+    <div><img src="logos/m-anthropic.png" alt="">Anthropic</div>
+    <div><img src="logos/m-gemini.png" alt="">Gemini</div>
+    <div><img src="logos/m-openai.png" alt="">OpenAI</div>
+  </div>
+</div>
+<div class="md byo in5">
+  <div class="tag">Bring your own LLM<i>Self-hosted</i></div>
+  <div class="lg6">
+    <img src="logos/m-mistral.png" alt="Mistral"><img src="logos/m-qwen.png" alt="Qwen"><img src="logos/m-deepseek.png" alt="DeepSeek">
+    <img src="logos/m-ollama.png" alt="Ollama"><img src="logos/m-vllm.png" alt="vLLM"><img src="logos/m-kimi.png" alt="Kimi">
+  </div>
+</div>
+
+<div class="built in6">
+  <span class="tag" style="margin-right:6px">Built in</span>
+  <span class="chip">Attack Discovery</span><span class="chip">AI Assistant</span><span class="chip">Automatic Migration</span>
+</div>
+
+<svg id="wire" viewBox="0 0 1280 720"></svg>
+<script src="style/eweb.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  document.getElementById('mk').innerHTML = EW.MARK;
+  document.querySelector('#mk svg').style.cssText = 'width:26px;height:26px;display:block';
+  // models feed the agent builder: hairlines from each model card up to the builder
+  const svg = document.getElementById('wire'), lines = [[776, 380], [1064, 380]];
+  const pulses = lines.map(([x, y]) => {
+    EW.el('line', {x1: x, y1: y, x2: x, y2: 322, stroke: '#1D1E24', 'stroke-width': 1, 'stroke-dasharray': '2 3'}, svg);
+    return EW.el('rect', {x: x - 3, y: y, width: 6, height: 6, fill: '#F04E98', opacity: 0}, svg);
+  });
+  EW.loop(t => {
+    if (t < 1.5) return;
+    pulses.forEach((p, i) => { const k = ((t - 1.5) * .6 + i * .5) % 1;
+      p.setAttribute('y', (380 - k * 58 - 3).toFixed(1)); p.setAttribute('opacity', Math.sin(k * Math.PI).toFixed(2)); });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Why Elastic: Unified Platform</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/partner.css">
+<style>
+  #hero{left:560px;top:0;width:720px;height:720px}
+  .pt{transition:opacity .5s ease}
+  .pt.off{opacity:.38}
+  .pt .n{transition:color .5s ease}
+  .pt.off .n{color:var(--grey-l)}
+  .pt.now{box-shadow:inset 3px 0 0 var(--blue)}
+  .pt .t i{font-style:normal;color:var(--grey);font-weight:500}
+  .stage{position:absolute;left:660px;right:72px;top:586px;display:flex;align-items:center;gap:10px;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--grey);z-index:2}
+  .stage b{color:var(--blue);font-weight:600}
+  .stage .bar{flex:1;height:2px;background:var(--line);position:relative}
+  .stage .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--blue)}
+</style>
+</head>
+<body class="why" data-foot="">
+<div class="z">
+  <div class="eyebrow in1">Why Elastic · <b>Unified platform</b></div>
+  <h1 class="in2">Unified within. <span class="b">Unified across.</span></h1>
+  <p class="sub in3">Separate tools become one solution. Then the solutions share one platform, one copy of the data, and one context.</p>
+  <div class="pts">
+    <div class="pt off in3" id="p1"><span class="n">01</span><div><div class="t">Within Observability <i>· metrics, logs, traces</i></div><div class="d">Every signal in one store, correlated by default.</div></div></div>
+    <div class="pt off in4" id="p2"><span class="n">02</span><div><div class="t">Within Security <i>· SIEM × XDR × SOAR × UEBA</i></div><div class="d">The full security stack, not a SIEM plus add-ons.</div></div></div>
+    <div class="pt off in5" id="p3"><span class="n">03</span><div><div class="t">Across solutions <i>· DevSecOps</i></div><div class="d">Observability and security on the same data and context.</div></div></div>
+  </div>
+</div>
+<svg id="hero" class="iso" viewBox="0 0 720 720"></svg>
+<div class="stage in4"><span id="cap"><b>01</b> · separate tools</span><span class="bar"><i id="prog"></i></span></div>
+<script src="style/eweb.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 640, y: 120, w: 640, h: 460, seed: 9, blobs: 6, thr: .5});
+  const svg = document.getElementById('hero'), el = EW.el, s = .75, ox = 330, oy = 335, C = .8660254;
+  const P = (x, y, z) => [ox + (x - y) * C * s, oy + ((x + y) * .5 - z) * s];
+  const poly = a => a.map(p => P(...p).map(v => v.toFixed(1)).join(',')).join(' ');
+  const F = EW.FACES, ease = EW.ease, back = EW.back, clamp = k => Math.max(0, Math.min(1, k));
+  const blur = el('filter', {id: 'ub', x: '-50%', y: '-50%', width: '200%', height: '200%'}, el('defs', {}, svg)); el('feGaussianBlur', {stdDeviation: 9}, blur);
+  const box = (x, y, z, w, d, h, f, st) => { const g = el('g', {}, svg), zt = z + h, o = st === false ? {} : {stroke: '#1D1E24', 'stroke-width': 1, 'stroke-linejoin': 'round'};
+    el('polygon', Object.assign({points: poly([[x, y + d, zt], [x + w, y + d, zt], [x + w, y + d, z], [x, y + d, z]]), fill: f.left}, o), g);
+    el('polygon', Object.assign({points: poly([[x + w, y, zt], [x + w, y + d, zt], [x + w, y + d, z], [x + w, y, z]]), fill: f.right}, o), g);
+    el('polygon', Object.assign({points: poly([[x, y, zt], [x + w, y, zt], [x + w, y + d, zt], [x, y + d, zt]]), fill: f.top}, o), g);
+    return g; };
+  // leader-line callout that can move with its object
+  const label = (side, len, title, sub) => { const g = el('g', {opacity: 0}, svg), ln = el('line', {stroke: '#1D1E24', 'stroke-width': 1}, g);
+    const lines = [[title, 600]].concat(sub ? [[sub, 400]] : []).map(([t, w]) => { const e = el('text', {'font-size': 11.5, 'font-weight': w, fill: w > 500 ? '#1D1E24' : '#343741', 'letter-spacing': '.06em', 'text-anchor': side === 'r' ? 'start' : 'end', stroke: '#fff', 'stroke-width': 5, 'paint-order': 'stroke'}, g); e.textContent = t.toUpperCase(); return e; });
+    return {g, at(ax, ay){ const ex = ax + (side === 'r' ? len : -len); ln.setAttribute('x1', ax); ln.setAttribute('y1', ay); ln.setAttribute('x2', ex); ln.setAttribute('y2', ay);
+      const tx = ex + (side === 'r' ? 9 : -9), y0 = ay + 4 - (lines.length - 1) * 8.3; lines.forEach((e, i) => { e.setAttribute('x', tx); e.setAttribute('y', y0 + i * 16.6); }); }}; };
+
+  // floor shadow and the platform
+  const shadow = el('polygon', {points: poly([[8, 8, 0], [314, 8, 0], [314, 214, 0], [8, 214, 0]]), fill: 'rgba(40,55,90,.16)', filter: 'url(#ub)', opacity: 0}, svg);
+  el('polygon', {points: poly([[-30, -30, 0], [330, -30, 0], [330, 230, 0], [-30, 230, 0]]), fill: 'none', stroke: '#1D1E24', 'stroke-width': 1.4, 'stroke-dasharray': '2 4'}, svg);
+  const plat = box(0, 0, 0, 300, 200, 40, F.blue);
+
+  // the separate tools: slabs that float apart, then close up
+  const mk = (x, names, side) => { const h = 90 / names.length;
+    const slabs = names.map((n, i) => ({n, z: 40 + i * h, gap: i * 34, g: box(x, 40, 40 + i * h, 120, 120, h, F.slate, true), lb: label(side, side === 'l' ? 44 : 30, n)}));
+    return {x, h, slabs}; };
+  const obs = mk(20, ['Metrics', 'Logs', 'Traces'], 'l');
+  const obsOne = box(20, 40, 40, 120, 120, 90, F.pink);
+  const sec = mk(160, ['SIEM', 'XDR', 'SOAR', 'UEBA'], 'r');
+  const secOne = box(160, 40, 40, 120, 120, 90, F.orange);
+  const obsLb = label('l', 44, 'Observability', 'One store, every signal'), secLb = label('r', 30, 'Security', 'One stack, end to end');
+
+  // DevSecOps: shared data flowing between the two, under one shared layer
+  const bridge = el('path', {d: '', fill: 'none', stroke: '#02BCB7', 'stroke-width': 1.4, 'stroke-dasharray': '3 3', opacity: 0}, svg);
+  const [bx1, by1] = P(80, 100, 130), [bx2, by2] = P(220, 100, 130);
+  bridge.setAttribute('d', `M${bx1},${by1} Q${(bx1 + bx2) / 2},${Math.min(by1, by2) - 20} ${bx2},${by2}`);
+  const BL = bridge.getTotalLength(), pk = [0, 1, 2, 3].map(i => el('rect', {width: 6, height: 6, fill: i % 2 ? '#F04E98' : '#FF7E62', opacity: 0}, svg));
+  const lidSh = el('polygon', {points: poly([[18, 38, 130], [292, 38, 130], [292, 168, 130], [18, 168, 130]]), fill: 'rgba(40,55,90,.18)', filter: 'url(#ub)', opacity: 0}, svg);
+  const lid = box(10, 30, 250, 280, 140, 12, F.white);
+  svg.appendChild(bridge); pk.forEach(d => svg.appendChild(d));
+  const lidLb = label('r', 34, 'DevSecOps', 'Shared context');
+
+  const pts = [1, 2, 3].map(i => document.getElementById('p' + i)), cap = document.getElementById('cap'), prog = document.getElementById('prog');
+  const CAPS = ['<b>01</b> · within observability', '<b>02</b> · within security', '<b>03</b> · across solutions', '<b>✓</b> · one platform'];
+  const ty = (g, dy, op) => { g.setAttribute('transform', `translate(0,${dy.toFixed(2)})`); g.setAttribute('opacity', op.toFixed(3)); };
+  const END = 6.6, t0 = performance.now() - (navigator.webdriver ? END * 1000 + 1000 : 0);
+
+  EW.loop(() => {
+    const t = (performance.now() - t0) / 1000;
+    const pk1 = clamp(t / .6);
+    ty(plat, -60 * s * (1 - back(pk1)), clamp(pk1 * 2.5)); shadow.setAttribute('opacity', pk1);
+    // act 1 and act 2: each group drops in apart, closes up, then fuses into one solution block
+    [[obs, obsOne, obsLb, .35, 1.5, 'l'], [sec, secOne, secLb, .55, 3.3, 'r']].forEach(([G, one, lb, tin, tm]) => {
+      const close = ease(clamp((t - tm) / 1.0)), fuse = ease(clamp((t - tm - 1.0) / .45));
+      G.slabs.forEach((sl, i) => {
+        const din = clamp((t - tin - i * .09) / .6), lift = (sl.gap * (1 - close) + 70 * (1 - back(din))) * s;
+        ty(sl.g, -lift, clamp(din * 2.5) * (1 - fuse));
+        const [ax, ay] = G.x === 20 ? P(20, 160, sl.z + G.h / 2) : P(280, 40, sl.z + G.h / 2);
+        sl.lb.at(ax, ay - lift); sl.lb.g.setAttribute('opacity', (clamp((t - tin - .5 - i * .09) / .3) * (1 - fuse)).toFixed(3));
+      });
+      one.setAttribute('opacity', fuse.toFixed(3));
+      const [ax, ay] = G.x === 20 ? P(20, 160, 85) : P(280, 40, 85); lb.at(ax, ay); lb.g.setAttribute('opacity', fuse.toFixed(3));
+    });
+    // act 3: the shared layer lands, data starts crossing between the solutions
+    const l3 = clamp((t - 5.1) / .7);
+    ty(lid, (-80 * (1 - back(l3)) + (t > 5.8 ? Math.sin((t - 5.8) * 1.2) * 4 : 0)) * s, clamp(l3 * 2.5));
+    lidSh.setAttribute('opacity', (l3 * .45).toFixed(3));
+    const [lx, ly] = P(290, 30, 256); lidLb.at(lx, ly - 80 * (1 - back(l3)) * s); lidLb.g.setAttribute('opacity', clamp((t - 5.5) / .3).toFixed(3));
+    const fl = clamp((t - 5.7) / .4); bridge.setAttribute('opacity', fl * .9);
+    pk.forEach((d, i) => { if (t < 5.7){ d.setAttribute('opacity', 0); return; }
+      let k = ((t - 5.7) * .45 + i / 4) % 1; if (i % 2) k = 1 - k; const p = bridge.getPointAtLength(k * BL);
+      d.setAttribute('x', (p.x - 3).toFixed(1)); d.setAttribute('y', (p.y - 3).toFixed(1)); d.setAttribute('opacity', (fl * Math.min(1, Math.sin(k * Math.PI) * 1.8)).toFixed(2)); });
+    // left column and stage caption follow the story
+    const act = t < 3.1 ? 0 : t < 4.9 ? 1 : t < END ? 2 : 3;
+    pts.forEach((p, i) => { p.classList.toggle('off', act < 3 && i !== act && !(i < act)); p.classList.toggle('now', i === act); });
+    if (cap.dataset.a != act){ cap.dataset.a = act; cap.innerHTML = CAPS[act]; }
+    prog.style.width = (clamp(t / END) * 100).toFixed(1) + '%';
+  });
+})();
+</script>
+</body>
+</html>

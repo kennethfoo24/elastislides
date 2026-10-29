@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Use Cases</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/partner.css">
+<style>
+  h1{font-size:46px;letter-spacing:-1.6px}
+  .sub{font-size:17px}
+  .cols3{top:250px;bottom:84px}
+  .q{padding:16px 0 15px;border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:0}
+  .q p{font:400 16px/1.45 var(--mono);color:var(--char);letter-spacing:-.2px}
+  .q p b{font-weight:600;color:var(--ink);background:linear-gradient(transparent 62%,color-mix(in srgb,var(--c) 38%,transparent) 62%)}
+  .q .to{margin-top:7px;font:600 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--blue);display:flex;gap:6px}
+  .q .to::before{content:'→'}
+</style>
+</head>
+<body data-foot="">
+<div class="z">
+  <div class="eyebrow in1">Key use cases by solution</div>
+  <h1 class="in2">If you hear this, <span class="b">it's an Elastic conversation.</span></h1>
+  <p class="sub in3">The pain, in the customer's own words, and what to lead with when you hear it.</p>
+</div>
+
+<div class="cols3">
+  <div class="col s-search in3">
+    <div class="sol"><img src="logos/sol-search.png" alt=""><span class="nm">Search &amp; AI</span><span class="k">01</span></div>
+    <div class="q"><p>"I <b>can't find</b> what I'm looking for when I type in the search bar."</p><div class="to">Semantic + hybrid search</div></div>
+    <div class="q"><p>"We have <b>internal docs</b> that can't <b>integrate with AI</b>."</p><div class="to">RAG on Elasticsearch</div></div>
+    <div class="q"><p>"I want to <b>unify all my data</b> so I can easily search it."</p><div class="to">Unified datastore</div></div>
+  </div>
+  <div class="col s-obs in4">
+    <div class="sol"><img src="logos/sol-observability.png" alt=""><span class="nm">Observability</span><span class="k">02</span></div>
+    <div class="q"><p>"We have <b>tons of logs</b>, and it's getting <b>expensive</b>."</p><div class="to">LogsDB + frozen tier</div></div>
+    <div class="q"><p>"We use X for logs, Y for metrics, Z for traces. <b>Different tools.</b>"</p><div class="to">One platform, every signal</div></div>
+    <div class="q"><p>"We don't want <b>vendor lock-in</b>, but we want <b>AI capabilities</b>."</p><div class="to">OpenTelemetry + AI Assistant</div></div>
+  </div>
+  <div class="col s-sec in5">
+    <div class="sol"><img src="logos/sol-security.png" alt=""><span class="nm">Security</span><span class="k">03</span></div>
+    <div class="q"><p>"We have <b>tons of endpoints</b>, and it's getting <b>expensive</b>."</p><div class="to">No per-endpoint pricing</div></div>
+    <div class="q"><p>"We need <b>autonomous</b> or <b>human-in-the-loop</b> automation."</p><div class="to">Workflows + Agentic SOC</div></div>
+    <div class="q"><p>"We want <b>pre-built rules</b> and alerting."</p><div class="to">Prebuilt detection rules</div></div>
+  </div>
+</div>
+<script src="style/eweb.js"></script>
+<script src="js/fuckslides.js"></script>
+</body>
+</html>

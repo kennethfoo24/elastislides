@@ -1,0 +1,46 @@
+/* Partner deck: shared pieces on top of eweb.css */
+.s-search{--c:var(--yellow)}
+.s-obs{--c:var(--pink)}
+.s-sec{--c:var(--orange)}
+.s-plat{--c:var(--blue)}
+
+/* three solution columns separated by hairlines */
+.cols3{position:absolute;left:72px;right:72px;display:grid;grid-template-columns:repeat(3,1fr);z-index:2}
+.cols3>.col{padding:0 28px;border-left:1px solid var(--line);display:flex;flex-direction:column;min-width:0}
+.cols3>.col:first-child{padding-left:0;border-left:0}
+.cols3>.col:last-child{padding-right:0}
+
+/* solution header: official icon, name, accent bar */
+.sol{display:flex;align-items:center;gap:11px;padding-bottom:12px;border-bottom:3px solid var(--c)}
+.sol img{height:24px;width:24px;object-fit:contain}
+.sol .nm{font:600 21px var(--sans);letter-spacing:-.4px;color:var(--ink)}
+.sol .k{margin-left:auto;font:500 11px var(--mono);letter-spacing:.06em;color:var(--grey-l)}
+
+/* list rows */
+.rows{display:flex;flex-direction:column;margin-top:4px}
+.row{display:grid;grid-template-columns:22px 1fr;gap:8px;padding:9px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row .n{font:500 10.5px var(--mono);color:var(--grey-l);padding-top:4px}
+.row .t{font:600 15.5px/1.25 var(--sans);letter-spacing:-.2px;color:var(--ink)}
+.row .d{font:400 12.5px/1.4 var(--sans);color:var(--grey);margin-top:2px}
+
+/* deploy-anywhere strip */
+.deploy{position:absolute;left:72px;right:72px;bottom:74px;display:flex;align-items:center;gap:10px;padding-top:14px;border-top:1px solid var(--ink);z-index:2}
+.deploy .tag{margin-right:8px}
+.deploy .chip{font-size:10.5px}
+
+/* "Why Elastic" summary slides: words left, visual right */
+.why .z{width:470px}
+.why h1{font-size:50px;letter-spacing:-1.8px}
+.why .sub{font-size:17px;max-width:440px}
+.pts{margin-top:26px;display:flex;flex-direction:column;border-top:1px solid var(--ink)}
+.pt{display:grid;grid-template-columns:34px 1fr;padding:13px 0;border-bottom:1px solid var(--line)}
+.pt .n{font:600 12px var(--mono);color:var(--blue);padding-top:3px}
+.pt .t{font:600 17px/1.3 var(--sans);letter-spacing:-.25px}
+.pt .d{font:400 13px/1.45 var(--sans);color:var(--grey);margin-top:2px}
+
+/* product window frame */
+.win{background:#fff;border:1px solid var(--ink);box-shadow:8px 8px 0 var(--c,var(--blue))}
+.win .bar{display:flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-bottom:1px solid var(--ink);font:500 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--char)}
+.win .bar i{width:8px;height:8px;border:1px solid var(--ink);border-radius:50%}
+.win .bar span{margin-left:8px}

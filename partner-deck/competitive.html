@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Competitive Landscape</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/partner.css">
+<style>
+  h1{font-size:46px;letter-spacing:-1.6px}
+  .sub{font-size:17px}
+  .cols3{top:244px;bottom:96px}
+  .wall{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .lt{height:56px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;padding:0 12px;gap:8px}
+  .lt img{max-height:24px;max-width:128px;object-fit:contain}
+  .lt img.sq{max-height:28px}
+  .lt span{font:600 12.5px/1.15 var(--sans);color:#3c4043;letter-spacing:-.1px}
+  .lt.wide img{max-width:170px;max-height:40px}
+  .edge{margin-top:22px;padding-top:12px;border-top:1px solid var(--ink)}
+  .edge .tag{color:var(--blue)}
+  .edge p{font-size:13.5px;line-height:1.45;color:var(--char);margin-top:4px}
+  .think{position:absolute;right:72px;top:150px;display:flex;align-items:center;gap:12px;z-index:2}
+  .think .w{font:600 30px var(--sans);letter-spacing:-1px}
+  .think .lgo{display:flex;align-items:center;gap:8px;font:600 30px var(--sans);letter-spacing:-1px}
+  .think .lgo svg{width:36px;height:36px}
+</style>
+</head>
+<body data-foot="">
+<div class="z">
+  <div class="eyebrow in1">Competitive landscape</div>
+  <h1 class="in2">If you see these, <span class="b">think Elastic.</span></h1>
+  <p class="sub in3">The incumbents you'll meet in each solution area, and the edge to lead with against them.</p>
+</div>
+<div class="think in6"><span class="w">Think</span><span class="lgo" id="lgo">elastic</span></div>
+
+<div class="cols3">
+  <div class="col s-search in3">
+    <div class="sol"><img src="logos/sol-search.png" alt=""><span class="nm">Search &amp; AI</span><span class="k">01</span></div>
+    <div class="wall">
+      <div class="lt"><img src="logos/opensearch.png" alt="OpenSearch"></div>
+      <div class="lt"><img src="logos/glean.png" alt="Glean"></div>
+      <div class="lt"><img src="logos/algolia.png" alt="Algolia"></div>
+      <div class="lt"><img class="sq" src="logos/google-custom-search.png" alt=""><span>Google Custom<br>Search</span></div>
+      <div class="lt"><img src="logos/milvus.png" alt="Milvus"></div>
+      <div class="lt"><img src="logos/pinecone.png" alt="Pinecone"></div>
+    </div>
+    <div class="edge"><div class="tag">Elastic edge</div><p>Hybrid search, vector database and embeddings in one engine, not three products stitched together.</p></div>
+  </div>
+  <div class="col s-obs in4">
+    <div class="sol"><img src="logos/sol-observability.png" alt=""><span class="nm">Observability</span><span class="k">02</span></div>
+    <div class="wall">
+      <div class="lt"><img src="logos/datadog.png" alt="Datadog"></div>
+      <div class="lt"><img src="logos/newrelic.png" alt="New Relic"></div>
+      <div class="lt"><img src="logos/appdynamics.png" alt="AppDynamics, part of Cisco"></div>
+      <div class="lt"><img src="logos/dynatrace.png" alt="Dynatrace"></div>
+      <div class="lt"><img src="logos/splunk.png" alt="Splunk"></div>
+      <div class="lt"><img src="logos/sumologic.png" alt="Sumo Logic"></div>
+    </div>
+    <div class="edge"><div class="tag">Elastic edge</div><p>Efficient storage and OpenTelemetry-first: lower cost at scale, with no proprietary agents.</p></div>
+  </div>
+  <div class="col s-sec in5">
+    <div class="sol"><img src="logos/sol-security.png" alt=""><span class="nm">Security</span><span class="k">03</span></div>
+    <div class="wall">
+      <div class="lt"><img src="logos/splunk.png" alt="Splunk"></div>
+      <div class="lt"><img src="logos/ibm-qradar.png" alt="IBM QRadar"></div>
+      <div class="lt wide"><img src="logos/google-secops.png" alt="Google Security Operations"></div>
+      <div class="lt"><img src="logos/logrhythm.png" alt="LogRhythm"></div>
+      <div class="lt"><img src="logos/crowdstrike.png" alt="CrowdStrike"></div>
+      <div class="lt"><img src="logos/sentinelone.png" alt="SentinelOne"></div>
+    </div>
+    <div class="edge"><div class="tag">Elastic edge</div><p>SIEM, XDR and SOAR on one platform, with no per-endpoint pricing to limit coverage.</p></div>
+  </div>
+</div>
+<script src="style/eweb.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>document.getElementById('lgo').insertAdjacentHTML('afterbegin', EW.MARK);</script>
+</body>
+</html>
