@@ -15,5 +15,6 @@
   "why-cost.html": "- Takeaway 3: cost efficiency.\n- LogsDB cuts log index size by up to 75%.\n- Data tiers keep older data cheap, and searchable snapshots keep it queryable without rehydration.\n- Resource-based pricing on Self-managed and Cloud Hosted: no per-query, per-host or per-endpoint fees. Serverless is usage-priced.",
   "thank-you.html": "- Recap the three reasons: unified, AI-driven, cost efficient.\n- Point partners to elastic.co/partners.\n- Partner portal: partners.elastic.co",
   "phones.html": "- Search is what every customer already uses daily: finding a ride in Uber, a title in Netflix, groceries in Shopify, a match in Tinder, code in GitHub.\n- Each phone shows the experience; the point is instant, relevant, suggestion-as-you-type search.\n- Illustrative mock-ups, not the actual apps.",
-  "so-why.html": "- Transition into the three takeaways: unified platform, AI-driven, cost efficient."
+  "so-why.html": "- Transition into the three takeaways: unified platform, AI-driven, cost efficient.",
+  "deployment.html": "- Three ways to run the same Elasticsearch platform.\n- Self-managed: you run everything, full control, including air-gapped and regulated environments.\n- Elastic Cloud Hosted: Elastic runs and upgrades the clusters on AWS, Azure or GCP; you choose the size and version.\n- Elastic Cloud Serverless: no clusters to size or manage; it scales automatically and is priced on usage.\n- Resource-based pricing applies to Self-managed and Elastic Cloud Hosted; Serverless is priced on usage."
 }

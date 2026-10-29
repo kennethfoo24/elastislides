@@ -26,10 +26,10 @@
   .byo{left:928px}
   .ab .g span.b{grid-column:span 3;border-color:var(--pink);background:#fff;font-size:10px;letter-spacing:.03em}
   .ab .g span.b i{font-style:normal;color:var(--pink);font-weight:600}
-  .vz{position:absolute;top:498px;width:272px;height:178px;z-index:2}
-  .vz svg{width:100%;height:100%;overflow:visible}
+  .vz{position:absolute;top:498px;width:272px;height:190px;z-index:2}
+  .vz svg{width:100%;height:150px;display:block;overflow:visible}
   .vz text{font-family:var(--mono)}
-  .vz .cap2{position:absolute;left:0;right:0;bottom:0;font:500 10px/1.3 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--char)}
+  .vz .cap2{position:absolute;left:0;right:0;top:162px;font:500 10px/1.3 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--char)}
   .vz .cap2 b{color:var(--blue);font-weight:600}
   #wire{position:absolute;left:0;top:0;width:1280px;height:720px;z-index:1;pointer-events:none}
 </style>
@@ -124,7 +124,7 @@
   A('path', {d: 'M115 3.5l5 2v4c0 3-2.2 5-5 6-2.8-1-5-3-5-6v-4z', fill: '#fff'});
   tx('AIR-GAPPED ENVIRONMENT', 185, 9.5, {fill: '#fff', 'font-size': 6.6});
   const card = (x, label, draw) => { A('rect', {x: x + 2.5, y: 31.5, width: 46, height: 62, rx: 5, fill: '#B7D2F6'});
-    A('rect', {x, y: 29, width: 46, height: 62, rx: 5, fill: '#fff', stroke: '#1D1E24'}); draw(x + 23); tx(label, x + 23, 85, {'font-size': 6.2}); };
+    A('rect', {x, y: 29, width: 46, height: 62, rx: 5, fill: '#fff', stroke: '#1D1E24'}); draw(x + 23); tx(label, x + 23, 85, label.length > 9 ? {'font-size': 5, 'letter-spacing': 0, textLength: 42, lengthAdjust: 'spacingAndGlyphs'} : {'font-size': 6.2}); };
   card(92, 'LLM', cx => { A('rect', {x: cx - 12, y: 36, width: 24, height: 24, rx: 3, fill: '#0B64DD'});
     [-6, 0, 6].forEach(d => { A('rect', {x: cx - 17, y: 46 + d - 1, width: 5, height: 1.6, fill: '#0B64DD'}); A('rect', {x: cx + 12, y: 46 + d - 1, width: 5, height: 1.6, fill: '#0B64DD'}); });
     tx('LLM', cx, 52.5, {fill: '#fff', 'font-size': 8, 'font-weight': 700}); tx('SELF-HOSTED', cx, 69, {'font-size': 5.2, fill: '#69707D'}); });
