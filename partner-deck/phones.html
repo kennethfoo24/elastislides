@@ -55,7 +55,6 @@
 </head>
 <body data-foot="">
 <div class="z">
-  <div class="eyebrow in1">Search &amp; AI · <b>everyday</b></div>
   <h1 class="in2">Search is in <span class="b">every pocket.</span></h1>
   <p class="sub in3">The experiences your customers expect: instant, relevant, and as good as the apps they use every day.</p>
 </div>
@@ -92,7 +91,7 @@
            <div class="code" style="margin-top:7px"><div class="f">cmd/server/main.go</div><pre>41  cfg := <mark>parseConfig</mark>(*flagPath)
 42  srv := NewServer(cfg)</pre></div>`},
   ];
-  const D = 4.4, ph = document.getElementById('screen'), list = document.getElementById('apps'), still = navigator.webdriver;
+  const D = 3.0, K = 1.45, LEAD = .5, ph = document.getElementById('screen'), list = document.getElementById('apps'), still = navigator.webdriver;
   S.forEach((s, i) => {
     list.insertAdjacentHTML('beforeend', `<div class="app"><img src="logos/app-${s.logo}.svg" alt=""><div><div class="t">${s.name}</div><div class="d">${s.cap}</div></div><i></i></div>`);
     let body = '';
@@ -104,7 +103,7 @@
   const sc = [...ph.querySelectorAll('.sc')], ap = [...list.querySelectorAll('.app')];
   let cur = -1;
   EW.loop(t0 => {
-    const T = still ? 0 : t0, idx = still ? 1 : Math.floor(T / D) % S.length, lt = still ? 3.5 : T % D;
+    const T = still ? 0 : Math.max(0, t0 - LEAD), idx = still ? 1 : Math.floor(T / D) % S.length, lt = still ? 3.5 : (T % D) * K;
     if (idx !== cur){ cur = idx; sc.forEach((e, j) => e.classList.toggle('on', j === idx)); ap.forEach((e, j) => e.classList.toggle('on', j === idx)); }
     const s = S[idx], e = sc[idx];
     if (s.q){ const n = Math.max(0, Math.min(s.q.length, Math.floor((lt - .5) / .12))); e.querySelector('.tx').textContent = s.q.slice(0, n); }
@@ -112,7 +111,7 @@
     items.forEach((it, j) => it.classList.toggle('on', lt > (s.at[Math.min(j, s.at.length - 1)] ?? 2)));
     if (s.k === 'tinder'){ const l = e.querySelector('.like'), c = e.querySelector('.card'), k = Math.max(0, Math.min(1, (lt - 3.1) / .6));
       l.style.opacity = k; c.style.transform = `translateX(${k * 40}px) rotate(${k * 6}deg)`; }
-    ap[idx].querySelector('i').style.width = (lt / D * 100).toFixed(1) + '%';
+    ap[idx].querySelector('i').style.width = (lt / (D * K) * 100).toFixed(1) + '%';
     ap.forEach((a, j) => { if (j !== idx) a.querySelector('i').style.width = 0; });
   });
 })();

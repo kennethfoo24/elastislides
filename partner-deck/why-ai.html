@@ -36,13 +36,12 @@
 </head>
 <body class="why" data-foot="">
 <div class="z">
-  <div class="eyebrow in1">Why Elastic · <b>AI-driven</b></div>
   <h1 class="in2">Agentic AI, <span class="b">on any model.</span></h1>
   <p class="sub in3">Customers build their own agents on their own data, with the model and deployment they choose.</p>
   <div class="pts">
     <div class="pt in3"><span class="n">01</span><div><div class="t">Any model, any deployment</div><div class="d">Managed models via EIS, or bring your own LLM.</div></div></div>
     <div class="pt in4"><span class="n">02</span><div><div class="t">UI-friendly AI Agent Builder</div><div class="d">Instructions, skills, tools and plugins, no heavy coding.</div></div></div>
-    <div class="pt in5"><span class="n">03</span><div><div class="t">Agentic SOC and agentic SRE</div><div class="d">Agents that investigate, with humans in the loop.</div></div></div>
+    <div class="pt in5"><span class="n">03</span><div><div class="t">Agentic SOC and Agentic SRE</div><div class="d">Agents that investigate, with humans in the loop.</div></div></div>
     <div class="pt in6"><span class="n">04</span><div><div class="t">AI baked into every solution</div><div class="d">Not a separate product to buy and integrate.</div></div></div>
   </div>
 </div>
@@ -117,35 +116,38 @@
     const ring = EW.el('circle', {cx: x, cy: y, r: 3, fill: 'none', stroke: '#0B64DD', 'stroke-width': 1, opacity: 0}, map);
     const dot = EW.el('circle', {cx: x, cy: y, r: 0, fill: '#0B64DD'}, map); return {ring, dot, i}; });
 
-  // BYOLLM: a walled, air-gapped environment, with the public cloud cut off outside
-  const air = document.getElementById('air');
-  const defs = EW.el('defs', {}, air);
-  EW.el('rect', {x: 70, y: 6, width: 196, height: 128, fill: '#fff', stroke: '#1D1E24', 'stroke-width': 1.4, 'stroke-dasharray': '5 3'}, air);
-  const t1 = EW.el('text', {x: 78, y: 18, 'font-size': 8, fill: '#0B64DD', 'font-weight': 600, 'letter-spacing': '.06em'}, air); t1.textContent = 'YOUR AIR-GAPPED ENVIRONMENT';
-  const icon = (x, y, w, h, label, fill) => { EW.el('rect', {x, y, width: w, height: h, fill: fill || '#fff', stroke: '#1D1E24'}, air);
-    const t = EW.el('text', {x: x + w / 2, y: y + h + 10, 'font-size': 7.5, 'text-anchor': 'middle', fill: '#343741', 'letter-spacing': '.04em'}, air); t.textContent = label; };
-  // server rack with a model chip, data store, an Elasticsearch box, and a lock
-  icon(82, 34, 54, 44, '', '#D9E8FF'); [0, 1, 2].forEach(i => EW.el('rect', {x: 88, y: 40 + i * 12, width: 42, height: 8, fill: '#fff', stroke: '#1D1E24', 'stroke-width': .8}, air));
-  const t2 = EW.el('text', {x: 109, y: 90, 'font-size': 7.5, 'text-anchor': 'middle', fill: '#343741'}, air); t2.textContent = 'SELF-HOSTED LLM';
-  icon(150, 34, 54, 44, '', '#fff'); EW.el('ellipse', {cx: 177, cy: 46, rx: 18, ry: 6, fill: '#FEC514', stroke: '#1D1E24'}, air); EW.el('path', {d: 'M159 46v22a18 6 0 0 0 36 0V46', fill: '#FEC514', stroke: '#1D1E24'}, air);
-  const t3 = EW.el('text', {x: 177, y: 90, 'font-size': 7.5, 'text-anchor': 'middle', fill: '#343741'}, air); t3.textContent = 'YOUR DATA';
-  const es = EW.el('g', {}, air); es.innerHTML = EW.MARK.replace('<svg ', '<svg x="218" y="40" width="34" height="34" ');
-  const t4 = EW.el('text', {x: 235, y: 90, 'font-size': 7.5, 'text-anchor': 'middle', fill: '#343741'}, air); t4.textContent = 'ELASTICSEARCH';
-  const links = [[136, 56, 150, 56], [204, 56, 218, 56]].map(([x1, y1, x2, y2]) => EW.el('line', {x1, y1, x2, y2, stroke: '#0B64DD', 'stroke-width': 1.4, 'stroke-dasharray': '2 2'}, air));
-  const pk = EW.el('rect', {width: 5, height: 5, fill: '#F04E98'}, air);
-  // lock + the internet, crossed out
-  const lock = EW.el('g', {}, air); lock.innerHTML = '<rect x="161" y="106" width="16" height="12" fill="#1D1E24"/><path d="M164 106v-4a5 5 0 0 1 10 0v4" fill="none" stroke="#1D1E24" stroke-width="2"/>';
-  const lt = EW.el('text', {x: 183, y: 116, 'font-size': 8, fill: '#1D1E24', 'font-weight': 600}, air); lt.textContent = 'NO INTERNET';
-  const out = EW.el('g', {}, air);
-  out.innerHTML = '<path d="M20 74a11 11 0 0 1 3-21 14 14 0 0 1 27-3 11 11 0 0 1 4 22z" fill="#F5F7FA" stroke="#98A2B3" stroke-width="1.2"/><text x="36" y="66" font-size="8" text-anchor="middle" fill="#98A2B3">CLOUD</text>';
-  const wall = EW.el('line', {x1: 70, y1: 6, x2: 70, y2: 134, stroke: '#F04E98', 'stroke-width': 3, opacity: 0}, air);
-  const x1 = EW.el('path', {d: 'M18 36L56 94M56 36L18 94', stroke: '#F04E98', 'stroke-width': 2.6, opacity: 0}, air);
+  // BYOLLM: an air-gapped environment: the public cloud is cut off outside, everything stays inside
+  const air = document.getElementById('air'), A = (t, a, p) => EW.el(t, a, p || air);
+  const tx = (s, x, y, o, p) => { const e = A('text', Object.assign({x, y, 'font-size': 7, 'text-anchor': 'middle', fill: '#343741', 'letter-spacing': '.05em', 'font-weight': 600}, o), p); e.textContent = s; return e; };
+  A('rect', {x: 84, y: 5, width: 186, height: 142, rx: 10, fill: '#EEF4FF', stroke: '#0B64DD', 'stroke-width': 1.4, 'stroke-dasharray': '5 3'});
+  A('rect', {x: 104, y: -2, width: 146, height: 17, rx: 8.5, fill: '#0B64DD'});
+  A('path', {d: 'M115 3.5l5 2v4c0 3-2.2 5-5 6-2.8-1-5-3-5-6v-4z', fill: '#fff'});
+  tx('AIR-GAPPED ENVIRONMENT', 185, 9.5, {fill: '#fff', 'font-size': 6.6});
+  const card = (x, label, draw) => { A('rect', {x: x + 2.5, y: 31.5, width: 46, height: 62, rx: 5, fill: '#B7D2F6'});
+    A('rect', {x, y: 29, width: 46, height: 62, rx: 5, fill: '#fff', stroke: '#1D1E24'}); draw(x + 23); tx(label, x + 23, 85, {'font-size': 6.2}); };
+  card(92, 'LLM', cx => { A('rect', {x: cx - 12, y: 36, width: 24, height: 24, rx: 3, fill: '#0B64DD'});
+    [-6, 0, 6].forEach(d => { A('rect', {x: cx - 17, y: 46 + d - 1, width: 5, height: 1.6, fill: '#0B64DD'}); A('rect', {x: cx + 12, y: 46 + d - 1, width: 5, height: 1.6, fill: '#0B64DD'}); });
+    tx('LLM', cx, 52.5, {fill: '#fff', 'font-size': 8, 'font-weight': 700}); tx('SELF-HOSTED', cx, 69, {'font-size': 5.2, fill: '#69707D'}); });
+  card(150, 'YOUR DATA', cx => { A('ellipse', {cx, cy: 40, rx: 13, ry: 4.5, fill: '#FEC514', stroke: '#1D1E24'}); A('path', {d: `M${cx-13} 40v18a13 4.5 0 0 0 26 0V40`, fill: '#FEC514', stroke: '#1D1E24'});
+    A('path', {d: `M${cx-13} 49a13 4.5 0 0 0 26 0`, fill: 'none', stroke: '#1D1E24'}); });
+  card(208, 'ELASTICSEARCH', cx => { const g = A('g', {}); g.innerHTML = EW.MARK.replace('<svg ', `<svg x="${cx - 13}" y="35" width="26" height="26" `); });
+  const arrows = [[138, 150], [196, 208]].map(([x1, x2]) => { A('line', {x1, y1: 60, x2, y2: 60, stroke: '#0B64DD', 'stroke-width': 1.4}); A('path', {d: `M${x2 - 3} 57l3 3-3 3`, fill: 'none', stroke: '#0B64DD', 'stroke-width': 1.4}); return [x1, x2]; });
+  const pk = A('rect', {width: 4, height: 4, fill: '#F04E98'});
+  A('rect', {x: 126, y: 108, width: 118, height: 22, rx: 11, fill: '#fff', stroke: '#1D1E24'});
+  A('g', {transform: 'translate(135 113)'}).innerHTML = '<rect y="5" width="10" height="8" rx="1.5" fill="#1D1E24"/><path d="M2.2 5V3.5a2.8 2.8 0 0 1 5.6 0V5" fill="none" stroke="#1D1E24" stroke-width="1.6"/>';
+  tx('NO INTERNET ACCESS', 195, 122, {'font-size': 6.6});
+  // outside: the public cloud, cut off by a red gap at the wall
+  const out = A('g', {}); out.innerHTML = '<path d="M12 68a10 10 0 0 1 2-19 13 13 0 0 1 25-3 10 10 0 0 1 4 22z" fill="#F5F7FA" stroke="#98A2B3" stroke-width="1.2"/>';
+  tx('PUBLIC CLOUD', 28, 84, {fill: '#98A2B3', 'font-size': 6});
+  A('line', {x1: 46, y1: 58, x2: 76, y2: 58, stroke: '#98A2B3', 'stroke-width': 1.2, 'stroke-dasharray': '2 3'});
+  const x1 = A('g', {opacity: 0}); A('circle', {cx: 62, cy: 58, r: 8, fill: '#F04E98'}, x1); A('path', {d: 'M58.5 54.5l7 7M65.5 54.5l-7 7', stroke: '#fff', 'stroke-width': 1.8, 'stroke-linecap': 'round'}, x1);
+  const wall = x1;
   EW.loop(t => {
     pins.forEach(p => { const k = still ? 1 : Math.min(1, Math.max(0, (t - .9 - p.i * .09) / .4)); p.dot.setAttribute('r', (3.2 * k).toFixed(2));
       const q = (((t - 1.6 + p.i * .35) % 2.2) + 2.2) % 2.2 / 2.2; p.ring.setAttribute('r', (3 + q * 9).toFixed(1)); p.ring.setAttribute('opacity', (t < 1.4 || still ? 0 : (1 - q) * .7).toFixed(2)); });
-    const kw = Math.min(1, Math.max(0, (t - 1.3) / .5)); wall.setAttribute('opacity', still ? 1 : kw); x1.setAttribute('opacity', still ? 1 : kw);
-    const q = (t * .5) % 1, seg = q < .5 ? [136, 150, q * 2] : [204, 218, (q - .5) * 2];
-    pk.setAttribute('x', (seg[0] + (seg[1] - seg[0]) * seg[2] - 2.5).toFixed(1)); pk.setAttribute('y', 53.5);
+    const kw = Math.min(1, Math.max(0, (t - 1.3) / .5)); wall.setAttribute('opacity', still ? 1 : kw);
+    const q = (t * .6) % 2, a = arrows[q < 1 ? 0 : 1], f = q % 1;
+    pk.setAttribute('x', (a[0] + (a[1] - a[0]) * f - 2).toFixed(1)); pk.setAttribute('y', 58);
   });
 })();
 </script>

@@ -15,22 +15,21 @@
 </head>
 <body data-foot="">
 <div class="z">
-  <div class="eyebrow in1">Key features in action</div>
   <h1 class="in2">What it looks like, <span class="b">end to end.</span></h1>
   <p class="sub in3">Every feature from the last slide, working together in one picture per solution.</p>
 </div>
 
 <div class="cols3">
   <div class="col s-search in3">
-    <div class="sol"><img src="logos/sol-search.png" alt=""><span class="nm">Search &amp; AI</span><span class="k">01</span></div>
+    <div class="sol"><img src="logos/sol-search.png" alt=""><span class="nm">Search &amp; AI</span></div>
     <svg class="dg" id="dS" viewBox="0 0 360 400"></svg>
   </div>
   <div class="col s-obs in4">
-    <div class="sol"><img src="logos/sol-observability.png" alt=""><span class="nm">Observability</span><span class="k">02</span></div>
+    <div class="sol"><img src="logos/sol-observability.png" alt=""><span class="nm">Observability</span></div>
     <svg class="dg" id="dO" viewBox="0 0 360 400"></svg>
   </div>
   <div class="col s-sec in5">
-    <div class="sol"><img src="logos/sol-security.png" alt=""><span class="nm">Security</span><span class="k">03</span></div>
+    <div class="sol"><img src="logos/sol-security.png" alt=""><span class="nm">Security</span></div>
     <svg class="dg" id="dX" viewBox="0 0 360 400"></svg>
   </div>
 </div>
@@ -84,19 +83,25 @@
     const a4 = line('M180,254 L180,274'); show(a4, 1.35); flow(a4, [BLUE], 1.8, .9, 1);
     show(box(60, 274, 240, 40, 'RAG', 'Top results ground the LLM prompt', {c: '#FEC514'}), 1.4);
     const a5 = line('M180,314 L180,334'); show(a5, 1.45);
-    // the answer, typed out
-    const ans = el('g', {opacity: 0}); el('rect', {x: 20, y: 334, width: 320, height: 58, fill: '#fff', stroke: BLUE, 'stroke-width': 1.2}, ans);
-    el('rect', {x: 20, y: 334, width: 4, height: 58, fill: BLUE}, ans);
-    const t1 = sans('', 32, 354, {fill: INK, 'font-size': 11.5, 'font-weight': 500}, ans);
-    text('SOURCES · WIKI · TICKETS', 32, 380, {fill: BLUE, 'font-size': 9}, ans);
+    // the grounded prompt that goes to the LLM
+    const ans = el('g', {opacity: 0}); el('rect', {x: 20, y: 334, width: 320, height: 62, fill: '#fff', stroke: BLUE, 'stroke-width': 1.2}, ans);
+    el('rect', {x: 20, y: 334, width: 320, height: 16, fill: BLUE}, ans); text('PROMPT  →  LLM', 28, 345, {fill: '#fff', 'font-size': 8.5}, ans);
+    text('CONTEXT', 28, 364, {fill: GREY, 'font-size': 7.5, 'font-weight': 500}, ans);
+    [['Wiki: VPN setup', 76, 76], ['Ticket #482', 158, 66], ['KB: MFA reset', 230, 72]].forEach(([n, x, w]) => { el('rect', {x, y: 356, width: w, height: 12, fill: '#FEF3C7', stroke: '#FEC514', 'stroke-width': .8}, ans); sans(n, x + 5, 365, {fill: INK, 'font-size': 8, 'font-weight': 500}, ans); });
+    text('QUESTION', 28, 386, {fill: GREY, 'font-size': 7.5, 'font-weight': 500}, ans);
+    const t1 = sans('', 76, 386, {fill: INK, 'font-size': 10.5, 'font-weight': 500}, ans);
     show(ans, 1.5);
-    const msg = 'Reset your VPN token from the IT portal, then…';
-    at(1.6, kk => { t1.textContent = msg.slice(0, Math.round(msg.length * kk)); }, 1.2);
+    const msg = 'How do I reset my VPN token?';
+    at(1.6, kk => { t1.textContent = msg.slice(0, Math.round(msg.length * kk)); }, 1.0);
   })();
 
   // ── Observability: one request, seen as DEM, LLM, trace, logs, infra metrics, all through OpenTelemetry
   (function(){
     const {el, text, sans, box, line, show, flow} = kit(document.getElementById('dO'));
+    // a signal heading: the word is bold and highlighted
+    const hl = (word, rest, y, t) => { const g = el('g', {opacity: 0}); const w = text(word, 4, y, {fill: PINK, 'font-size': 11.5, 'font-weight': 800}, g);
+      const bb = w.getBBox(); el('rect', {x: 0, y: bb.y - 1, width: bb.width + 8, height: bb.height + 2, fill: PINK, opacity: .16}, g); g.appendChild(w);
+      text(rest.toUpperCase(), bb.width + 16, y, {fill: GREY, 'font-weight': 500}, g); show(g, t); };
     show(box(0, 0, 74, 26, 'USERS', '', {center: true}), .5);
     const dem = text('DEM · RUM + SYNTHETICS', 84, 17, {fill: PINK, 'font-size': 8.5, opacity: 0}); show(dem, .6);
     const svcs = [['Frontend', 0], ['Checkout', 94], ['Payment', 188], ['Database', 282]];
@@ -106,17 +111,17 @@
     const llm = box(282, 0, 78, 26, 'LLM', '', {center: true, stroke: PINK}); show(llm, .8);
     const lp = line('M133,44 C133,20 250,13 282,13', {stroke: PINK}); show(lp, .85); flow(lp, [PINK], 1.4, .7, 1);
     // APM: the trace waterfall
-    const h1 = text('APM · DISTRIBUTED TRACE', 0, 98, {fill: GREY, 'font-weight': 500, opacity: 0}); show(h1, .9);
+    hl('TRACES', 'APM · distributed trace', 98, .9);
     const spans = [[0, 360, 'frontend'], [36, 300, 'checkout'], [80, 230, 'payment'], [110, 150, 'db query']];
     spans.forEach(([x, w, n], i) => { const y = 106 + i * 15, r = el('rect', {x, y, width: 0, height: 10, fill: i === 2 ? RED : BLUE, opacity: i === 2 ? .85 : .9 - i * .15});
       const tl = text(n, x + 4, y + 8, {fill: '#fff', 'font-size': 7.5, opacity: 0});
       at(1.0 + i * .12, kk => { r.setAttribute('width', (w * ease(kk)).toFixed(1)); tl.setAttribute('opacity', ease(kk)); }, .5); });
     // logs streaming in
-    const h2 = text('LOG ANALYTICS', 0, 186, {fill: GREY, 'font-weight': 500, opacity: 0}); show(h2, 1.0);
+    hl('LOGS', 'log analytics', 186, 1.0);
     [['INFO ', 'checkout', 'order created'], ['WARN ', 'payment ', 'retry 1/3'], ['ERROR', 'payment ', 'gateway timeout'], ['INFO ', 'frontend', '503 returned']].forEach(([lv, s, m], i) => {
       const e = text(`12:01:0${7 + (i > 1)} ${lv} ${s} ${m}`, 0, 202 + i * 14, {'font-weight': 400, 'font-size': 9, fill: lv === 'ERROR' ? RED : CHAR, opacity: 0, 'xml:space': 'preserve'}); show(e, 1.1 + i * .12); });
     // infrastructure metrics: nodes with sparklines, one spiking
-    const h3 = text('INFRASTRUCTURE · KUBERNETES', 0, 272, {fill: GREY, 'font-weight': 500, opacity: 0}); show(h3, 1.2);
+    hl('METRICS', 'infrastructure · Kubernetes', 272, 1.2);
     [0, 92, 184, 276].forEach((x, i) => { const g = box(x, 280, 84, 40, '', '', {stroke: LINE}); show(g, 1.25 + i * .05);
       text(`NODE-${i + 1}`, x + 6, 292, {'font-size': 8, fill: GREY, 'font-weight': 500}, g);
       const pts = Array.from({length: 12}, (_, j) => `${x + 6 + j * 6.5},${314 - (i === 2 && j > 7 ? 14 + j : 4 + ((j * 7 + i * 3) % 6))}`).join(' ');
@@ -124,8 +129,7 @@
     // OpenTelemetry band into Elastic
     const ot = box(0, 334, 360, 24, 'OPENTELEMETRY  →  ELASTIC', '', {center: true, dash: '3 3'}); show(ot, 1.35);
     const op = el('path', {d: 'M6,346 L354,346', fill: 'none', stroke: 'none'}); flow(op, [BLUE, PINK, TEAL], 1.5, .45, 3);
-    // AIOps finds the culprit
-    const ai = box(0, 366, 360, 30, 'AIOPS · ROOT CAUSE: PAYMENT → GATEWAY TIMEOUT', '', {center: true, stroke: RED, fill: '#FDECEA'}); show(ai, 2.0);
+    // the culprit stands out on its own
     const pr = el('rect', {x: 188, y: 44, width: 78, height: 30, fill: 'none', stroke: RED, 'stroke-width': 1.5, opacity: 0});
     at(2.0, (kk, tt) => { const p = ((tt - 2.0) % 1.6) / 1.6; pr.setAttribute('opacity', (1 - p).toFixed(2)); pr.setAttribute('transform', `translate(${227 * -p * .12},${59 * -p * .12}) scale(${1 + p * .12})`); }, 1e9);
   })();
@@ -156,7 +160,6 @@
       sans(s, 64, 268 + i * 22, {fill: INK, 'font-size': 11, 'font-weight': 500}, g); show(g, 2.1 + i * .18); });
     // the response goes back to the endpoint
     const back = line('M30,266 L12,266 L12,46 L40,46 L40,38', {stroke: TEAL, 'stroke-width': 1.3}); show(back, 2.3); flow(back, [TEAL], 2.5, .5, 1);
-    const iso = el('g', {opacity: 0}); el('rect', {x: 2, y: -7, width: 58, height: 14, fill: TEAL}, iso); text('ISOLATED', 31, 3, {'text-anchor': 'middle', fill: '#fff', 'font-size': 8}, iso); show(iso, 2.6);
     show(box(30, 346, 300, 46, 'AI AGENT DETECTION & RESPONSE', 'Autonomous, or analyst approves each step', {c: '#FF7E62', dash: '3 3'}), 1.55);
     const a3 = line('M180,332 L180,346'); show(a3, 1.55);
   })();
