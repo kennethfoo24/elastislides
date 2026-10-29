@@ -11,6 +11,21 @@
   .cols3{top:204px;bottom:56px}
   .dg{margin-top:14px;width:100%;height:400px;overflow:visible}
   .dg text{font-family:var(--mono)}
+
+  .sol.clk{cursor:pointer;position:relative;z-index:6;pointer-events:auto;transition:background .2s}
+  .sol.clk:hover{background:var(--bg)}
+  .sol .go{margin-left:auto;font:600 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--blue);border:1px solid var(--blue);padding:3px 8px;background:#fff}
+  .sol.clk:hover .go{background:var(--blue);color:#fff}
+  .ov{position:absolute;inset:0;z-index:50;display:none;background:rgba(29,30,36,0);transition:background .5s}
+  .ov.on{background:rgba(29,30,36,.4)}
+  .pan{position:absolute;left:64px;top:36px;width:1152px;height:648px;background:#fff;border:1px solid var(--ink);box-shadow:12px 12px 0 var(--c);padding:16px 24px 0;transform-origin:0 0;transition:transform .55s cubic-bezier(.2,.8,.2,1),opacity .35s}
+  .pan .oh{display:flex;align-items:center;gap:12px;height:40px;padding-bottom:12px;border-bottom:3px solid var(--c);margin-bottom:18px}
+  .pan .oh img{height:26px;width:26px;object-fit:contain}
+  .pan .oh .nm{font:600 24px var(--sans);letter-spacing:-.5px}
+  .pan .oh .ct{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--grey);margin-left:6px}
+  .pan .oh .x{margin-left:auto;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--ink);background:#fff;padding:7px 12px;cursor:pointer}
+  .pan .oh .x:hover{background:var(--ink);color:#fff}
+  .pan svg{width:1104px;display:block;overflow:visible}
 </style>
 </head>
 <body data-foot="">
@@ -20,20 +35,28 @@
 
 <div class="cols3">
   <div class="col s-search in3">
-    <div class="sol"><img src="logos/sol-search.png" alt=""><span class="nm">Search &amp; AI</span></div>
+    <div class="sol clk" data-deep="search" role="button" tabindex="0"><img src="logos/sol-search.png" alt=""><span class="nm">Search &amp; AI</span><span class="go">Explore ↗</span></div>
     <svg class="dg" id="dS" viewBox="0 0 360 400"></svg>
   </div>
   <div class="col s-obs in4">
-    <div class="sol"><img src="logos/sol-observability.png" alt=""><span class="nm">Observability</span></div>
+    <div class="sol clk" data-deep="obs" role="button" tabindex="0"><img src="logos/sol-observability.png" alt=""><span class="nm">Observability</span><span class="go">Explore ↗</span></div>
     <svg class="dg" id="dO" viewBox="0 0 360 400"></svg>
   </div>
   <div class="col s-sec in5">
-    <div class="sol"><img src="logos/sol-security.png" alt=""><span class="nm">Security</span></div>
+    <div class="sol clk" data-deep="sec" role="button" tabindex="0"><img src="logos/sol-security.png" alt=""><span class="nm">Security</span><span class="go">Explore ↗</span></div>
     <svg class="dg" id="dX" viewBox="0 0 360 400"></svg>
   </div>
 </div>
 
+
+<div class="ov" id="ov">
+  <div class="pan" id="pan">
+    <div class="oh"><img id="ovi" src="" alt=""><span class="nm" id="ovn"></span><span class="ct" id="ovc"></span><button class="x" id="ovx">Close ✕</button></div>
+    <svg id="dp" viewBox="0 0 1136 568"></svg>
+  </div>
+</div>
 <script src="style/eweb.js"></script>
+<script src="style/deep.js"></script>
 <script src="js/fuckslides.js"></script>
 <script>
 (function(){
@@ -167,6 +190,28 @@
   const t0 = performance.now() - (navigator.webdriver ? 20000 : 0);
   EW.loop(() => { const t = (performance.now() - t0) / 1000; steps.forEach(s => { if (t >= s.t) s.f(s.dur >= 1e9 ? 0 : clamp((t - s.t) / s.dur), t); }); });
 })();
+
+  // click a solution title: the diagram balloons out of its column into a large panel over the dimmed slide
+  (function(){
+    const ov = document.getElementById('ov'), pan = document.getElementById('pan'), svg = document.getElementById('dp'), played = {}, INFO = {
+      search: ['Search &amp; AI', 'logos/sol-search.png', 'var(--yellow)', 'RAG over internal documents'],
+      obs: ['Observability', 'logos/sol-observability.png', 'var(--pink)', 'The whole user journey, correlated'],
+      sec: ['Security', 'logos/sol-security.png', 'var(--orange)', 'Every layer to a response']};
+    let from = null, cur = null;
+    const xf = r => `translate(${r.left - 64}px,${r.top - 36}px) scale(${r.width / 1152},${r.height / 648})`;
+    const close = () => { if (!cur) return; DEEP.stop(svg); cur = null; ov.classList.remove('on'); pan.style.opacity = 0; pan.style.transform = xf(from);
+      clearTimeout(ov._t); ov._t = setTimeout(() => { ov.style.display = 'none'; }, 560); };
+    document.querySelectorAll('.sol.clk').forEach(b => { const open = () => { if (cur) return; const k = b.dataset.deep, i = INFO[k]; cur = k; from = b.closest('.col').getBoundingClientRect();
+        pan.style.setProperty('--c', i[2]); document.getElementById('ovn').innerHTML = i[0]; document.getElementById('ovi').src = i[1]; document.getElementById('ovc').textContent = i[3];
+        clearTimeout(ov._t); svg.innerHTML = ''; ov.style.display = 'block'; pan.style.transition = 'none'; pan.style.opacity = 0; pan.style.transform = xf(from); void pan.offsetWidth;
+        pan.style.transition = ''; pan.style.opacity = 1; pan.style.transform = 'none'; ov.classList.add('on');
+        // the story plays once; after that the panel opens straight on the finished picture
+        setTimeout(() => { if (cur === k) DEEP.run(svg, k, {jump: played[k], onEnd: () => { played[k] = true; }}); }, 450); };
+      b.addEventListener('click', open); b.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(); } }); });
+    document.getElementById('ovx').addEventListener('click', close);
+    ov.addEventListener('click', e => { if (e.target === ov) close(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && cur){ e.stopImmediatePropagation(); close(); } }, true);
+  })();
 </script>
 </body>
 </html>
