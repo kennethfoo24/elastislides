@@ -6,31 +6,27 @@
 <link rel="stylesheet" href="style/eweb.css">
 <link rel="stylesheet" href="style/partner.css">
 <style>
-  .lock{position:absolute;left:0;right:0;top:92px;display:flex;align-items:center;justify-content:center;gap:34px;z-index:2}
-  .mk svg{width:268px;height:268px;display:block;overflow:visible}
-  .mk path{transform-box:fill-box;transform-origin:center;animation:piece .7s cubic-bezier(.2,.7,.2,1.25) both}
-  .mk path:nth-child(1){animation:fade .5s ease both}
-  .mk path:nth-child(2){animation-delay:.15s}
-  .mk path:nth-child(3){animation-delay:.25s}
-  .mk path:nth-child(4){animation-delay:.33s}
-  .mk path:nth-child(5){animation-delay:.41s}
-  .mk path:nth-child(6){animation-delay:.49s}
-  .mk path:nth-child(7){animation-delay:.57s}
-  .mk path:nth-child(8){animation-delay:.65s}
-  @keyframes piece{from{opacity:0;transform:scale(.4) translateY(-14px)}to{opacity:1;transform:none}}
-  @keyframes fade{from{opacity:0}to{opacity:1}}
-  .wm{font:600 212px/1 var(--sans);letter-spacing:-9px;color:var(--ink);padding-bottom:22px;animation:ew-wipe .9s cubic-bezier(.6,0,.2,1) .55s both}
+  .lock{position:absolute;left:0;top:0;width:1280px;height:720px;display:flex;align-items:center;justify-content:center;z-index:2}
+  .logo{position:relative;width:820px;height:281px}
+  .logo img{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .logo .mk{position:absolute;inset:0;transform-origin:17% 50%;animation:pop .9s cubic-bezier(.2,.7,.2,1.25) .1s both,breathe 5s ease-in-out 1.2s infinite}
+  .logo .mk img{clip-path:inset(0 64% 0 0)}
+  .logo .wm img{clip-path:inset(0 0 0 36%);animation:wm .9s cubic-bezier(.6,0,.2,1) .6s both}
+  @keyframes pop{from{opacity:0;transform:scale(.3) rotate(-25deg)}to{opacity:1;transform:none}}
+  @keyframes wm{from{clip-path:inset(0 100% 0 36%)}to{clip-path:inset(0 0 0 36%)}}
+  @keyframes breathe{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.04) rotate(2deg)}}
 </style>
 </head>
 <body data-foot="none">
 <div class="lock">
-  <span class="mk" id="mk"></span>
-  <span class="wm">elastic</span>
+  <div class="logo">
+    <div class="mk"><img src="logos/elastic-logo.png" alt="Elastic"></div>
+    <div class="wm"><img src="logos/elastic-logo.png" alt=""></div>
+  </div>
 </div>
 <script src="style/eweb.js"></script>
 <script src="js/fuckslides.js"></script>
 <script>
-  document.getElementById('mk').innerHTML = EW.MARK;
   EW.dots({x: 0, y: 380, w: 1280, h: 340, gap: 10, seed: 12, blobsList: [{x: 160, y: 260, r: 260}, {x: 1120, y: 240, r: 280}], thr: .6});
 </script>
 </body>
