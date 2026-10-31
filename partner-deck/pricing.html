@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pricing: Three Deployment Models</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/partner.css">
+<style>
+  h1{font-size:50px;letter-spacing:-1.8px}
+  .cols3{top:190px;bottom:90px}
+  .hd{display:flex;align-items:center;gap:14px}
+  .hd i{width:52px;height:52px;border-radius:50%;border:2.5px solid var(--ink);display:flex;align-items:center;justify-content:center;background:#fff;flex:none}
+  .hd i img{width:28px;height:28px;object-fit:contain}
+  .hd .nm{font:600 19px/1.15 var(--sans);letter-spacing:-.4px}
+  .hd .sb{font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--grey);margin-top:4px}
+  /* same usage in every chart; only the shaded "what you pay" changes */
+  .viz{height:178px;margin-top:16px;border-top:3px solid var(--blue);padding-top:8px}
+  .viz svg{width:100%;height:100%;display:block;overflow:visible}
+  .viz text{font-family:var(--mono)}
+  .big{margin-top:14px;font:600 26px/1.1 var(--sans);letter-spacing:-.9px;color:var(--blue)}
+  .d{font:500 14px/1.4 var(--sans);letter-spacing:-.15px;color:var(--char);margin-top:6px}
+  .key{position:absolute;right:72px;top:156px;display:flex;gap:20px;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--char);z-index:2}
+  .key span{display:flex;align-items:center;gap:8px}
+  .key i{width:16px;height:12px}
+</style>
+</head>
+<body data-foot="">
+<div class="z">
+  <div class="eyebrow in1">Pricing</div>
+  <h1 class="in2">Elastic <span class="b">Licensing Models</span></h1>
+</div>
+
+<div class="key in3"><span><i style="background:var(--slate)"></i>Your usage</span><span><i style="background:var(--blue-l);border:1.5px solid var(--blue)"></i>What you pay for</span></div>
+
+<div class="cols3">
+  <div class="col in3">
+    <div class="hd"><i><img src="logos/dep-self.png" alt=""></i><div><div class="nm">Self-managed</div><div class="sb">Own it</div></div></div>
+    <div class="viz"><svg id="v1" viewBox="0 0 340 170"></svg></div>
+    <div class="big">Buy for your peak</div>
+    <p class="d">Yearly license per 64 GB of RAM (1 ERU).</p>
+  </div>
+
+  <div class="col in4">
+    <div class="hd"><i><img src="logos/dep-hosted.png" alt=""></i><div><div class="nm">Elastic Cloud Hosted</div><div class="sb">Rent it</div></div></div>
+    <div class="viz"><svg id="v2" viewBox="0 0 340 170"></svg></div>
+    <div class="big">Pay for the size you run</div>
+    <p class="d">Billed hourly. Resize as you grow.</p>
+  </div>
+
+  <div class="col in5">
+    <div class="hd"><i><img src="logos/dep-serverless.png" alt=""></i><div><div class="nm">Elastic Cloud Serverless</div><div class="sb">Just use it</div></div></div>
+    <div class="viz"><svg id="v3" viewBox="0 0 340 170"></svg></div>
+    <div class="big">Pay for what you use</div>
+    <p class="d">GB sent in + GB kept. Nothing to size.</p>
+  </div>
+</div>
+
+<script src="style/eweb.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  const BLUE = '#0B64DD', BLUE_L = '#D9E8FF', SLATE = '#B5BFCE', INK = '#1D1E24', GREY = '#98A2B3';
+  // the same six months of usage in every chart
+  const use = [.5, .4, .68, .56, .86, .62], months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN'];
+  const X0 = 14, BW = 38, GAP = 16, BASE = 140, H = 120, L = X0 - 6, R = X0 + 5 * (BW + GAP) + BW + 6;
+  const x = i => X0 + i * (BW + GAP), y = v => BASE - v * H;
+  const fade = (e, at) => { e.style.opacity = 0; e.style.transition = 'opacity .6s ease'; setTimeout(() => e.style.opacity = 1, at * 1000); };
+  const txt = (p, x, y, s, a) => { const t = EW.el('text', Object.assign({x, y, 'font-size': 9.5, 'letter-spacing': '.06em', fill: GREY}, a), p); t.textContent = s; return t; };
+
+  // what you pay for: [first month, end month, level]
+  const paid = {
+    v1: {steps: [[0, 6, .92]], label: 'LICENSED FOR PEAK', dash: '6 4'},                  // bought once, for the peak
+    v2: {steps: [[0, 2, .56], [2, 4, .74], [4, 6, .92]], label: 'SIZE YOU PICK', dash: ''}, // a size you step up as you grow
+  };
+  ['v1', 'v2', 'v3'].forEach((id, k) => {
+    const S = document.getElementById(id), at = .8 + k * .25, p = paid[id];
+    if (p) {
+      const g = EW.el('g', {}, S);
+      let top = '';
+      p.steps.forEach(([a, b, v], i) => {
+        const x1 = a ? x(a) - GAP / 2 : L, x2 = b === 6 ? R : x(b) - GAP / 2;
+        top += `${i ? 'L' : 'M'}${x1} ${y(v)} H${x2} `;
+      });
+      EW.el('path', {d: `${top} V${BASE} H${L} Z`, fill: BLUE_L}, g);
+      EW.el('path', {d: top, fill: 'none', stroke: BLUE, 'stroke-width': 2, 'stroke-dasharray': p.dash}, g);
+      txt(g, L, y(.92) - 7, p.label, {fill: BLUE, 'font-weight': 600});
+      fade(g, at + .9);
+    }
+    use.forEach((v, i) => {
+      // serverless bills the usage itself, so its bars take the paid colour
+      const bar = EW.el('rect', {x: x(i), y: y(v), width: BW, height: v * H, fill: id === 'v3' ? BLUE : SLATE}, S);
+      bar.style.transformBox = 'fill-box'; bar.style.transformOrigin = 'bottom';
+      bar.animate([{transform: 'scaleY(0)'}, {transform: 'scaleY(1)'}], {duration: 700, delay: (at + i * .06) * 1000, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'backwards'});
+      txt(S, x(i) + BW / 2, BASE + 16, months[i], {'text-anchor': 'middle'});
+    });
+    if (!p) fade(txt(S, L, y(.92) - 7, 'BILLED = USAGE', {fill: BLUE, 'font-weight': 600}), at + .9);
+    EW.el('line', {x1: L, y1: BASE, x2: R, y2: BASE, stroke: INK, 'stroke-width': 1}, S);
+  });
+})();
+</script>
+</body>
+</html>

@@ -23,6 +23,8 @@ module.exports = {
     'why-ai.html',
     'why-cost.html',
     'thank-you.html',
+    'sizing.html',
+    'pricing.html',
   ],
 
   labels: [
@@ -44,6 +46,8 @@ module.exports = {
     'Why Elastic · AI-Driven',
     'Why Elastic · Cost',
     'Thank You',
+    'Pricing · What to Size',
+    'Pricing · Deployment Models',
   ],
   disabled: [
     ,

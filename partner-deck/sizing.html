@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pricing: What to Size</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/partner.css">
+<style>
+  .z{text-align:center}
+  .z .eyebrow{justify-content:center}
+  h1{font-size:52px;letter-spacing:-1.8px}
+  /* the three solutions, docked on the platform */
+  .sols{position:absolute;left:226px;right:226px;top:220px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;z-index:3}
+  .sc{height:108px;background:#fff;border:1px solid var(--ink);border-top:5px solid var(--c);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+  .sc img{width:30px;height:30px;object-fit:contain}
+  .sc span{font:600 16px var(--sans);letter-spacing:-.3px}
+  .plat{position:absolute;left:176px;right:176px;top:310px;height:220px;border:1.5px dashed var(--teal-d);border-radius:22px;background:var(--bg);z-index:2}
+  .plat .pn{margin-top:38px;text-align:center;font:600 18px var(--sans);letter-spacing:-.3px}
+  /* the two sizing questions */
+  .qs{display:flex;justify-content:center;align-items:center;gap:56px;padding-top:30px}
+  .q{display:flex;align-items:center;gap:18px;width:290px}
+  .q:first-child{justify-content:flex-end}
+  .q svg{width:64px;height:64px;flex:none}
+  .q .t{font:600 22px/1.2 var(--sans);letter-spacing:-.6px}
+  .q .u{margin-top:6px;font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--blue)}
+  .x{text-align:center;font:300 40px var(--sans);color:var(--grey-l)}
+</style>
+</head>
+<body data-foot="">
+<div class="z">
+  <div class="eyebrow in1">Pricing</div>
+  <h1 class="in2">One platform, <span class="b">one license.</span></h1>
+</div>
+
+<div class="sols">
+  <div class="sc s-search in3"><img src="logos/sol-search.png" alt=""><span>Search &amp; AI</span></div>
+  <div class="sc s-obs in4"><img src="logos/sol-observability.png" alt=""><span>Observability</span></div>
+  <div class="sc s-sec in5"><img src="logos/sol-security.png" alt=""><span>Security</span></div>
+</div>
+
+<div class="plat in5">
+  <div class="pn">Elasticsearch Platform</div>
+  <div class="qs">
+    <div class="q in6">
+      <svg viewBox="0 0 64 64" fill="none" stroke="#1D1E24" stroke-width="2.5"><ellipse cx="32" cy="14" rx="20" ry="7"/><path d="M12 14v36c0 3.9 9 7 20 7s20-3.1 20-7V14"/><path d="M12 26c0 3.9 9 7 20 7s20-3.1 20-7" stroke="#02BCB7"/><path d="M12 38c0 3.9 9 7 20 7s20-3.1 20-7" stroke="#02BCB7"/></svg>
+      <div><div class="t">How much data<br>per day?</div><div class="u">GB / day</div></div>
+    </div>
+    <div class="x in6">×</div>
+    <div class="q in6">
+      <svg viewBox="0 0 64 64" fill="none" stroke="#1D1E24" stroke-width="2.5"><rect x="10" y="12" width="40" height="42" rx="2"/><path d="M10 22h40M20 6v10M40 6v10"/><path d="M54 18v40H16" stroke="#98A2B3"/><text x="30" y="44" text-anchor="middle" font-family="Inter,sans-serif" font-size="16" font-weight="700" fill="#02BCB7" stroke="none">31</text></svg>
+      <div><div class="t">How long do<br>you keep it?</div><div class="u">Retention · days</div></div>
+    </div>
+  </div>
+</div>
+
+<script src="style/eweb.js"></script>
+<script src="js/fuckslides.js"></script>
+</body>
+</html>
