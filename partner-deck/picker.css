@@ -1,0 +1,16 @@
+/* slide picker (see picker.js) */
+.pk-bar { display: flex; align-items: center; gap: 8px; margin-right: 8px; }
+.pk-count { font: 600 0.72rem 'Inter', -apple-system, sans-serif; color: rgba(255,255,255,0.7); margin-right: 4px; }
+.pk-b { font: 600 0.62rem 'Inter', -apple-system, sans-serif; letter-spacing: 0.06em; color: rgba(255,255,255,0.7); background: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 4px 10px; cursor: pointer; transition: color .15s, border-color .15s; }
+.pk-b:hover { color: #fff; border-color: rgba(255,255,255,0.5); }
+.pk-go { font: 700 0.68rem 'Inter', -apple-system, sans-serif; letter-spacing: 0.04em; color: #0d0f14; background: #38BDF8; border: 0; border-radius: 6px; padding: 6px 14px; cursor: pointer; transition: background .15s, opacity .15s; }
+.pk-go:hover { background: #7dd3fc; }
+.pk-go:disabled { opacity: 0.3; cursor: default; }
+
+.ov-thumb-inner { position: relative; }
+.ov-btn-disable { display: none; }
+.ov-thumb.disabled { opacity: 0.5; }
+.pk-box { position: absolute; top: 8px; left: 8px; z-index: 6; width: 22px; height: 22px; padding: 0; display: flex; align-items: center; justify-content: center; border-radius: 5px; cursor: pointer; background: rgba(13,15,20,0.78); border: 2px solid rgba(255,255,255,0.85); color: transparent; transition: background .12s, border-color .12s, color .12s; }
+.pk-box svg { width: 14px; height: 14px; }
+.pk-box:hover { border-color: #fff; }
+.ov-thumb:not(.disabled) .pk-box { background: #38BDF8; border-color: #38BDF8; color: #0d0f14; }

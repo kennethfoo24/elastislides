@@ -58,19 +58,33 @@ window.FUCKSLIDES_SLIDES   = ${JSON.stringify(config.slides)};
 window.FUCKSLIDES_LABELS   = ${JSON.stringify(config.labels || config.slides.map(s => s.replace('.html', '')))};
 window.FUCKSLIDES_NAME     = ${JSON.stringify(config.name || 'presentation')};
 window.FUCKSLIDES_TITLE    = ${JSON.stringify(config.title || config.name || 'presentation')};
-window.FUCKSLIDES_DISABLED = ${JSON.stringify(config.disabled || [])};
+window.FUCKSLIDES_DISABLED = (function () {
+  var base = ${JSON.stringify(config.disabled || [])}.filter(Boolean), all = window.FUCKSLIDES_SLIDES;
+  // slides the presenter un-ticked in the picker (see picker.js), remembered per browser
+  try {
+    var saved = JSON.parse(localStorage.getItem('fs-picked-' + window.FUCKSLIDES_NAME));
+    if (Array.isArray(saved)) { saved = saved.filter(function (s) { return all.indexOf(s) >= 0; }); if (saved.length < all.length) return saved; }
+  } catch (e) {}
+  return base;
+})();
 window.FUCKSLIDES_DENSITY  = ${JSON.stringify(config.density || null)};
 window.FUCKSLIDES_NOTES    = ${notesDat};
 window.FUCKSLIDES_RECORDINGS = ${JSON.stringify(recordings)};
 window.FUCKSLIDES_REPO       = ${JSON.stringify(repo)};
 </script>`;
 
-html = html.replace('</head>', snippet + '\n</head>');
+const pickerCss = fs.readFileSync(path.join(cwd, 'picker.css'), 'utf8');
+const pickerJs  = fs.readFileSync(path.join(cwd, 'picker.js'), 'utf8');
+html = html.replace('</head>', snippet + '\n<style>' + pickerCss + '</style>\n</head>');
 html = html.replace('let allNotes  = {};', 'let allNotes  = window.FUCKSLIDES_NOTES || {};');
 html = html.replace(/<title>[^<]*<\/title>/i, `<title>${config.title || config.name || 'Presentation'}</title>`);
 html = html.replace(/<script src="\/js\/fuckslides\.js"><\/script>/g, `<script>${fsJs}</script>`);
 if (logoDat) html = html.replace(/src="\/logo\.png"/g, `src="${logoDat}"`);
 else html = html.replace(/<img class="nav-logo"[^>]*>/g, '');
+
+// the picker runs after the player script; the last </body> is the real one (an earlier one sits inside a string)
+const bodyEnd = html.lastIndexOf('</body>');
+html = html.slice(0, bodyEnd) + '<script>' + pickerJs + '</script>\n' + html.slice(bodyEnd);
 
 fs.writeFileSync(out, html, 'utf8');
 

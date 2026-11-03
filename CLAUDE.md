@@ -10,6 +10,7 @@ HTML slide decks in the Elastic web style, built with fslides and published to G
 - `partner-deck/style/eweb.css`: the base design system (colours, type, entrance animations). `style/partner.css`: shared deck pieces (`.cols3`, `.sol`, `.pts`/`.pt`, `.deploy`, `.why`). `style/eweb.js`: the `EW` helpers (`EW.el`, `EW.loop`, `EW.iso`, `EW.dots`, `EW.MARK`).
 - `partner-deck/logos/`: icons and logos (`sol-*` solutions, `dep-*` deployment types, `src-*` data sources, competitors).
 - `partner-deck/source/`: reference PDFs the slides are based on. Gitignored and never deployed; slides take their content and inspiration from here.
+- `partner-deck/picker.js` + `picker.css`: the slide picker (checkboxes in the overview, "Present selected"). `build-player.js` injects them into the player; the selection is stored in the browser's localStorage and drives the player's own skip list (`disabled`).
 - `partner-deck/partner-deck.html` and `partner-deck/js/fuckslides.js` are build output (gitignored).
 
 ## Writing a slide
