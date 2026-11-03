@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI to Observe and Secure</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/partner.css">
+<style>
+  .z{width:640px}
+  .blk{position:absolute;left:0;width:640px;height:220px;padding-left:26px;border-left:4px solid var(--c);display:flex;flex-direction:column;justify-content:center}
+  .b1{top:64px;--c:var(--blue)}
+  .b2{top:324px;--c:var(--pink)}
+  .blk h2{font:600 76px/1.02 var(--sans);letter-spacing:-3.4px;color:var(--ink)}
+  .blk h2 .ai{color:var(--blue)}
+  .blk .d{font:400 15px/1.4 var(--sans);color:var(--char);margin-top:14px}
+  .blk .d b{font-weight:600;color:var(--ink)}
+
+  .vis{position:absolute;left:752px;width:456px;height:220px;z-index:2}
+  .v1{top:120px;--c:var(--blue)}
+  .v2{top:380px;--c:var(--pink)}
+  .vis svg{display:block;width:456px;height:220px;overflow:visible}
+  .vis text{font-family:var(--mono)}
+  .vis text.sans{font-family:var(--sans)}
+</style>
+</head>
+<body data-foot="">
+<div class="z">
+  <div class="eyebrow in1">Two sides of AI</div>
+  <div class="blk b1 in2">
+    <h2><span class="ai">AI</span> to<br>Observe &amp; Secure</h2>
+    <div class="d"><b>AI as the operator.</b> Agents that investigate, triage and act.</div>
+  </div>
+  <div class="blk b2 in4">
+    <h2>Observe &amp; Secure<br><span class="ai">AI</span></h2>
+    <div class="d"><b>AI as the workload.</b> LLM apps and agents, monitored and protected.</div>
+  </div>
+</div>
+
+<div class="vis win v1 in3"><svg id="s1" viewBox="0 0 456 220"></svg></div>
+<div class="vis win v2 in5"><svg id="s2" viewBox="0 0 456 220"></svg></div>
+
+<script src="style/eweb.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  const BLUE = '#0B64DD', PINK = '#F04E98', ORANGE = '#FF7E62', TEAL = '#48EFCF', CHAR = '#343741', INK = '#1D1E24', LINE = '#D3DAE6', GREY = '#69707D';
+  const NX = [16, 173, 330], NY = 38, NW = 110, NH = 98;
+  const lanes = [];
+
+  function build(id, o){
+    const svg = document.getElementById(id), A = (t, a, p) => EW.el(t, a, p || svg);
+    const tx = (s, x, y, a, p) => { const e = A('text', Object.assign({x, y, 'font-size': 9, 'text-anchor': 'middle', fill: CHAR, 'letter-spacing': '.06em', 'font-weight': 600}, a), p); e.textContent = s; return e; };
+    const node = i => { const x = NX[i]; A('rect', {x: x + 5, y: NY + 5, width: NW, height: NH, fill: o.shade}); A('rect', {x, y: NY, width: NW, height: NH, fill: '#fff', stroke: INK}); return x + NW / 2; };
+    const aiIcon = cx => { A('rect', {x: cx - 17, y: NY + 10, width: 34, height: 34, fill: BLUE}); tx('AI', cx, NY + 33, {fill: '#fff', 'font-size': 15, 'font-weight': 700, 'letter-spacing': 0}); };
+    const label = (cx, t, s) => { tx(t, cx, NY + NH - 24, {fill: INK, 'font-size': 10}); tx(s, cx, NY + NH - 11, {'font-size': 7.5, fill: GREY, 'font-weight': 500}); };
+    const rows = (x, list) => list.forEach(([s, c], i) => { const y = NY + 8 + i * 15;
+      A('rect', {x: x + 14, y, width: NW - 28, height: 12, fill: '#F5F7FA', stroke: LINE}); A('rect', {x: x + 14, y, width: 5, height: 12, fill: c});
+      tx(s, x + 25, y + 8.8, {'text-anchor': 'start', 'font-size': 7, 'font-weight': 500, 'letter-spacing': '.03em'}); });
+
+    // concept tag
+    tx(o.tag, 16, 24, {'text-anchor': 'start', 'font-size': 9.5, fill: GREY, 'font-weight': 500});
+
+    // lanes first, so the nodes cover the line ends
+    const fwd = [[NX[0] + NW, NX[1]], [NX[1] + NW, NX[2]]].map(([a, b]) => ({d: `M${a},${NY + 49} H${b - 1}`, head: `M${b - 6},${NY + 45} l5,4 -5,4`, col: o.fwd}));
+    const ret = {d: `M${NX[2] + NW / 2},${NY + NH} V166 H${NX[0] + NW / 2} V${NY + NH + 5}`, head: `M${NX[0] + NW / 2 - 4},${NY + NH + 6} l4,-5 4,5`, col: o.ret, dash: '4 4'};
+    [...fwd, ret].forEach(l => {
+      A('path', {d: l.d, fill: 'none', stroke: l.col, 'stroke-width': 1.6, 'stroke-dasharray': l.dash || '', opacity: l.dash ? .55 : 1});
+      A('path', {d: l.head, fill: 'none', stroke: l.col, 'stroke-width': 1.6});
+      const p = A('path', {d: l.d, fill: 'none', stroke: 'none'}), n = l.dash ? 3 : 2;
+      lanes.push({p, len: p.getTotalLength(), ret: !!l.dash, pk: Array.from({length: n}, () => A('rect', {width: 6, height: 6, fill: l.col, opacity: 0}))});
+    });
+
+    // return-lane label
+    const mx = (NX[0] + NX[2] + NW) / 2;
+    A('rect', {x: mx - 62, y: 157, width: 124, height: 18, fill: '#fff', stroke: o.ret, 'stroke-width': 1});
+    tx(o.retLabel, mx, 169, {'font-size': 8, fill: INK});
+
+    // caption
+    tx(o.cap, 16, 206, {'text-anchor': 'start', 'font-size': 12.5, fill: CHAR, 'font-weight': 400, 'letter-spacing': 0}).classList.add('sans');
+
+    o.draw({node, aiIcon, label, rows, A});
+
+    // pulse rings on the Elastic node
+    o.rings = [0, 1].map(() => A('rect', {x: NX[1], y: NY, width: NW, height: NH, fill: 'none', stroke: o.fwd, 'stroke-width': 1.1, opacity: 0}));
+    return o;
+  }
+  const mark = (A, cx) => { const g = A('g', {}); g.innerHTML = EW.MARK.replace('<svg ', `<svg x="${cx - 17}" y="${NY + 10}" width="34" height="34" `); };
+
+  const top = build('s1', {
+    shade: '#B7D2F6', fwd: BLUE, ret: BLUE, retLabel: 'ACT ON THE ESTATE',
+    tag: 'TELEMETRY → ELASTIC → AI AGENT → ACTION', cap: 'Agents read your data, then investigate and act.',
+    draw: ({node, aiIcon, label, rows, A}) => {
+      const c0 = node(0); rows(NX[0], [['APPS', PINK], ['INFRA', TEAL], ['ENDPOINTS', ORANGE]]); label(c0, 'YOUR ESTATE', 'LOGS · TRACES');
+      const c1 = node(1); mark(A, c1); label(c1, 'ELASTIC', 'DATA + CONTEXT');
+      const c2 = node(2); aiIcon(c2); label(c2, 'AI AGENT', 'INVESTIGATE · ACT');
+    }
+  });
+  const bot = build('s2', {
+    shade: '#F9C3DC', fwd: PINK, ret: ORANGE, retLabel: 'GUARDRAILS BACK',
+    tag: 'AI TELEMETRY → ELASTIC → ALERTS + GUARDRAILS', cap: 'Prompts, tokens and threats are watched. Guardrails flow back.',
+    draw: ({node, aiIcon, label, rows, A}) => {
+      const c0 = node(0); aiIcon(c0); label(c0, 'AI APPS', 'LLMs · AGENTS');
+      const c1 = node(1); mark(A, c1); label(c1, 'ELASTIC', 'OBSERVE + SECURE');
+      const c2 = node(2); rows(NX[2], [['COST · TOKENS', PINK], ['LATENCY', PINK], ['THREATS · ABUSE', ORANGE]]); label(c2, 'AI, WATCHED', 'AND PROTECTED');
+    }
+  });
+
+  EW.loop(t => {
+    const tt = Math.max(0, t - 1.0), e = EW.ease(Math.min(1, tt / .6));
+    lanes.forEach((l, li) => l.pk.forEach((r, i) => {
+      const k = (tt * (l.ret ? .3 : .45) + i / l.pk.length + (li % 3) * .17) % 1, pt = l.p.getPointAtLength(k * l.len);
+      r.setAttribute('x', (pt.x - 3).toFixed(1)); r.setAttribute('y', (pt.y - 3).toFixed(1));
+      r.setAttribute('opacity', (e * Math.pow(Math.sin(k * Math.PI), .4)).toFixed(2));
+    }));
+    [top, bot].forEach((o, oi) => o.rings.forEach((r, i) => { const k = (t * .45 + i * .5 + oi * .25) % 1, g = k * 12;
+      r.setAttribute('x', NX[1] - g); r.setAttribute('y', NY - g); r.setAttribute('width', NW + g * 2); r.setAttribute('height', NH + g * 2);
+      r.setAttribute('opacity', (t < 1.2 ? 0 : (1 - k) * .45).toFixed(2)); }));
+  });
+})();
+</script>
+</body>
+</html>
