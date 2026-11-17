@@ -1,0 +1,8 @@
+{
+  "name": "elastic-web",
+  "description": "Elastic 2026 web language: white canvas, flat Elastic palette, isometric solids, mono callouts, big blue stats.",
+  "starter": {
+    "slides": ["cover.html", "platform.html", "stats.html", "closing.html"],
+    "labels": ["Cover", "Search AI Platform", "Proof point", "Thank you"]
+  }
+}

@@ -6,7 +6,8 @@ Live: https://kennethfoo24.github.io/elastislides/
 
 | Deck | Description |
 |------|-------------|
-| [partner-deck](partner-deck/) | Elastic for Partners: Search, Observability and Security |
+| [partner-deck](decks/partner-deck/) | Elastic for Partners: Search, Observability and Security |
+| [observability-deck](decks/observability-deck/) | Introducing Elastic Observability: 18 animated slides with real product screenshots |
 
 ## Partner deck
 
@@ -40,18 +41,15 @@ The two pricing slides come after Thank You, as backup for pricing questions:
 - **What to Size** ("One platform, one license"): Search & AI, Observability and Security on one platform, sized by two questions: how much data per day, and how long you keep it.
 - **Elastic Licensing Models**: the same usage charted three times to show what you pay for on Self-managed (a yearly license for your peak, per 64 GB of RAM), Elastic Cloud Hosted (the size you run, billed hourly) and Serverless (exactly what you use).
 
-Speaker notes for every slide are in `partner-deck/notes.json`.
+Speaker notes for every slide are in `decks/partner-deck/notes.json`.
 
 ## Run a deck locally
 
 ```bash
-cd partner-deck
-npm install
-npx fslides serve      # http://localhost:3021/partner-deck.html
+npm install                     # once, at the repo root
+npm run serve -- partner-deck   # http://localhost:3021/partner-deck.html
 ```
-
-`npx fslides pdf` exports a PDF (run `npm approve-scripts puppeteer` first so the PDF browser can install).
 
 ## Publishing
 
-Every push to `main` builds the player with `npm run export` and deploys to GitHub Pages.
+Every push to `main` builds every deck in `decks/` and deploys to GitHub Pages.

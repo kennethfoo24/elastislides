@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>H6 Demo window</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/scenes.css">
+<style>
+  h1{font-size:40px;letter-spacing:-1.4px;max-width:1140px}
+  .sub{font-size:16px;max-width:900px;margin-top:10px}
+  #hs{position:absolute;left:72px;top:200px;width:280px;height:120px;z-index:2}
+  .ctx{position:absolute;z-index:3;left:72px;top:352px;width:270px;font-size:14px;line-height:1.5;color:var(--grey)}
+  .ctx strong{color:var(--ink);font-weight:600}
+  .tc{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+  .tc div{border:1px solid var(--line);border-left:3px solid var(--c);padding:8px 11px;font:600 13px var(--sans);color:var(--ink)}
+  .tc div span{display:block;font:400 11.5px/1.35 var(--sans);color:var(--grey);margin-top:2px}
+  .dwin{left:382px;top:196px;width:826px;height:440px}
+</style>
+</head>
+<body data-foot="Deck name · Demo">
+<div class="z">
+  <div class="eyebrow in1">Eyebrow · <b>Demo</b></div>
+  <h1 class="in2">We meet people <span class="b">where they already work.</span></h1>
+  <p class="sub in3">A live example, driven from the chat. Three skills load at handshake, zero custom engineering.</p>
+</div>
+<svg id="hs" class="iso" viewBox="0 0 280 120"></svg>
+<div class="ctx in4">One short paragraph on <strong>why this matters</strong>, in plain words.
+  <div class="tc"><div style="--c:var(--teal-d)">Skill one<span>One line on what it does</span></div><div style="--c:var(--orange)">Skill two<span>One line on what it does</span></div><div style="--c:var(--pink)">Skill three<span>One line on what it does</span></div></div></div>
+<div class="dwin in4">
+  <div class="top"><i></i><i></i><i></i><span>Agent</span><em>model-name</em></div>
+  <div class="body">
+    <div class="chat"><div class="msg me" id="m0">connect to my cluster</div><div class="msg" id="m1">Connected. Six skills loaded. Ask me anything.</div><div class="msg me" id="m2">check health for production</div></div>
+    <div class="panel"><h3>Skills <span class="pill">6 loaded</span></h3>
+      <div class="cards"><div class="sk"><em>loaded</em><b>health_summary</b><span>Service health across the cluster</span></div><div class="sk"><em>loaded</em><b>anomaly_explainer</b><span>Anomalies ranked by severity</span></div><div class="sk"><em>loaded</em><b>anomaly_detail</b><span>Drill down on any spike</span></div><div class="sk"><em>loaded</em><b>blast_radius</b><span>Impact when something fails</span></div><div class="sk"><em>loaded</em><b>query_tool</b><span>Run any query from chat</span></div><div class="sk"><em>loaded</em><b>significant_events</b><span>Events and burn rates</span></div></div>
+    </div>
+  </div>
+</div>
+<script src="style/eweb.js"></script>
+<script src="style/scenes.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 360, y: 150, w: 120, h: 520, seed: 9, blobs: 2, thr: .5});
+  const sc = EW.iso(document.getElementById('hs'), {ox: 140, oy: 52, s: .42});
+  sc.box({x: 0, y: 0, w: 270, d: 200, h: 24, c: 'blue', delay: .1, drop: 70, order: -1000});
+  sc.box({x: 140, y: 40, w: 100, d: 100, h: 50, z: 24, c: 'teal', delay: .5, drop: 60});
+  sc.box({x: 30, y: 50, w: 80, d: 80, h: 80, z: 24, c: 'pink', delay: .8, drop: 70, float: 4, floatSpeed: 1.2});
+  sc.label({at: [30, 130, 64], side: 'l', len: 36, title: 'Agent', delay: 1.2, size: 10});
+  sc.label({at: [240, 140, 36], side: 'r', len: 30, title: 'Server', sub: '6 skills', delay: 1.3, size: 10});
+  sc.run();
+  // the conversation plays by itself; for export (webdriver) it jumps to the end state
+  const on = (id, ms) => setTimeout(() => document.getElementById(id).classList.add('on'), EW.S.skip ? 0 : ms);
+  on('m0', 800); on('m1', 1700); on('m2', 3300);
+  document.querySelectorAll('.sk').forEach((e, i) => setTimeout(() => e.classList.add('on'), EW.S.skip ? 0 : 2200 + i * 220));
+})();
+</script>
+</body>
+</html>

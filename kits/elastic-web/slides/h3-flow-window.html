@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>H3 Flow and window</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/scenes.css">
+<style>
+  h1{font-size:46px;letter-spacing:-1.6px}
+  .sub{font-size:17px;max-width:720px;margin-top:10px}
+  #sc{left:0;top:0;width:1280px;height:720px}
+  .kwin{left:770px;top:214px;width:446px}
+  .kcap{position:absolute;z-index:3;left:770px;top:626px;width:430px;font-size:13.5px;line-height:1.5;color:var(--char)}
+  .kcap b{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body data-foot="Deck name · Flow">
+<div class="z">
+  <div class="eyebrow in1">Eyebrow · <b>New</b></div>
+  <h1 class="in2">Data lands here. <span class="b">Query it there.</span></h1>
+  <p class="sub in3">One sentence on what is new and where the viewer should look.</p>
+</div>
+<svg id="sc" class="iso scene" viewBox="0 0 1280 720"></svg>
+<div class="kwin in4">
+  <div class="bar"><i></i><i></i><i></i><span class="sp">Product · View</span><span class="badge">QL</span></div>
+  <div class="ed" id="ed"></div>
+  <div class="res"><div class="rh"><span>Result title</span><span id="st">Ready</span></div><div class="chart" id="chart"></div>
+    <div class="ax"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div></div>
+</div>
+<div class="kcap in5"><b>One bold line.</b> One plain line that says why it matters.</div>
+<script src="style/eweb.js"></script>
+<script src="style/scenes.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 0, y: 170, w: 760, h: 520, seed: 44, blobs: 6, thr: .55});
+  const sc = EW.iso(document.getElementById('sc'), {ox: 430, oy: 478, s: 1});
+  sc.box({x: -240, y: -68, w: 70, d: 70, h: 62, c: 'teal', delay: .15, drop: 80});
+  sc.label({at: [-170, -68, 62], side: 'r', len: 28, title: 'Source', sub: 'Route it', delay: 1.1});
+  sc.run();
+  // raw data flows into the teal block, then blue cubes arc into the lake
+  EW.S.stream(sc, {from: [-440, -33, 20], to: [-240, -33, 20], convertAt: 1, rate: 3.2, speed: 160, size: 12, layer: 'floor', delay: .7});
+  EW.S.lake(sc, {x: 0, y: 0, feed: {from: [-158, -40, 26]}, label: {title: 'Store', sub: ['Object storage', 'your data lake']}});
+  // typed query, then a result chart that refreshes
+  const chart = document.getElementById('chart'), bars = Array.from({length: 24}, () => chart.appendChild(document.createElement('b')));
+  bars.forEach(b => { b.style.height = '0%'; });
+  let seed = 3; const draw = () => { seed++; const r = EW.rand(seed); bars.forEach((b, i) => { b.style.height = Math.min(100, (.18 + .5 * Math.pow(Math.sin((i + seed) * .37), 2) + r() * .3 + (i > 15 && i < 20 ? .25 : 0)) * 100) + '%'; }); };
+  EW.S.type(document.getElementById('ed'), [
+    [['kw', 'FROM'], ['', ' my-data']],
+    [['pp', '|'], ['kw', 'WHERE'], ['', ' service.name == '], ['str', '"checkout"']],
+    [['pp', '|'], ['kw', 'STATS'], ['', ' errors = '], ['fn', 'COUNT'], ['', '(*) '], ['kw', 'BY'], ['fn', ' BUCKET'], ['', '(@timestamp, 1h)']]
+  ], {delay: 1, dur: 1.4, done: () => { document.getElementById('st').textContent = '24 rows · done'; draw(); setInterval(draw, 6000); }});
+})();
+</script>
+</body>
+</html>

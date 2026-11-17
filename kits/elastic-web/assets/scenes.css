@@ -1,0 +1,95 @@
+/* scenes.css: styles for hero slides (H1 to H6). Link after eweb.css. Not used by L-layouts. */
+
+/* ── content density (fslides density dial, 1 to 5, default 3) ──
+   data-d="4" shows at >= 4, data-dmax="1" shows only at <= 1 (the runtime hides them).
+   .dz animates layout moves between levels; .dx is the extra-context block for 4 and 5.
+   (copied from elastic/observability-team company-preso eweb.css) */
+.dz{transition:transform .6s cubic-bezier(.2,.7,.2,1),top .6s cubic-bezier(.2,.7,.2,1),left .6s cubic-bezier(.2,.7,.2,1),width .6s cubic-bezier(.2,.7,.2,1),height .6s cubic-bezier(.2,.7,.2,1),opacity .4s}
+.dx{border-left:2px solid var(--blue);padding:2px 0 2px 12px}
+.dx .dxk{display:block;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:5px}
+.dx p{font-size:13px;line-height:1.5;color:var(--char)}
+.dx p+p{margin-top:6px}
+.dx b{color:var(--ink);font-weight:600}
+.dx.pink{border-color:var(--pink)}.dx.pink .dxk{color:var(--pink)}
+
+/* full-canvas scene layers */
+svg.scene{position:absolute;left:0;top:0;width:1280px;height:720px;z-index:1;overflow:visible}
+
+/* pillar strip under a scene (H1) and stage captions (H2) */
+.strip{position:absolute;z-index:3;left:72px;right:72px;display:grid;gap:0;border-top:1px solid var(--ink)}
+.strip.c3{grid-template-columns:repeat(3,1fr)}
+.strip .cd{padding:12px 22px 0 0;border-right:1px solid var(--line);margin-right:22px}
+.strip .cd:last-child{border-right:0;margin-right:0}
+.strip .cd .tag{display:flex;align-items:center;gap:8px}
+.strip .cd h2{font:600 22px/1.05 var(--sans);letter-spacing:-.6px;margin-top:7px}
+.strip .cd p{font-size:12.5px;line-height:1.45;color:var(--char);margin-top:6px;max-width:350px}
+.stages{position:absolute;z-index:3;left:72px;right:72px;display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+.stages .st{border-top:1px solid var(--ink);padding-top:12px}
+.stages .st .tag{color:var(--blue)}
+.stages .st h2{font:600 19px/1.15 var(--sans);letter-spacing:-.4px;margin-top:8px}
+.stages .st p{font-size:12.5px;line-height:1.45;color:var(--char);margin-top:6px;min-height:54px}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.chips .chip{font-size:9.5px;padding:2px 6px}
+
+/* code window with typed query and result chart (H3) */
+.kwin{position:absolute;z-index:3;background:#fff;border:1px solid var(--ink);box-shadow:10px 10px 0 var(--blue)}
+.kwin .bar{height:34px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:0 12px;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--char)}
+.kwin .bar i{width:9px;height:9px;border-radius:50%;border:1px solid var(--grey-l)}
+.kwin .bar .sp{flex:1}
+.kwin .badge{font:700 11px var(--mono);letter-spacing:.02em;text-transform:none;color:#fff;background:var(--blue);padding:3px 8px}
+.kwin .ed{padding:14px 14px 12px;border-bottom:1px solid var(--line);background:var(--bg);min-height:104px}
+.kwin .ln{display:flex;gap:10px;font:500 12px/1.8 var(--mono);color:var(--ink);white-space:pre}
+.kwin .ln .n{color:var(--grey-l);width:12px;text-align:right}
+.kwin .kw{color:var(--blue);font-weight:700}
+.kwin .str{color:#C2410C}
+.kwin .fn{color:#7C3AED}
+.kwin .pp{display:inline-block;color:#fff;background:var(--ink);padding:0 3px;margin-right:3px}
+.kwin .cur{display:inline-block;width:7px;height:15px;background:var(--blue);vertical-align:-2px;animation:ew-blink 1s steps(1) infinite}
+@keyframes ew-blink{50%{opacity:0}}
+.kwin .res{padding:12px 14px 14px}
+.kwin .rh{display:flex;justify-content:space-between;font:600 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--char)}
+.kwin .rh span:last-child{color:var(--grey)}
+.kwin .chart{height:110px;margin-top:10px;display:flex;align-items:flex-end;gap:3px;border-bottom:1px solid var(--ink)}
+.kwin .chart b{flex:1;background:var(--blue);transition:height .6s cubic-bezier(.2,.7,.2,1)}
+.kwin .ax{display:flex;justify-content:space-between;margin-top:5px;font:500 9.5px var(--mono);color:var(--grey)}
+
+/* giant stat (H4) */
+.giant{font:500 250px/1 var(--sans);letter-spacing:-14px;color:var(--ink);margin-left:-12px;font-variant-numeric:tabular-nums;transition:color .4s}
+.giant.settled{color:var(--blue)}
+.giant-unit{display:flex;align-items:baseline;gap:14px;margin-top:10px}
+.giant-unit b{font:600 32px var(--sans);letter-spacing:-1px}
+.giant-unit span{font:500 14px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--grey)}
+.tagline{margin-top:54px;font:400 30px/1.2 var(--mono);color:var(--grey);opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s}
+.tagline b{color:var(--ink);font-weight:600}
+.tagline.show{opacity:1;transform:none}
+
+/* growth curve annotations (H5) */
+.an{position:absolute;z-index:3;text-align:right;opacity:0;transition:opacity .5s,transform .5s;transform:translateY(6px)}
+.an.on{opacity:1;transform:none}
+.an .m{font:500 46px/1 var(--sans);letter-spacing:-1.8px;color:var(--blue)}
+.an .m.o{color:var(--orange)}
+.an .t{font:500 11.5px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--char);margin-bottom:6px;max-width:330px;margin-left:auto}
+.mk{position:absolute;z-index:3;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--grey);white-space:nowrap;background:#fff;padding:2px 6px;opacity:0;transition:opacity .4s}
+.mk.on{opacity:1}
+.mk.dark{font-size:11px;color:#fff;background:var(--ink);padding:5px 10px}
+
+/* demo window with chat and skill cards (H6) */
+.dwin{position:absolute;z-index:3;background:#fff;border:1px solid var(--ink);box-shadow:12px 12px 0 var(--slate-l)}
+.dwin .top{display:flex;align-items:center;gap:7px;height:38px;padding:0 14px;border-bottom:1px solid var(--line);background:var(--bg)}
+.dwin .top i{width:10px;height:10px;border-radius:50%;border:1px solid var(--ink)}
+.dwin .top span{flex:1;text-align:center;font:600 12px var(--sans);color:var(--ink)}
+.dwin .top em{font:400 10px var(--mono);font-style:normal;color:var(--grey-l)}
+.dwin .body{display:grid;grid-template-columns:200px 1fr;height:calc(100% - 38px)}
+.dwin .chat{border-right:1px solid var(--line);padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
+.dwin .msg{font:400 11.5px/1.45 var(--sans);color:var(--char);background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 11px;opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s}
+.dwin .msg.me{align-self:flex-end;border-color:var(--blue);color:var(--ink)}
+.dwin .msg.on{opacity:1;transform:none}
+.dwin .panel{padding:14px 18px;display:flex;flex-direction:column;gap:10px}
+.dwin .panel h3{font:600 15px var(--sans);letter-spacing:-.2px;display:flex;align-items:center;gap:8px}
+.dwin .panel h3 .pill{margin-left:auto;font:500 10px var(--mono);color:var(--blue);border:1px solid var(--blue);border-radius:99px;padding:2px 9px}
+.dwin .cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dwin .sk{border:1px solid var(--line);padding:9px 11px;opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s,border-color .4s}
+.dwin .sk.on{opacity:1;transform:none;border-color:var(--blue)}
+.dwin .sk b{display:block;font:600 11.5px var(--mono);color:var(--blue)}
+.dwin .sk span{display:block;font:400 11px/1.35 var(--sans);color:var(--grey);margin-top:3px}
+.dwin .sk em{float:right;font:500 9.5px var(--mono);font-style:normal;color:var(--teal-d)}

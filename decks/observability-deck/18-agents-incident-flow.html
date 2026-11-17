@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Agents working the incident</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="obs.css">
+<style>
+
+#fl text{font-family:'Patrick Hand','Inter',cursive}
+
+</style>
+</head>
+<body data-foot="none">
+<div class="pg" id="pg">
+<svg id="fl" viewBox="0 0 1456 819" width="1280" height="720" style="position:absolute;left:0;top:0"></svg>
+</div>
+<script src="style/eweb.js"></script>
+<script src="style/scenes.js"></script>
+<script src="obs.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+
+(function(){
+const svg = document.getElementById('fl'), mk = (t, a, p) => EW.S.mk(t, a, p || svg), SK = EW.S.skip || navigator.webdriver;
+const INK = '#1e1e1e', G = '#b0f0bd', R = '#ffc9c9', B = '#a5d8ff', Y = '#ffe98f';
+const hid = e => { e.style.opacity = 0; return e; };
+const box = (x, y, w, h, o = {}) => hid(mk('rect', {x, y, width: w, height: h, rx: o.r ?? 20, fill: o.fill || '#fff', stroke: o.stroke || INK, 'stroke-width': o.sw ?? 2.6, 'stroke-dasharray': o.dash || 'none'}));
+const txt = (x, y, s, o = {}) => { const t = hid(mk('text', {x, y, 'text-anchor': o.a || 'middle', 'font-size': o.size || 24, fill: o.fill || INK, 'font-weight': o.w || 400})); t.textContent = s; return t; };
+const arrow = (d, o = {}) => { const g = mk('g', {}); g.dashed = !!o.dash; const p = mk('path', {d, fill: 'none', stroke: o.stroke || INK, 'stroke-width': o.sw || 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-dasharray': o.dash || 'none'}, g); p.style.opacity = 0; g.p = p; g.d = d; return g; };
+const chip = (x, y, w, h, label, fill = B, size = 19) => { const g = mk('g', {}); const r = mk('rect', {x, y, width: w, height: h, rx: 12, fill, stroke: INK, 'stroke-width': 2}, g); const lines = label.split('\n');
+  lines.forEach((l, i) => { const t = mk('text', {x: x + w / 2, y: y + h / 2 + 7 - (lines.length - 1) * 11 + i * 22, 'text-anchor': 'middle', 'font-size': size, fill: INK}, g); t.textContent = l; });
+  const tick = mk('text', {x: x + w - 2, y: y + 6, 'text-anchor': 'middle', 'font-size': 24, fill: '#0a8a4a', 'font-weight': 700, stroke: '#fff', 'stroke-width': 5, 'paint-order': 'stroke'}, g); tick.textContent = '✓'; tick.style.opacity = 0; g.tick = tick; g.r = r; g.style.opacity = 0; g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center'; return g; };
+const all = [];
+const T = (el, at, fx = 'pop', dur = .5) => { all.push(el); OBS.show(el, {at, fx, dur}); return el; };
+const draw = (g, at, dur = .8) => { all.push(g.p); OBS.draw(g.p, {at, dur}); };
+const later = OBS.later;
+// ── 1 · the dashboard of SLOs
+const dash = box(60, 92, 325, 308, {r: 26});
+const dTitle = txt(232, 124, 'Dashboard', {size: 26});
+const cards = [[62, 142, 'a'], [225, 142, 'b'], [68, 272, 'c'], [230, 272, 'd']].map(([x, y]) => { const c = box(x, y, 157, 114, {r: 22}); const l = txt(x + 79, y + 36, 'SLO', {size: 26}); const pill = box(x + 20, y + 48, 118, 46, {fill: G, r: 12}); const n = txt(x + 79, y + 79, '98.555/99.999', {size: 20}); return {c, l, pill, n}; });
+[dash, dTitle].forEach((e, i) => T(e, .15 + i * .1, 'fade')); cards.forEach((k, i) => { [k.c, k.l, k.pill, k.n].forEach(e => T(e, .35 + i * .18, 'pop', .45)); });
+// ── 2 · happy path and metrics
+const happy = box(415, 160, 273, 77, {fill: G, r: 24}), hT = txt(551, 186, 'happy path', {size: 22}), hP = txt(551, 220, 'add_cart  →  checkout  →  payment', {size: 20});
+const a1 = arrow('M368 210 L412 204 M398 196 L412 204 L400 214'), a2 = arrow('M551 242 V282 M542 252 L551 242 L560 252 M542 272 L551 282 L560 272');
+const metrics = box(415, 284, 273, 74, {r: 22}), mT = txt(551, 308, 'metrics', {size: 22});
+const mch = [['request', 423, 62], ['error', 491, 50], ['latency', 547, 62], ['throughput', 615, 70]].map(([l, x, w]) => chip(x, 319, w, 30, l, B, 15));
+const a3 = arrow('M690 316 C715 316 720 262 738 258 M726 266 L738 258 L724 252', {dash: '7 6'});
+// ── 3 · logs and traces
+const logs = box(742, 155, 126, 202, {r: 24}), lT = txt(805, 181, 'logs', {size: 22}), lch = [['patterns', 195], ['error logs', 241], ['anomaly', 287]].map(([l, y]) => chip(762, y, 86, 38, l, B, 17));
+const traces = box(897, 153, 124, 204, {r: 24}), tT = txt(958, 181, 'traces', {size: 22}), tch = [['service\nmap', 195], ['error\ntracking', 241], ['bottleneck', 287]].map(([l, y]) => chip(917, y, 86, 38, l, B, 15));
+const link = arrow('M868 255 H897');
+// ── 4 · the case, fed by the three signals
+const caseB = box(399, 410, 618, 170, {fill: Y, r: 28}), cT = txt(708, 440, 'case', {size: 24}), ctx = box(428, 452, 560, 42, {fill: 'none', dash: '8 6', r: 14, sw: 2.2}), ctxT = txt(708, 480, 'case context', {size: 20});
+const cch = [['incident\nmanagement', 425, 98], ['severity\nscoring', 547, 96], ['triage &\ninvestigation', 661, 98], ['runbook', 777, 96], ['next steps', 893, 98]].map(([l, x, w]) => chip(x, 506, w, 60, l, B, 17));
+const dn1 = arrow('M552 365 V405 M543 395 L552 405 L561 395'), dn2 = arrow('M803 362 V406 M794 396 L803 406 L812 396'), dn3 = arrow('M959 362 V406 M950 396 L959 406 L968 396');
+// ── 5 · remediate and postmortem
+const rem = box(1078, 153, 148, 421, {fill: B, r: 30}), rT = txt(1152, 188, 'remediate', {size: 24, w: 700});
+const rt = [['escalate', 252], ['remediate', 326], ['rollback', 398], ['reboot', 472]].map(([l, y]) => { const c = chip(1103, y, 98, 62, l, '#fff', 20); return c; });
+const post = box(1257, 247, 148, 212, {fill: B, r: 28}), pT = txt(1331, 276, 'postmortem', {size: 21, w: 700});
+const pch = [['document\nlearnings', 303, 46], ['MTTR\nMTTD', 362, 46]].map(([l, y, h]) => chip(1282, y, 98, h, l, '#fff', 17));
+const a4 = arrow('M1017 486 H1045 V363 H1075 M1063 354 L1075 363 L1063 372'), loop = arrow('M1330 463 V598 H825 V572 M815 584 L825 572 L836 584', {dash: '7 6'});
+// ── 6 · the agents (robot icons from the deck), one per stage
+const agent = (x, y, label, lx, anchor = 'start') => { const g = hid(mk('g', {})); const ring = mk('circle', {cx: x + 34, cy: y + 34, r: 40, fill: 'none', stroke: '#F04E98', 'stroke-width': 3, opacity: 0}, g);
+  const wrap = mk('g', {}, g); mk('image', {href: 'img/agent.png', x, y, width: 68, height: 68}, wrap); mk('image', {href: 'img/elastic-mark.png', x: x + 36, y: y + 38, width: 32, height: 32}, wrap);
+  g.label = label; g.ring = ring; g.wrap = wrap; g.style.transformBox = 'fill-box'; g.style.transformOrigin = 'center'; return g; };
+const ag = [agent(300, 66, 'watches every SLO', 300), agent(640, 232, 'reads the golden signals', 640), agent(806, 112, 'finds patterns in the logs', 806), agent(962, 104, 'follows the trace', 962), agent(960, 392, 'opens and triages the case', 790), agent(1148, 96, 'runs the playbook', 1148), agent(1330, 168, 'writes the postmortem', 1330), agent(1150, 534, 'feeds learnings back into the runbook', 1150)];
+const work = (g, on) => { g.ring.setAttribute('opacity', on ? 1 : 0); if (on) g.ring.animate([{r: 36, opacity: .9}, {r: 50, opacity: 0}], {duration: 1100, iterations: Infinity}); else g.ring.getAnimations().forEach(a => a.cancel()); };
+const bob = g => { if (SK) return; g.wrap.animate([{transform: 'translateY(0)'}, {transform: 'translateY(-6px)'}], {duration: 1300 + Math.random() * 500, direction: 'alternate', iterations: Infinity, easing: 'ease-in-out'}); };
+const cap = txt(728, 712, '', {size: 30, fill: '#F04E98', w: 700}); cap.style.transition = 'opacity .35s'; const capSet = s => { cap.style.opacity = 0; setTimeout(() => { cap.textContent = s ? '\u25C6  ' + s : ''; cap.style.opacity = s ? 1 : 0; }, SK ? 0 : 280); };
+const wake = (g, at) => later(() => { OBS.show(g, {fx: 'pop', dur: .55}); bob(g); work(g, true); capSet('AI agent: ' + g.label); }, at * 1000);
+const rest = (g, at) => later(() => work(g, false), at * 1000);
+later(() => capSet(''), 31000);
+const go = (chips, at, step = .55) => chips.forEach((c, i) => later(() => { OBS.show(c, {fx: 'pop', dur: .35}); c.r.animate([{fill: '#fff'}, {fill: c.r.getAttribute('fill')}], {duration: 500}); setTimeout(() => OBS.show(c.tick, {fx: 'pop', dur: .3}), SK ? 0 : 450); }, (at + i * step) * 1000));
+const dots = (g, o) => later(() => OBS.travel(svg, g.d.split(' M')[0], Object.assign({r: 5, fill: '#F04E98', dur: 2, count: 2}, o)), 0);
+const reveal = (g, at, dur) => later(() => { if (g.dashed) OBS.show(g.p, {fx: 'fade', dur: .8}); else OBS.draw(g.p, {dur: dur || .8}); }, at * 1000);
+const BASE = 1.5;
+// Dashboard → the breach
+const nums = cards.map(k => k.n);
+later(() => { const t0 = performance.now(), n = nums[1], pill = cards[1].pill; const f = now => { const k = Math.min(1, (now - t0) / 1600); const v = 98.555 - (98.555 - 92.123) * k; n.textContent = v.toFixed(3) + '/99.999'; if (k > .3) pill.setAttribute('fill', R); if (k < 1) requestAnimationFrame(f); else pill.animate([{transform: 'scale(1)'}, {transform: 'scale(1.1)'}, {transform: 'scale(1)'}], {duration: 600}); }; requestAnimationFrame(f); }, (BASE + .5) * 1000);
+wake(ag[0], BASE + 1.2);
+reveal(a1, BASE + 2.3, .6); [happy, hT, hP].forEach((e, i) => T(e, BASE + 2.6 + i * .12, 'pop'));
+later(() => { const hl = hid(mk('rect', {x: 590, y: 202, width: 92, height: 26, rx: 8, fill: R, opacity: 0})); svg.insertBefore(hl, hP); hl.style.opacity = 1; hl.animate([{opacity: 0}, {opacity: 1}], {duration: 500}); }, (BASE + 3.6) * 1000);
+rest(ag[0], BASE + 3.8);
+// Metrics
+reveal(a2, BASE + 3.9, .5); [metrics, mT].forEach((e, i) => T(e, BASE + 4.1 + i * .1, 'pop')); wake(ag[1], BASE + 4.4); go(mch, BASE + 4.5, .45);
+later(() => { mch[1].r.setAttribute('fill', R); mch[2].r.setAttribute('fill', R); }, (BASE + 6.4) * 1000);
+rest(ag[1], BASE + 6.6);
+// Logs and traces
+reveal(a3, BASE + 5.4, .7); [logs, lT].forEach((e, i) => T(e, BASE + 5.7 + i * .1, 'pop')); [traces, tT].forEach((e, i) => T(e, BASE + 6.0 + i * .1, 'pop')); reveal(link, BASE + 6.4, .4);
+wake(ag[2], BASE + 6.4); wake(ag[3], BASE + 6.7); go(lch, BASE + 6.7, .5); go(tch, BASE + 7.0, .5); rest(ag[2], BASE + 8.6); rest(ag[3], BASE + 8.9);
+// The case
+[dn1, dn2, dn3].forEach((g, i) => reveal(g, BASE + 8.4 + i * .15, .5));
+later(() => [dn1, dn2, dn3].forEach((g, i) => OBS.travel(svg, g.d.split(' M')[0], {r: 5, fill: '#0B64DD', dur: 1.8, delay: i * .4, count: 2})), (BASE + 9.2) * 1000);
+[caseB, cT, ctx, ctxT].forEach((e, i) => T(e, BASE + 9.0 + i * .1, 'pop')); wake(ag[4], BASE + 9.6);
+go(cch, BASE + 9.9, .6);
+later(() => { cch[1].r.setAttribute('fill', R); }, (BASE + 10.6) * 1000);
+rest(ag[4], BASE + 13.1);
+// Remediate and postmortem
+reveal(a4, BASE + 12.6, .8); [rem, rT].forEach((e, i) => T(e, BASE + 13.2 + i * .1, 'pop')); wake(ag[5], BASE + 13.5); go(rt, BASE + 13.7, .7); rest(ag[5], BASE + 16.6);
+[post, pT].forEach((e, i) => T(e, BASE + 16.2 + i * .1, 'pop')); wake(ag[6], BASE + 16.5); go(pch, BASE + 16.8, .7); rest(ag[6], BASE + 18.3);
+// the loop closes: learnings travel back into the case, and the SLO recovers
+reveal(loop, BASE + 18.2, 1.2); wake(ag[7], BASE + 18.6);
+later(() => OBS.travel(svg, 'M1330 463 V598 H825 V572', {r: 6, fill: '#F04E98', dur: 3, count: 2}), (BASE + 19.2) * 1000);
+later(() => { const n = nums[1], pill = cards[1].pill, t0 = performance.now(); const f = now => { const k = Math.min(1, (now - t0) / 1400); n.textContent = (92.123 + (99.4 - 92.123) * k).toFixed(3) + '/99.999'; if (k > .4) pill.setAttribute('fill', G); if (k < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); }, (BASE + 20.2) * 1000);
+later(() => { OBS.travel(svg, 'M368 210 L412 204', {r: 4, fill: '#0a8a4a', dur: 1.6, count: 1, loop: false}); work(ag[7], false); }, (BASE + 21.5) * 1000);
+// the wordmark, like every page of the PDF
+const lg = mk('image', {href: 'img/elastic-wordmark.png', x: 1340, y: 772, width: 94, height: 32}); lg.style.opacity = 0; OBS.show(lg, {at: .6});
+// export mode: jump to the end state
+if (SK) { nums[1].textContent = '99.400/99.999'; cards[1].pill.setAttribute('fill', G); document.querySelectorAll('#fl *').forEach(e => { if (e.style) e.style.opacity = ''; }); [...svg.querySelectorAll('path')].forEach(p => p.style.opacity = 1); [...svg.querySelectorAll('g')].forEach(g => { g.style.opacity = 1; }); svg.querySelectorAll('text').forEach(t => t.style.opacity = 1); }
+})();
+
+</script>
+</body>
+</html>

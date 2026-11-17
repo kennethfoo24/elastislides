@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>H2 Pipeline stages</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/scenes.css">
+<style>
+  .head{display:flex;align-items:flex-end;justify-content:space-between}
+  h1{font-size:72px;letter-spacing:-3px;margin-top:10px}
+  .sub{max-width:430px;font-size:17px;margin:0 0 8px}
+  #pp{left:0;top:176px;width:1280px;height:240px}
+  .stages{top:424px}
+</style>
+</head>
+<body data-foot="Deck name · Pipeline">
+<div class="z head">
+  <div><div class="eyebrow in1">01 · Pillar · Name</div><h1 class="in2">Name</h1></div>
+  <p class="sub in3">Five stages. One pipeline. Every signal from any source to <b style="color:var(--ink)">one destination</b>.</p>
+</div>
+<svg id="pp" class="iso" viewBox="0 0 1280 240"></svg>
+<div class="stages">
+  <div class="st in3"><span class="tag">01 / Source</span><h2>Stage one</h2><p>One short line on what this stage does.</p><div class="chips"><span class="chip">Tag</span><span class="chip">Tag</span><span class="chip">Tag</span></div></div>
+  <div class="st in3"><span class="tag">02 / Inputs</span><h2>Stage two</h2><p>One short line on what this stage does.</p><div class="chips"><span class="chip">Tag</span><span class="chip">Tag</span></div></div>
+  <div class="st in4"><span class="tag">03 / Pipeline</span><h2>Stage three</h2><p>One short line on what this stage does.</p><div class="chips"><span class="chip">Tag</span><span class="chip">Tag</span><span class="chip">Tag</span></div></div>
+  <div class="st in4"><span class="tag">04 / Routing</span><h2>Stage four</h2><p>One short line on what this stage does.</p><div class="chips"><span class="chip">Tag</span><span class="chip">Tag</span></div></div>
+  <div class="st in5"><span class="tag">05 / Destination</span><h2>Stage five</h2><p>One short line on what this stage does.</p><div class="chips"><span class="chip">Tag</span><span class="chip">Tag</span><span class="chip">Tag</span></div></div>
+</div>
+<script src="style/eweb.js"></script>
+<script src="style/scenes.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 0, y: 160, w: 1280, h: 270, seed: 31, blobs: 9, thr: .62});
+  const s = .9, a = 231.2 / (2 * .866 * s);
+  const sc = EW.iso(document.getElementById('pp'), {ox: 177.6, oy: 150, s});
+  const C = i => [i * a, -i * a];
+  [0, 1, 2, 3].forEach(i => { const [x, y] = C(i); sc.rect({x: x - 48, y: y - 48, w: 96, d: 96, z: 0, delay: .1 + i * .08}); });
+  // 01 a cluster of small sources
+  [[-28, -28, 56], [6, -28, 36], [-28, 6, 30], [6, 6, 22]].forEach(([dx, dy, h], k) => { const [x, y] = C(0); sc.box({x: x + dx, y: y + dy, w: 22, d: 22, h, c: k === 0 ? 'ink' : 'white', stroke: '#1D1E24', delay: .2 + k * .06, drop: 60}); });
+  // 02 a plate with four instance slots
+  { const [x, y] = C(1); sc.box({x: x - 38, y: y - 38, w: 76, d: 76, h: 8, c: 'slate', stroke: false, delay: .4, drop: 60, order: -100});
+    [[-32, -32], [4, -32], [-32, 4], [4, 4]].forEach(([dx, dy], k) => sc.box({x: x + dx, y: y + dy, w: 28, d: 28, h: 38, z: 8, c: 'blue', delay: .5 + k * .05, drop: 40, order: 5 + k})); }
+  // 03 the transform block, 04 the router block
+  { const [x, y] = C(2); sc.box({x: x - 34, y: y - 34, w: 68, d: 68, h: 66, c: 'teal', delay: .6, drop: 70}); }
+  { const [x, y] = C(3); sc.box({x: x - 30, y: y - 30, w: 60, d: 60, h: 40, c: 'ink', delay: .75, drop: 60}); }
+  // 05 three destinations: a block, a bucket, an open slot
+  const L = 82, [dx, dy] = C(4);
+  sc.box({x: dx - L - 24, y: dy - L - 24, w: 48, d: 48, h: 40, c: 'blue', delay: 1.0, drop: 60});
+  sc.box({x: dx + L - 24, y: dy + L - 24, w: 48, d: 48, h: 40, c: 'white', wire: true, dash: '3 3', delay: 1.1, drop: 60});
+  sc.label({at: [dx - L + 24, dy - L - 24, 20], side: 'r', len: 14, title: 'Index', delay: 1.4, size: 10});
+  sc.label({at: [dx + 26, dy - 26, 22], side: 'r', len: 14, title: 'Bucket', delay: 1.45, size: 10});
+  sc.label({at: [dx + L + 24, dy + L - 24, 20], side: 'r', len: 14, title: 'Other', delay: 1.5, size: 10});
+  sc.run();
+  EW.S.cyl(sc, {x: dx, y: dy, h: 42, r: 24, delay: 1.05});
+  // raw data in (mixed colours), uniform blue out once the pipeline has transformed it
+  EW.S.stream(sc, {from: [...C(0), 0], to: [...C(4), 0], convertAt: .5, rate: 4, speed: 100, size: 12});
+})();
+</script>
+</body>
+</html>

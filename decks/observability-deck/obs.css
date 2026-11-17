@@ -1,0 +1,9 @@
+/* observability-deck: faithful rebuild of the PDF. Every slide is an absolutely positioned 1280x720 page. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Patrick+Hand&display=swap');
+body{padding:0;background:#fff;font-family:'Inter',-apple-system,system-ui,sans-serif}
+.pg{position:absolute;left:0;top:0;width:1280px;height:720px;overflow:hidden}
+.pg>img,.pg>.t,.pg>svg{position:absolute}
+.pgv{left:0;top:0}
+.t{white-space:nowrap;display:block}
+.pg .anim{will-change:transform,opacity}
+.foot-logo{position:absolute;right:20px;bottom:14px;height:34px;z-index:20}

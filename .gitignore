@@ -1,2 +1,14 @@
-node_modules/
 .DS_Store
+node_modules/
+.playwright-mcp/
+# generated from kits/ and logos/ by tools/sync.js
+decks/*/style/
+decks/*/logos/
+decks/*/slides/style/
+decks/*/slides/logos/
+decks/*/.claude/
+# build output
+decks/*/js/
+decks/*/*.html.bak
+# throwaway decks (underscore prefix): local only, never committed or published
+decks/_*/

@@ -1,0 +1,15 @@
+{
+  "name": "elastislides",
+  "private": true,
+  "description": "Elastic HTML slide decks. Decks live in decks/, shared design kits in kits/, shared logos in logos/.",
+  "scripts": {
+    "postinstall": "node tools/sync.js",
+    "sync": "node tools/sync.js",
+    "serve": "bash scripts/deck.sh serve",
+    "build": "bash scripts/deck.sh build",
+    "new-deck": "bash scripts/new-deck.sh"
+  },
+  "devDependencies": {
+    "fslides": "^0.8.0"
+  }
+}

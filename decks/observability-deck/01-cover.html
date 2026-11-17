@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Observability</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="obs.css">
+<style>
+
+</style>
+</head>
+<body data-foot="none">
+<div class="pg" id="pg">
+<svg class="pgv" viewBox="0 0 720 405" width="1280" height="720"><path d="M0 0H720V405H0Z" data-b="0,0,720,405" fill="#0b64dd"/><path d="M203.82 131.01C203.82 123.15 210.19 116.79 218.04 116.79L501.96 116.79C505.73 116.79 509.35 118.29 512.01 120.95C514.68 123.62 516.18 127.24 516.18 131.01L516.18 187.87C516.18 195.72 509.81 202.09 501.96 202.09L218.04 202.09C210.19 202.09 203.82 195.72 203.82 187.87L203.82 131.01" data-b="203.82,116.79,516.18,202.09" fill="#ffffff" stroke="#ffffff" stroke-width="1.34" stroke-linejoin="round"/></svg><img src="img/x12.png" data-b="664.82,383.14,708.02,397.99" style="left:1181.91px;top:681.13px;width:76.8px;height:26.4px;" alt=""><img src="img/x14.png" data-b="244.75,139.03,284.09,178.37" style="left:435.12px;top:247.16px;width:69.93px;height:69.93px;" alt=""><span class="t" data-b="295.91,143.3,459.73,173.42" style="left:526.06px;top:254.75px;height:53.55px;line-height:53.55px;font-size:44.29px;font-weight:700;color:#101c3f;">Observability</span>
+</div>
+<script src="style/eweb.js"></script>
+<script src="style/scenes.js"></script>
+<script src="obs.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+
+const card = OBS.Pa(0,0,720,405).find(p => p.getAttribute('fill') === '#ffffff');
+const icon = OBS.img(14), txt = OBS.T(0,0,720,405);
+OBS.show(card, {fx:'pop', dur:.8, at:.2});
+OBS.show(icon, {fx:'pop', dur:.7, at:.8});
+OBS.show(txt, {fx:'right', dur:.7, at:1.0});
+OBS.later(() => icon.animate([{transform:'translateY(0)'},{transform:'translateY(-5px)'}], {duration:1500, direction:'alternate', iterations:Infinity, easing:'ease-in-out'}), 2200);
+
+</script>
+</body>
+</html>

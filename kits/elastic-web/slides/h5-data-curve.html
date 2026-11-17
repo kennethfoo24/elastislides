@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>H5 Data curve</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/scenes.css">
+<style>
+  h1{font-size:40px;letter-spacing:-1.4px;max-width:1140px;white-space:nowrap}
+  #ch{position:absolute;left:72px;top:176px;width:1136px;height:400px;z-index:1}
+  .era{position:absolute;z-index:3;top:590px;font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--grey);transition:opacity .5s}
+  .punch{position:absolute;z-index:3;left:72px;right:72px;top:626px;border-top:1px solid var(--ink);padding-top:12px;font-size:19px;color:var(--char);opacity:0;transition:opacity .6s}
+  .punch b{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body data-foot="none">
+<div class="z">
+  <div class="eyebrow in1">Section · Topic</div>
+  <h1 class="in2">The challenge you know. <span class="b">At a scale you've never seen.</span></h1>
+</div>
+<canvas id="ch" width="1136" height="400"></canvas>
+<div class="an" id="a0"><div class="t">first thing that multiplies</div><div class="m">x100</div></div>
+<div class="an" id="a1"><div class="t">second thing that multiplies</div><div class="m">x10</div></div>
+<div class="an" id="a2"><div class="t">the unknown on top</div><div class="m o">?x</div></div>
+<div class="mk dark" id="ai" style="opacity:0;transition:opacity .4s">Turning point</div>
+<div class="mk" id="grow">Already growing</div>
+<div class="mk" id="peak">Previous peak</div>
+<div class="era" id="e0" style="left:92px">The world we built for · context</div>
+<div class="era" id="e1" style="right:72px;opacity:0">What it becomes</div>
+<div class="punch" id="punch">One sentence that lands the point. <b>The part to remember.</b></div>
+<script src="style/eweb.js"></script>
+<script src="style/scenes.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  const $ = id => document.getElementById(id), OX = 72, OY = 176, ann = [[.66, 'a0'], [.8, 'a1'], [.94, 'a2']];
+  // Illustrative curve only: no axis values, so nothing here can be mistaken for data (rule R13).
+  EW.S.curve($('ch'), {onFrame(t, a) {
+    const {c, rev, k2, X, Y, v, py, UA, X1, base} = a;
+    const pk = $('peak'); pk.classList.toggle('on', rev >= UA * .98); pk.style.left = (OX + a.X0 + 6) + 'px'; pk.style.top = (OY + py - 22) + 'px';
+    const g = $('grow'); g.classList.toggle('on', t > 1.3 && t < 2.8); g.style.left = (OX + X(UA * .72) - 150) + 'px'; g.style.top = (OY + Y(v(UA * .72)) - 10) + 'px';
+    const ai = $('ai'); ai.style.opacity = t > 2.2 ? 1 : 0; ai.style.left = (OX + Math.min(X(UA), X1 - 50) - 44) + 'px'; ai.style.top = (OY + base + 12) + 'px';
+    $('e1').style.opacity = t > 3.4 ? 1 : 0;
+    ann.forEach(([u, id], i) => { const e = $(id), on = rev >= u && k2 >= 1; e.classList.toggle('on', on); if (!on) return;
+      const x = X(u), y = Y(v(u)); e.style.right = (1280 - OX - x + 26) + 'px'; e.style.top = (OY + y - e.offsetHeight + 23) + 'px';
+      c.strokeStyle = '#1D1E24'; c.lineWidth = 1; c.beginPath(); c.moveTo(x - 20, y); c.lineTo(x - 6, y); c.stroke();
+      c.fillStyle = '#fff'; c.lineWidth = 1.5; c.beginPath(); c.arc(x, y, 5, 0, 6.283); c.fill(); c.stroke();
+      c.fillStyle = i === 2 ? '#FF7E62' : '#0B64DD'; c.beginPath(); c.arc(x, y, 2.5, 0, 6.283); c.fill(); });
+    $('punch').style.opacity = t > 5.2 ? 1 : 0;
+  }});
+})();
+</script>
+</body>
+</html>

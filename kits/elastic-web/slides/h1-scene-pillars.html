@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>H1 Scene and pillars</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/scenes.css">
+<style>
+  h1{font-size:58px;letter-spacing:-2.2px;margin-top:14px}
+  .road{margin-top:22px;max-width:520px;font:400 15px/1.5 var(--mono);color:var(--char)}
+  .road b{color:var(--ink);font-weight:600}
+  #pl{left:0;top:0;width:1280px;height:720px}
+  .strip{top:506px}
+</style>
+</head>
+<body data-foot="Deck name · Overview">
+<div class="z">
+  <div class="eyebrow in1">Eyebrow</div>
+  <h1 class="in2">Plain statement.<br><span class="b">Payoff in blue.</span></h1>
+  <p class="road in3"><b>One sentence of roadmap:</b> what goes in, what runs across, what acts on top.</p>
+</div>
+<svg id="pl" class="iso scene" viewBox="0 0 1280 720"></svg>
+<div class="strip c3">
+  <div class="cd in4"><span class="tag"><i class="sw" style="background:var(--teal)"></i>01 · Pillar</span><h2>In</h2><p>One short line on what the first part does.</p><div class="chips"><span class="chip">Tag</span><span class="chip">Tag</span></div></div>
+  <div class="cd in5"><span class="tag"><i class="sw" style="background:var(--blue)"></i>02 · Pillar</span><h2>Across</h2><p>One short line on what the middle part does.</p><div class="chips"><span class="chip">Tag</span><span class="chip">Tag</span><span class="chip">Tag</span></div></div>
+  <div class="cd in6"><span class="tag"><i class="sw" style="background:var(--pink)"></i>03 · Pillar</span><h2>On top</h2><p>One short line on the AI part. Pink is reserved for AI.</p><div class="chips"><span class="chip">Tag</span><span class="chip">Tag</span></div></div>
+</div>
+<script src="style/eweb.js"></script>
+<script src="style/scenes.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 600, y: 30, w: 680, h: 460, seed: 21, blobs: 5, thr: .5});
+  const sc = EW.iso(document.getElementById('pl'), {ox: 842, oy: 286, s: .8});
+  sc.box({x: 0, y: 0, w: 300, d: 200, h: 28, c: 'slate', stroke: false, delay: .1, drop: 90});
+  // 01 a pipeline sliding in from the left edge
+  const pipe = sc.box({x: -90, y: 150, w: 200, d: 34, h: 34, z: 28, c: 'teal', delay: .35, drop: 0, dur: .9, snap: false, order: 5});
+  pipe.onFrame = (t, it) => { const k = EW.ease((t - .35) / .9); it.g.setAttribute('transform', `translate(${(-80 * (1 - k)).toFixed(1)},${(40 * (1 - k)).toFixed(1)})`); };
+  // 02 five bars across the platform
+  [0, 1, 2, 3, 4].forEach(i => sc.box({x: 130 + i * 32, y: 30, w: 24, d: 150, h: [96, 80, 66, 54, 44][i], z: 28, c: i === 0 ? 'blue' : 'slate', stroke: i === 0 ? '#1D1E24' : false, delay: .55 + i * .07, drop: 80, order: 3}));
+  // 03 a screen facing the viewer, and the pink hero cube above it
+  const X = 330;
+  sc.box({x: X - 14, y: 30, w: 8, d: 20, h: 34, c: 'slate', stroke: false, delay: .75, drop: 60});
+  sc.box({x: X - 30, y: 14, w: 40, d: 52, h: 5, c: 'slate', stroke: false, delay: .7, drop: 60, order: -5});
+  sc.box({x: X - 8, y: -44, w: 8, d: 168, h: 130, z: 34, c: {top: '#343741', left: '#343741', right: '#FFFFFF'}, delay: .8, drop: 70, order: 20});
+  sc.box({x: X + 58, y: -64, w: 56, d: 56, h: 56, z: 80, c: 'pink', delay: 1.0, drop: 70, float: 5, floatSpeed: 1.3, order: 40});
+  sc.label({at: [-90, 184, 45], side: 'l', len: 26, title: 'Input label', delay: 1.2});
+  sc.label({at: [300, 200, 0], side: 'r', len: 30, title: 'Platform label', delay: 1.35});
+  sc.label({at: [X, 100, 18], side: 'r', len: 26, title: 'Output label', sub: 'Second line', delay: 1.4});
+  sc.run();
+  // data cubes riding the pipeline
+  EW.S.stream(sc, {from: [-90, 167, 62], to: [112, 167, 62], layer: 'top', rate: 2, speed: 90, convertAt: .3, size: 14});
+})();
+</script>
+</body>
+</html>

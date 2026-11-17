@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>H4 Giant stat</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="style/scenes.css">
+<style>
+  .giant{margin-top:120px}
+  #stack{left:700px;top:0;width:580px;height:720px}
+</style>
+</head>
+<body data-foot="Deck name · Shift">
+<div class="z">
+  <div class="eyebrow in1">Section · <b>Shift</b></div>
+  <div class="giant in2" id="num">25</div>
+  <div class="giant-unit in3"><b>unit</b><span>per thing</span></div>
+  <div class="tagline" id="tagline">Here is <b>how we did it.</b></div>
+</div>
+<svg id="stack" class="iso" viewBox="0 0 580 720"></svg>
+<script src="style/eweb.js"></script>
+<script src="style/scenes.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  EW.dots({x: 640, y: 60, w: 640, h: 620, seed: 31, blobs: 5, thr: .48});
+  const sc = EW.iso(document.getElementById('stack'), {ox: 290, oy: 425, s: 1});
+  const st = EW.S.stack(sc, {n: 25, keep: 4, at: .75});
+  sc.label({at: [150, 0, st.total - 8], side: 'r', len: 30, title: 'Before', sub: '25 units', delay: 1.55});
+  sc.label({at: [150, 0, st.kept / 2 + 2], side: 'r', len: 30, title: 'Now', sub: '3.75 units', delay: 1.6});
+  sc.run();
+  // the number lands as the slabs peel away
+  const num = document.getElementById('num');
+  EW.S.count(num, 25, 3.75, {delay: .75, dur: .95, fmt: v => v >= 10 ? v.toFixed(1) : v.toFixed(2),
+    done: () => { num.classList.add('settled'); document.getElementById('tagline').classList.add('show'); }});
+})();
+</script>
+</body>
+</html>

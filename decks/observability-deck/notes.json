@@ -1,0 +1,20 @@
+{
+  "01-cover.html": "- Observability, the 90-second tour. Everything that follows is on one platform.",
+  "02-platform-outcomes.html": "- Any data, any source, business and operational, flows into the Elastic Observability layer on top of the Elasticsearch platform.\n- Six capabilities plus the AI Assistant. Runs on public cloud, hybrid or on-prem.\n- Outcomes: 69% satisfaction (Elastic survey), 75% productivity and 85% less revenue disruption (Forrester TEI).",
+  "03-agentic-platform.html": "- All signals in, insights to action out.\n- Three layers: AI and data platform, AI intelligence layer, agentic investigations.\n- MCP apps and reusable skills let Claude, Cursor and others use all of it.",
+  "04-signals-answers.html": "- Six views of the same platform: logging, tracing, RUM, infra metrics, profiling and KPI metrics.\n- You need all of them to get answers, and they live together here.",
+  "05-one-click.html": "- One click on an e-commerce site becomes a request that crosses frontend, backend and an external payment provider.\n- Metrics, one trace and the logs line up automatically.\n- Finish on the AI assistant: ask why checkout was slow.",
+  "06-three-ways-in.html": "- One platform, three ways in: Kibana dashboards, the AI Assistant and Agent Builder, or your own chat or IDE through MCP.",
+  "07-break-down-silos.html": "- One platform for business and operational data. Logs, metrics and traces correlate in context.\n- An open common data model, and one view for ITOps, DevOps, SRE and AppDev.",
+  "08-log-analytics.html": "- AI categorization turns billions of log lines into a short list with anomaly scores.\n- Cross cluster search, data tiering, correlation and full text search in milliseconds.",
+  "09-apm.html": "- Distributed tracing from the latency distribution down to the slowest span.\n- ML health indicators and on-demand correlations find the root cause. OpenTelemetry and native agents out of the box.",
+  "10-infrastructure-monitoring.html": "- Cloud native and 3-tier architectures in one inventory. Colour is CPU.\n- 400+ integrations on AWS, Azure and Google Cloud, plus Kubernetes.\n- Pivot from a hot pod straight to its logs, metrics and traces.",
+  "11-simplify-ingest.html": "- One agent for logs, metrics and traces, managed centrally with Fleet.\n- Thousands of agents, one-click policy changes and upgrades. 400+ integrations, many with dashboards.",
+  "12-llm-observability.html": "- Dashboards for OpenAI, Azure OpenAI, Amazon Bedrock and Google Vertex AI.\n- End-to-end tracing through EDOT or third party libraries, cost per model, and visibility into prompts, responses and guardrails.",
+  "13-universal-profiling.html": "- Zero instrumentation, whole system, always on and low overhead.\n- Find the hot frame, see its CO2 and dollar cost, and cut compute waste.",
+  "14-digital-experience.html": "- Track infrastructure, application and business trends. Verify user journeys proactively.\n- Core web vitals and page load distribution, then trace from front end to back end. Establish SLOs, SLIs and SLAs.",
+  "15-slo-management.html": "- Define SLOs and SLIs, alert on burn rate and error budget, and show them next to other KPIs in dashboards.",
+  "16-zero-config-ml.html": "- Enable anomaly detection with one click for hosts and Kubernetes pods.\n- The model band shows normal. Outliers get a score, and APM correlations point to the cause. Lower MTTD and MTTR.",
+  "17-ai-assistant.html": "- Built in, not bolted on. Powered by ESRE.\n- Accelerate incident management, explore problems and act, with output grounded in your own data and runbooks.",
+  "18-agents-incident-flow.html": "- Follow one incident from an SLO breach to a postmortem. An AI agent picks up each stage.\n- Dashboard SLO breaches, happy path, signals, case, remediation, postmortem. Learnings feed the next runbook, and the SLO recovers.\n- Illustrative flow; people stay in the loop for the decisions that matter."
+}

@@ -27,19 +27,20 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Build the partner deck player
-        working-directory: partner-deck
+      - name: Install (fslides once at the root; postinstall syncs kits and logos into every deck)
         env:
           PUPPETEER_SKIP_DOWNLOAD: 'true'
-        run: |
-          npm ci
-          npm run export
+        run: npm ci
 
-      - name: Assemble site
+      - name: Build every deck and assemble the site
         run: |
           mkdir -p _site
           cp index.html _site/
-          rsync -a --exclude node_modules --exclude source partner-deck/ _site/partner-deck/
+          for d in decks/*/; do
+            name=$(basename "$d")
+            node tools/build-player.js "$d"
+            rsync -a --exclude source "$d" "_site/$name/"
+          done
 
       - uses: actions/configure-pages@v5
 
