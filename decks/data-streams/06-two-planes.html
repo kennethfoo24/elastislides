@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Data stream end to end · two planes</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="ds.css">
+<style>
+h1{font-size:42px;letter-spacing:-1.4px}
+.legend{position:absolute;right:72px;top:58px;display:flex;gap:18px;font:600 10px var(--mono);letter-spacing:.06em;color:var(--char);z-index:3}
+.legend span{display:flex;align-items:center;gap:7px}
+.legend i{width:10px;height:10px;display:inline-block}
+.legend .lm{background:var(--blue)}
+.legend .lc{border:1.5px solid var(--orange)}
+.band{position:absolute;left:72px;font:600 10.5px var(--mono);letter-spacing:.08em;color:var(--grey);text-transform:uppercase;display:flex;align-items:center;gap:8px;z-index:3}
+.band b{color:var(--ink);font-weight:600}
+.cd{position:absolute;top:208px;height:146px;background:#fff;border:1px solid var(--ink);border-top:4px solid var(--blue);padding:9px 12px;z-index:2}
+.cd .k{font:600 9.5px var(--mono);letter-spacing:.08em;color:var(--grey);text-transform:uppercase}
+.cd .n{font:600 11.5px var(--mono);color:var(--ink);margin-top:5px;white-space:nowrap}
+.cd .p{font:500 10px var(--mono);color:var(--grey);margin-top:2px;white-space:nowrap}
+.cd .l{font:400 11px/1.4 var(--sans);color:var(--char);margin-top:6px;white-space:nowrap}
+.cd .l b{font-weight:600;color:var(--ink)}
+.cd .no{color:#E0352B;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.c{font:500 9.5px var(--mono);padding:3px 5px;border:1px solid var(--blue);color:var(--blue);background:#F2F7FF;white-space:nowrap}
+.c.o{border:1px dashed var(--orange);color:#C2410C;background:#fff}
+.hook{display:inline-block;margin-top:7px;font:500 9.5px var(--mono);padding:3px 5px;border:1px dashed var(--orange);color:#C2410C;white-space:nowrap}
+.c1{left:72px;width:168px}.c2{left:254px;width:220px}.c3{left:488px;width:272px}.c4{left:774px;width:168px}.c5{left:956px;width:268px}
+.nd{position:absolute;top:462px;text-align:center;z-index:3}
+.tile{height:76px;display:flex;align-items:center;justify-content:center;gap:6px}
+.ct{font:600 12.5px var(--sans);color:var(--ink);white-space:nowrap;margin-top:6px}
+.cs{font:500 10px var(--mono);color:var(--grey);white-space:nowrap;margin-top:2px}
+.srv{width:34px;height:40px}
+.file{display:flex;align-items:center;gap:4px;font:500 9.5px var(--mono);color:var(--ink)}
+.file .ico{width:11px;height:11px}
+.nm{height:28px;padding:0 10px;border:1px solid var(--ink);background:#fff;display:flex;align-items:center;font:600 10.5px var(--mono);white-space:nowrap}
+.nm .t{color:var(--grey)}.nm .d{color:var(--blue)}.nm .s{color:var(--teal-d)}
+.pp{width:96px;height:42px;border:1.5px solid var(--teal-d);background:#fff;display:flex;align-items:center;justify-content:center;gap:5px}
+.pp i{width:12px;height:12px;border:1px solid var(--ink);background:#fff;display:block}
+.pp i.on{background:var(--blue);border-color:var(--blue)}
+.snapi{width:50px;height:38px}
+.yours{height:58px;width:100%;border:1.5px dashed var(--orange);display:flex;align-items:center;justify-content:center;gap:5px;padding:0 8px;background:#fff}
+.tier{font:600 9.5px var(--mono);letter-spacing:.04em;border:1px solid var(--ink);padding:3px 5px;display:flex;align-items:center;gap:4px;white-space:nowrap}
+.tier::before{content:'';width:6px;height:6px}
+.tw::before{background:var(--yellow)}.tc::before{background:#7FB2F5}.tf::before{background:#D9E8FF;outline:1px solid #7FB2F5}
+.trash{width:28px;height:28px;background:#E0352B;border-radius:5px}
+.arr{font:600 11px var(--mono);color:var(--ink)}
+.gv{position:absolute;font:500 9.5px var(--mono);letter-spacing:.06em;color:var(--grey);z-index:4;background:#fff;padding:0 3px}
+</style>
+</head>
+<body data-foot="Data streams · v6 two planes">
+<div class="z"><div class="eyebrow in1">Data streams · Defaults, end to end</div><h1 class="in2">Installed once. <span class="b">Followed by every log line.</span></h1></div>
+<div class="legend in3"><span><i class="lm"></i>MANAGED DEFAULT</span><span><i class="lc"></i>YOUR @CUSTOM HOOK</span></div>
+
+<div class="band fx" style="top:186px;--d:.15s"><b>Control plane</b>· installed by the nginx integration</div>
+
+<div class="cd c1 fx" style="--d:.2s" id="c1">
+  <div class="k">Integration policy</div>
+  <div class="n">nginx · Fleet</div>
+  <div class="l">paths: <b>access.log</b></div>
+  <div class="l" style="margin-top:2px">namespace: <b>default</b></div>
+</div>
+<div class="cd c2 fx" style="--d:.3s" id="c2">
+  <div class="k">Ingest pipeline</div>
+  <div class="n">logs-nginx.access-&lt;version&gt;</div>
+  <div class="l">grok · user_agent · geoip · ECS</div>
+  <span class="hook">calls logs-nginx.access@custom</span>
+</div>
+<div class="cd c3 fx" style="--d:.4s" id="c3">
+  <div class="k">Index template</div>
+  <div class="n">logs-nginx.access</div>
+  <div class="p">matches logs-nginx.access-*</div>
+  <div class="chips"><span class="c">logs@settings</span><span class="c">logs@mappings</span><span class="c">ecs@mappings</span><span class="c">logs-nginx.access@package</span><span class="c o">logs@custom</span><span class="c o">logs-nginx.access@custom</span></div>
+</div>
+<div class="cd c4 fx" style="--d:.5s" id="c4">
+  <div class="k">SLM policy</div>
+  <div class="n">cloud-snapshot-policy</div>
+  <div class="l">every <b>30 min</b></div>
+  <div class="l" style="margin-top:2px">to <b>found-snapshots</b></div>
+  <div class="p" style="margin-top:6px">Elastic Cloud default</div>
+</div>
+<div class="cd c5 fx" style="--d:.6s" id="c5">
+  <div class="k">ILM policy</div>
+  <div class="n">logs@lifecycle</div>
+  <div class="l">hot: rollover at <b>50 GB</b> or <b>30 days</b></div>
+  <div class="l" style="margin-top:2px"><span class="no">No delete phase</span> by default</div>
+  <span class="hook">yours via logs-nginx.access@custom</span>
+</div>
+
+<div class="nd fx" style="left:72px;width:100px;--d:.7s"><div class="tile" id="t1" style="flex-direction:column;gap:4px"><i class="ico srv" data-icon="server"></i><span class="file"><i class="ico" data-icon="nginx"></i>access.log</span></div><div class="ct">Collect</div><div class="cs">Elastic Agent</div></div>
+<div class="nd fx" style="left:196px;width:166px;--d:.8s"><div class="tile"><div class="nm" id="t2"><span class="t">logs</span>-<span class="d">nginx.access</span>-<span class="s">default</span></div></div><div class="ct">Route by name</div><div class="cs">type · dataset · namespace</div></div>
+<div class="nd fx" style="left:386px;width:100px;--d:.9s"><div class="tile"><div class="pp" id="t3"><i></i><i></i><i></i><i></i></div></div><div class="ct">Parse</div><div class="cs">to ECS fields</div></div>
+<div class="nd fx" style="left:508px;width:224px;--d:1s"><div class="tile" id="t4"></div><div class="ct">Write, then read</div><div class="cs">newest index · all indices</div></div>
+<div class="nd fx" style="left:758px;width:100px;--d:1.1s"><div class="tile" id="t5"><i class="ico snapi" data-icon="cloud"></i></div><div class="ct">Snapshot</div><div class="cs">every 30 min</div></div>
+<div class="nd fx" style="left:884px;width:100px;--d:1.2s"><div class="tile" id="t6"><svg width="64" height="42" viewBox="0 0 64 42"><rect x="2" y="13" width="22" height="18" fill="#F5F7FA" stroke="#1D1E24"/><rect x="40" y="13" width="22" height="18" fill="#D9E8FF" stroke="#0B64DD" stroke-width="1.5"/><path d="M13 11 C13 2 51 2 51 10" fill="none" stroke="#1D1E24" stroke-width="1.4"/><path d="M47 7 L51 12 L55 7" fill="none" stroke="#1D1E24" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div class="ct">Rollover</div><div class="cs">50 GB or 30 days</div></div>
+<div class="nd fx" style="left:1008px;width:216px;--d:1.3s"><div class="tile"><div class="yours" id="t7"><span class="tier tw">WARM</span><span class="tier tc">COLD</span><span class="tier tf">FROZEN</span><span class="arr">→</span><i class="ico trash" data-icon="trash"></i></div></div><div class="ct" style="color:#C2410C">Your retention, then delete</div><div class="cs">nothing is deleted by default</div></div>
+
+<div class="band fx" style="top:606px;--d:.7s"><b>Data plane</b>· what every log line does</div>
+<div class="gv fx" id="gv" style="--d:1.2s">governs</div>
+
+<svg class="ov" id="ov" viewBox="0 0 1280 720"></svg>
+
+<script src="style/eweb.js"></script>
+<script src="ds.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+DS.icons();
+DS.ready(() => {
+  const ov = document.getElementById('ov'), B = DS.box, A = (p, o) => DS.arrow(ov, p, o), Y = 500;
+  const t4 = B('#t4');
+  const cy = DS.cyl(ov, {x: t4.l + 6, y: Y - 26, w: t4.w - 12, h: 52, segs: ['-000001', '-000002'], font: 10});
+  cy.g.classList.add('fx'); cy.g.style.setProperty('--d', '1s');
+  // flow along the data plane
+  const t1 = B('#t1'), t2 = B('#t2'), t3 = B('#t3'), t5 = B('#t5'), t6 = B('#t6'), t7 = B('#t7');
+  const f1 = A([[t1.r - 8, Y], [t2.l, Y]], {delay: .8, dur: .25});
+  const f2 = A([[t2.r, Y], [t3.l, Y]], {delay: .9, dur: .2});
+  const f3 = A([[t3.r, Y], [t4.l + 2, Y]], {delay: 1, dur: .2, c: DS.COL.blue});
+  const f4 = A([[cy.seg(1).b + cy.rx + 4, Y], [t5.l + 18, Y]], {delay: 1.1, dur: .2});
+  A([[t5.r - 18, Y], [t6.l + 14, Y]], {delay: 1.2, dur: .2});
+  A([[t6.r - 14, Y], [t7.l, Y]], {delay: 1.3, dur: .2, c: DS.COL.orange});
+  // governs: each control-plane object down to the step it controls
+  const G = {dash: '3 4', w: 1.1, head: 6, r: 8, c: '#69707D'}, mid = 410;
+  const gov = (card, x2, y2, o) => { const c = B(card); A([[c.cx, c.b], [c.cx, mid], [x2, mid], [x2, y2]], Object.assign({}, G, o)); };
+  gov('#c1', t1.cx, t1.t + 2, {delay: 1.0});
+  gov('#c2', t3.cx, t3.t - 2, {delay: 1.05});
+  gov('#c3', t4.cx, Y - 30, {delay: 1.1});
+  gov('#c4', t5.cx, t5.t + 14, {delay: 1.15});
+  const c5 = B('#c5');
+  A([[c5.cx - 40, c5.b], [c5.cx - 40, mid], [t6.cx, mid], [t6.cx, t6.t + 14]], Object.assign({}, G, {delay: 1.2}));
+  A([[c5.cx + 40, c5.b], [c5.cx + 40, mid], [t7.cx + 40, mid], [t7.cx + 40, t7.t - 2]], Object.assign({}, G, {delay: 1.25, c: DS.COL.orange}));
+  const gv = document.getElementById('gv'), c1 = B('#c1'); gv.style.left = (c1.cx + 6) + 'px'; gv.style.top = (c1.b + 14) + 'px';
+  // parse steps light in turn
+  const sq = [...document.querySelectorAll('#t3 i')];
+  if (!DS.skip) EW.loop(t => { const k = t < 2 ? -1 : Math.floor((t - 2) / .5) % 5; sq.forEach((e, i) => e.classList.toggle('on', i <= k && k < 4)); });
+  else sq.forEach(e => e.classList.add('on'));
+  // packets: raw before the pipeline, blue after
+  DS.flow(f1.p, {colors: DS.RAW, n: 2, period: 1.6});
+  DS.flow(f2.p, {colors: DS.RAW, n: 1, period: 1.1, phase: .3});
+  DS.flow(f3.p, {n: 1, period: 1.1, phase: .6});
+  DS.flow(f4.p, {n: 1, period: 1.4, phase: .2, size: 6});
+});
+</script>
+</body>
+</html>

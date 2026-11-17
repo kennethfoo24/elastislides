@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Data stream end to end · anatomy of a name</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="ds.css">
+<style>
+h1{font-size:42px;letter-spacing:-1.4px}
+:root{--cT:var(--blue);--cD:var(--teal-d);--cN:var(--orange)}
+.name{position:absolute;left:312px;top:292px;font:600 34px/1 var(--mono);letter-spacing:-.5px;color:var(--ink);white-space:nowrap;z-index:3}
+.name .sg{position:relative;display:inline-block;padding-bottom:6px;border-bottom:4px solid;animation:sgIn .5s cubic-bezier(.3,1.5,.5,1) var(--d) both}
+.name .sg::after{content:attr(data-c);position:absolute;left:50%;top:100%;translate:-50% 0;margin-top:7px;font:600 10px var(--mono);letter-spacing:.1em;color:var(--c);white-space:nowrap}
+.name .t{--c:var(--cT);border-color:var(--cT)}.name .d{--c:var(--cD);border-color:var(--cD)}.name .n{--c:var(--cN);border-color:var(--cN)}
+.name .hy{color:var(--grey-l)}
+@keyframes sgIn{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+.cd{position:absolute;background:#fff;border:1px solid var(--line);padding:11px 12px;z-index:2}
+.cd .hd{display:flex;align-items:center;gap:8px;font:600 13px var(--sans);color:var(--ink);letter-spacing:-.1px}
+.bd{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;background:var(--ink);color:#fff;font:600 10px var(--mono);flex:none}
+.cd .mn{font:600 11px var(--mono);color:var(--ink);margin-top:7px;white-space:nowrap}
+.cd .sb{font:400 11px/1.4 var(--sans);color:var(--grey);margin-top:3px}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.chip{font:500 9.5px var(--mono);text-transform:none;letter-spacing:0;padding:3px 6px;color:var(--char)}
+.chip.my{border-color:var(--orange);color:#C2410C;border-style:dashed}
+.tag{display:inline-block;font:600 9.5px var(--mono);letter-spacing:.06em;padding:2px 6px;margin-top:7px}
+.tag.no{color:#C2410C;background:#FFF1EC}
+.col{left:72px;top:262px;width:198px;height:112px}
+.col .srv{position:absolute;right:12px;top:10px;width:24px;height:27px}
+.col .ng{display:inline-flex;align-items:center;gap:5px}
+.col .ng .ico{width:11px;height:11px}
+.ilm{left:248px;top:168px;width:272px;height:96px;border-top:3px solid var(--cT)}
+.ns{left:646px;top:168px;width:236px;height:96px;border-top:3px solid var(--cN)}
+.tpl{left:196px;top:404px;width:352px;height:134px;border-top:3px solid var(--cD)}
+.pipe{left:566px;top:404px;width:304px;height:134px;border-top:3px solid var(--cD)}
+.bk{left:892px;top:262px;width:332px;height:138px}
+.bk .ix{font:500 10.5px var(--mono);color:var(--char);margin-top:8px;white-space:nowrap}
+.bk .ix b{font-weight:600}
+.bk .ix .u{padding-bottom:1px;border-bottom:2px solid}
+.bk .ix .uT{border-color:var(--cT)}.bk .ix .uD{border-color:var(--cD)}.bk .ix .uN{border-color:var(--cN)}
+.bk .ix.on{color:var(--blue)}
+.bk .st{font:600 9.5px var(--mono);letter-spacing:.06em;color:var(--grey);margin-top:2px}
+.bk .ix.on + .st{color:var(--blue)}
+.snp{left:892px;top:432px;width:160px;height:106px}
+.snp .ico{position:absolute;right:10px;top:9px;width:30px;height:22px}
+.del{left:1064px;top:432px;width:160px;height:106px;border:1px dashed #E0352B}
+.del .ico{position:absolute;right:10px;top:9px;width:22px;height:22px;background:#E0352B;border-radius:4px}
+.del .bd{background:#E0352B}
+.strip{position:absolute;left:72px;top:584px;width:1152px;display:flex;align-items:center;gap:0;z-index:3}
+.strip .s{flex:1;height:30px;border:1px solid var(--ink);background:#fff;display:flex;align-items:center;justify-content:center;gap:6px;font:600 10px var(--mono);letter-spacing:.04em;color:var(--ink);white-space:nowrap;animation:hl 4.8s linear 2s infinite}
+.strip .s i{font-style:normal;color:var(--grey-l)}
+.strip .ar{width:18px;height:1px;background:var(--ink);position:relative;flex:none}
+.strip .ar::after{content:'';position:absolute;right:-1px;top:-3px;border:3.5px solid transparent;border-left:5px solid var(--ink);border-right:0}
+.strip .s.x{border:1px dashed #E0352B;color:#E0352B}
+@keyframes hl{0%,12.5%,100%{background:#fff}1%,11%{background:var(--blue-l)}}
+html.ds-static .strip .s{animation:none}
+.mini{position:absolute;font:600 9.5px var(--mono);letter-spacing:.08em;color:var(--grey);z-index:3}
+</style>
+</head>
+<body data-foot="Data streams · v7 anatomy of a name">
+<div class="z"><div class="eyebrow in1">Data streams · Defaults, end to end</div><h1 class="in2">One name. <span class="b">It picks every default.</span></h1></div>
+
+<div class="name" id="nm"><span class="sg t" id="sT" data-c="TYPE" style="--d:.3s">logs</span><span class="hy">-</span><span class="sg d" id="sD" data-c="DATASET" style="--d:.45s">nginx.access</span><span class="hy">-</span><span class="sg n" id="sN" data-c="NAMESPACE" style="--d:.6s">default</span></div>
+
+<div class="cd col fx" style="--d:.2s" id="col">
+  <div class="hd"><span class="bd">1</span>Collect</div>
+  <div class="mn">Elastic Agent · Fleet</div>
+  <div class="sb"><span class="ng"><i class="ico" data-icon="nginx"></i>nginx integration</span><br>tails access.log, stamps<br><b style="color:var(--ink);font:600 10px var(--mono)">data_stream.*</b></div>
+  <i class="ico srv" data-icon="server"></i>
+</div>
+
+<div class="cd ilm fx" style="--d:.85s" id="ilm">
+  <div class="hd"><span class="bd">6</span>Rollover · ILM policy</div>
+  <div class="mn">logs@lifecycle</div>
+  <div class="sb">Rolls over at 50 GB or 30 days.</div>
+  <span class="tag no">NO DELETE PHASE BY DEFAULT</span>
+</div>
+
+<div class="cd ns fx" style="--d:.95s" id="ns">
+  <div class="hd">Namespace</div>
+  <div class="mn">-default · -prod · -dev</div>
+  <div class="sb">Its own streams, retention and access per environment or team.</div>
+</div>
+
+<div class="cd tpl fx" style="--d:1.05s" id="tpl">
+  <div class="hd"><span class="bd">3</span>Index template</div>
+  <div class="mn">logs-nginx.access <span style="color:var(--grey);font-weight:500">matches logs-nginx.access-*</span></div>
+  <div class="chips"><span class="chip">logs@settings</span><span class="chip">logs@mappings</span><span class="chip">ecs@mappings</span><span class="chip">logs-nginx.access@package</span><span class="chip my">logs-nginx.access@custom</span></div>
+</div>
+
+<div class="cd pipe fx" style="--d:1.15s" id="pipe">
+  <div class="hd"><span class="bd">4</span>Default ingest pipeline</div>
+  <div class="mn">logs-nginx.access-&lt;version&gt;</div>
+  <div class="chips"><span class="chip">grok</span><span class="chip">user_agent</span><span class="chip">geoip</span><span class="chip">ECS fields</span><span class="chip my">calls logs-nginx.access@custom</span></div>
+</div>
+
+<div class="cd bk fx" style="--d:1.25s" id="bk">
+  <div class="hd"><span class="bd">5</span>Backing indices</div>
+  <div class="ix">.ds-<span class="u uT">logs</span>-<span class="u uD">nginx.access</span>-<span class="u uN">default</span>-2026.11.18-<b>000001</b></div>
+  <div class="st">READ-ONLY · READS</div>
+  <div class="ix on">.ds-<span class="u uT">logs</span>-<span class="u uD">nginx.access</span>-<span class="u uN">default</span>-2026.11.18-<b>000002</b></div>
+  <div class="st">WRITE INDEX · WRITES AND READS</div>
+</div>
+
+<div class="cd snp fx" style="--d:1.45s" id="snp">
+  <i class="ico" data-icon="cloud"></i>
+  <div class="hd"><span class="bd">7</span>Snapshot</div>
+  <div class="mn" style="font-size:10px">cloud-snapshot-policy</div>
+  <div class="sb">Every 30 min, into<br><b style="color:var(--ink);font:600 10px var(--mono);white-space:nowrap">found-snapshots</b></div>
+</div>
+
+<div class="cd del fx" style="--d:1.55s" id="del">
+  <i class="ico" data-icon="trash"></i>
+  <div class="hd" style="color:#E0352B"><span class="bd">8</span>Delete</div>
+  <div class="sb" style="margin-top:7px">Only when you add retention, via <b style="color:#C2410C;font:600 10px var(--mono)">@custom</b></div>
+</div>
+
+<div class="mini fx" style="left:826px;top:280px;--d:1.25s">CREATES</div>
+
+<div class="strip fx" style="--d:1.6s">
+  <div class="s" style="animation-delay:2s"><i>1</i>Collect</div><div class="ar"></div>
+  <div class="s" style="animation-delay:2.6s"><i>2</i>Name</div><div class="ar"></div>
+  <div class="s" style="animation-delay:3.2s"><i>3</i>Template</div><div class="ar"></div>
+  <div class="s" style="animation-delay:3.8s"><i>4</i>Pipeline</div><div class="ar"></div>
+  <div class="s" style="animation-delay:4.4s"><i>5</i>Backing index</div><div class="ar"></div>
+  <div class="s" style="animation-delay:5s"><i>6</i>Rollover</div><div class="ar"></div>
+  <div class="s" style="animation-delay:5.6s"><i>7</i>Snapshot</div><div class="ar"></div>
+  <div class="s x" style="animation-delay:6.2s"><i>8</i>Delete</div>
+</div>
+
+<svg class="ov" id="ov" viewBox="0 0 1280 720"></svg>
+
+<script src="style/eweb.js"></script>
+<script src="ds.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+DS.icons();
+DS.ready(() => {
+  const ov = document.getElementById('ov'), B = DS.box, A = (p, o) => DS.arrow(ov, p, o);
+  const T = B('#sT'), D = B('#sD'), N = B('#sN'), nm = B('#nm');
+  const col = B('#col'), ilm = B('#ilm'), ns = B('#ns'), tpl = B('#tpl'), pipe = B('#pipe'), bk = B('#bk'), snp = B('#snp'), del = B('#del');
+  const cy = nm.t + 18;
+  // 1 collect stamps the name
+  const a0 = A([[col.r, cy], [nm.l - 8, cy]], {delay: .3, dur: .3});
+  // type -> ILM policy, namespace -> separation
+  A([[T.cx, T.t - 6], [T.cx, ilm.b]], {delay: .75, dur: .2, c: DS.COL.blue, w: 1.6});
+  A([[N.cx, N.t - 6], [N.cx, ns.b]], {delay: .85, dur: .2, c: DS.COL.orange, w: 1.6});
+  // dataset -> template and pipeline
+  const y0 = D.b + 24, yb = tpl.t - 14;
+  A([[D.cx, y0], [D.cx, yb], [tpl.cx + 40, yb], [tpl.cx + 40, tpl.t]], {delay: .95, dur: .3, c: DS.COL.teal, w: 1.6, r: 8});
+  A([[D.cx, y0], [D.cx, yb], [pipe.cx, yb], [pipe.cx, pipe.t]], {delay: 1.0, dur: .3, c: DS.COL.teal, w: 1.6, r: 8});
+  // the whole name creates the backing indices
+  const a1 = A([[nm.r + 8, cy], [bk.l, cy]], {delay: 1.15, dur: .2});
+  // backing indices: snapshot always, delete only with your retention
+  A([[snp.cx, bk.b], [snp.cx, snp.t]], {delay: 1.4, dur: .15, c: DS.COL.blue});
+  A([[del.cx, bk.b], [del.cx, del.t]], {delay: 1.5, dur: .15, c: '#E0352B', dash: '4 3'});
+  DS.flow(a0.p, {colors: DS.RAW, n: 2, period: 1.6, size: 7});
+  DS.flow(a1.p, {n: 1, period: 1.4, size: 7, phase: .4});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Data stream end to end · defaults and hooks</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="ds.css">
+<style>
+h1{font-size:42px;letter-spacing:-1.4px}
+.leg{position:absolute;left:72px;top:150px;display:flex;gap:22px;font:500 10.5px var(--mono);letter-spacing:.04em;color:var(--char);z-index:3}
+.leg span{display:flex;align-items:center;gap:7px}
+.leg i{display:inline-block;width:12px;height:12px}
+.leg .kd{background:var(--blue)}.leg .ky{border:1.5px solid var(--orange)}.leg .kr{background:#E0352B}
+.leg b{font-weight:600;color:var(--ink)}
+.col{position:absolute;top:212px;height:404px}
+.hd{position:absolute;left:0;right:0;top:0;height:30px;border:1px solid var(--ink);background:#fff;display:flex;align-items:center;gap:7px;padding-left:9px;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.hd i{font-style:normal;color:var(--blue)}
+.dl{position:absolute;left:0;right:0;top:42px;height:172px;background:var(--blue);color:#fff;padding:11px 10px}
+.yl{position:absolute;left:0;right:0;top:238px;height:166px;background:#fff;border:1.5px solid var(--orange);padding:11px 10px}
+.yl::before{content:'';position:absolute;left:50%;top:-22px;width:2px;height:20px;background:var(--orange)}
+.yl::after{content:'';position:absolute;left:calc(50% - 4px);top:-27px;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--orange);box-sizing:border-box}
+.tg{font:600 9.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px}
+.dl .tg{color:rgba(255,255,255,.7)}.yl .tg{color:var(--orange)}
+.n{font:600 11px var(--mono);white-space:nowrap}
+.dl .n{color:#fff}.yl .n{color:var(--ink)}
+.s{font:400 11px/1.35 var(--sans);margin-top:3px}
+.dl .s{color:rgba(255,255,255,.86)}.yl .s{color:var(--char)}
+.ls{margin-top:7px;font:500 9.5px/1.6 var(--mono);white-space:nowrap}
+.dl .ls{color:#fff}.yl .ls{color:var(--ink)}
+.ls div::before{content:'';display:inline-block;width:5px;height:5px;margin-right:6px;vertical-align:middle;background:currentColor;opacity:.6}
+.yl .ls div::before{background:var(--orange);opacity:1}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.chips span{font:500 9.5px var(--mono);padding:2px 5px;border:1px solid rgba(255,255,255,.6);color:#fff}
+.bi{margin-top:6px;height:22px;border:1px solid rgba(255,255,255,.6);display:flex;align-items:center;padding-left:7px;font:500 9.5px var(--mono);color:rgba(255,255,255,.8)}
+.bi.on{border:1.5px solid #fff;background:rgba(255,255,255,.16);color:#fff;font-weight:600}
+.brk{margin-top:5px;height:8px;border:1px solid rgba(255,255,255,.7);border-top:0}
+.nod{margin-top:12px;border:1px dashed rgba(255,255,255,.75);padding:7px 8px;font:600 10px var(--mono);letter-spacing:.06em;color:#fff}
+.nod small{display:block;font:400 10.5px var(--sans);letter-spacing:0;color:rgba(255,255,255,.86);margin-top:2px}
+.ph{display:flex;gap:4px;margin-top:8px}
+.ph span{flex:1;height:22px;border:1px solid var(--ink);display:flex;align-items:center;justify-content:center;font:600 9.5px var(--mono);letter-spacing:.04em;color:var(--ink)}
+.ph .w{border-top:3px solid var(--yellow)}.ph .c{border-top:3px solid #7FB2F5}.ph .f{border-top:3px solid #C9E0FF}
+.del{margin-top:5px;height:28px;background:#E0352B;display:flex;align-items:center;gap:8px;padding-left:8px;font:600 10px var(--mono);letter-spacing:.08em;color:#fff}
+.del .ico{width:20px;height:20px}
+.cl{display:block;width:40px;height:30px;margin-bottom:6px}
+/* entrances: default layers build left to right, hook layers slide up and snap */
+.up{animation:ds-up .45s cubic-bezier(.3,1.5,.5,1) var(--d,0s) both}
+@keyframes ds-up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+.lift{animation:ds-in .5s cubic-bezier(.2,.7,.2,1) var(--d,0s) both}
+.pulse{animation:ds-up .45s cubic-bezier(.3,1.5,.5,1) var(--d,0s) both,dp 2.6s ease-in-out 2.2s infinite}
+@keyframes dp{0%,100%{box-shadow:0 0 0 0 rgba(224,53,43,0)}50%{box-shadow:0 0 0 5px rgba(224,53,43,.16)}}
+html.ds-static .pulse{animation:none}
+</style>
+</head>
+<body data-foot="Data streams · v9 defaults and hooks">
+<div class="z"><div class="eyebrow in1">Data streams · Defaults, end to end</div><h1 class="in2">Works out of the box. <span class="b">Hooks where you need them.</span></h1></div>
+
+<div class="leg in3">
+  <span><i class="kd"></i><b>Default</b> installed by the integration, don't edit</span>
+  <span><i class="ky"></i><b>Yours</b> @custom hooks, survive upgrades</span>
+  <span><i class="kr"></i><b>Delete</b> only exists if you add it</span>
+</div>
+
+<!-- 1 Collect -->
+<div class="col" style="left:72px;width:150px">
+  <div class="hd fx" style="--d:.2s"><i>01</i>Collect</div>
+  <div class="dl lift" style="--d:.35s"><div class="tg">Default</div>
+    <div class="n">Elastic Agent</div><div class="s">Fleet-managed, nginx integration</div>
+    <div class="ls"><div>tails access.log</div><div>sets data_stream.*</div></div></div>
+  <div class="yl up" style="--d:1.0s"><div class="tg">Yours</div>
+    <div class="n">Integration policy</div>
+    <div class="ls"><div>log paths</div><div>namespace</div></div></div>
+</div>
+
+<!-- 2 Template -->
+<div class="col" style="left:242px;width:180px">
+  <div class="hd fx" style="--d:.28s"><i>02</i>Index template</div>
+  <div class="dl lift" style="--d:.47s"><div class="tg">Default</div>
+    <div class="n">logs-nginx.access</div><div class="s">matches logs-nginx.access-*</div>
+    <div class="ls"><div>logs@settings</div><div>logs@mappings</div><div>ecs@mappings</div><div>logs-nginx.access@package</div></div></div>
+  <div class="yl up" style="--d:1.07s"><div class="tg">Yours</div>
+    <div class="ls" style="margin-top:0"><div>logs@custom</div><div>nginx@custom</div><div>logs-nginx.access@custom</div></div>
+    <div class="s" style="margin-top:6px">Component templates. Data stream level wins.</div></div>
+</div>
+
+<!-- 3 Pipeline -->
+<div class="col" style="left:442px;width:196px">
+  <div class="hd fx" style="--d:.36s"><i>03</i>Ingest pipeline</div>
+  <div class="dl lift" style="--d:.59s"><div class="tg">Default</div>
+    <div class="n" style="font-size:10.5px">logs-nginx.access-&lt;version&gt;</div><div class="s">parse, enrich, map to ECS</div>
+    <div class="chips"><span>grok</span><span>user_agent</span><span>geoip</span><span>ECS</span></div></div>
+  <div class="yl up" style="--d:1.14s"><div class="tg">Yours</div>
+    <div class="ls" style="margin-top:0"><div>global@custom</div><div>logs@custom</div><div>logs-nginx.integration@custom</div><div>logs-nginx.access@custom</div></div>
+    <div class="s" style="margin-top:6px">Called if they exist.</div></div>
+</div>
+
+<!-- 4 Data stream -->
+<div class="col" style="left:658px;width:168px">
+  <div class="hd fx" style="--d:.44s"><i>04</i>Data stream</div>
+  <div class="dl lift" style="--d:.71s"><div class="tg">Default</div>
+    <div class="n" style="font-size:9.5px">logs-nginx.access-default</div>
+    <div class="bi" style="margin-top:9px">.ds-…-000001</div>
+    <div class="bi on">.ds-…-000002 ← writes</div>
+    <div class="brk"></div>
+    <div class="s" style="text-align:center">reads span all</div></div>
+  <div class="yl up" style="--d:1.21s"><div class="tg">Yours · namespace</div>
+    <div class="ls" style="margin-top:0"><div>logs-nginx.access-prod</div><div>logs-nginx.access-dev</div></div>
+    <div class="s" style="margin-top:6px">Own retention and access per namespace.</div></div>
+</div>
+
+<!-- 5 Lifecycle -->
+<div class="col" style="left:846px;width:176px">
+  <div class="hd fx" style="--d:.52s"><i>05</i>Lifecycle (ILM)</div>
+  <div class="dl lift" style="--d:.83s"><div class="tg">Default</div>
+    <div class="n">logs@lifecycle</div><div class="s">hot, rollover at 50 GB or 30 days</div>
+    <div class="nod">NO DELETE PHASE<small>Kept until you set retention.</small></div></div>
+  <div class="yl up" style="--d:1.28s"><div class="tg">Yours · copied policy</div>
+    <div class="ph"><span class="w">WARM</span><span class="c">COLD</span><span class="f">FROZEN</span></div>
+    <div class="del pulse" style="--d:1.35s"><i class="ico" data-icon="trash"></i>DELETE</div>
+    <div class="ls" style="margin-top:7px;line-height:1.45"><div>index.lifecycle.name</div></div>
+    <div class="s" style="margin-top:1px">in @custom, from next rollover</div></div>
+</div>
+
+<!-- 6 Snapshot -->
+<div class="col" style="left:1042px;width:162px">
+  <div class="hd fx" style="--d:.6s"><i>06</i>Snapshot (SLM)</div>
+  <div class="dl lift" style="--d:.95s"><div class="tg">Default · Cloud</div>
+    <i class="ico cl" data-icon="cloud"></i>
+    <div class="n" style="font-size:10.5px">cloud-snapshot-policy</div><div class="s">every 30 min</div>
+    <div class="ls"><div>→ found-snapshots</div></div></div>
+  <div class="yl up" style="--d:1.35s"><div class="tg">Yours</div>
+    <div class="n">Own SLM policy</div>
+    <div class="ls"><div>own repository</div><div>S3 · GCS · Azure</div><div>snapshot retention</div></div></div>
+</div>
+
+<svg class="ov" id="ov" viewBox="0 0 1280 720"></svg>
+
+<script src="style/eweb.js"></script>
+<script src="ds.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+DS.icons();
+DS.ready(() => {
+  const ov = document.getElementById('ov'), Y = 196;
+  // stage columns: left edge and width, in slide coordinates
+  const C = [[72, 150], [242, 180], [442, 196], [658, 168], [846, 176], [1042, 162]];
+  // the flow rail across the top: one arrow per stage hand-off
+  C.forEach(([l, w], i) => {
+    const end = i < C.length - 1 ? C[i + 1][0] - 4 : l + w;
+    DS.arrow(ov, [[l + (i ? 0 : 0), Y], [end, Y]], {delay: .2 + i * .1, dur: .25, w: 1.6, head: i < C.length - 1 ? 7 : 0});
+    DS.mk('line', {x1: l + 18, y1: Y, x2: l + 18, y2: 212, stroke: '#1D1E24', 'stroke-width': 1, class: 'fx', style: `--d:${.25 + i * .1}s`}, ov);
+  });
+  // data on the rail: raw until the pipeline has run, uniform blue after
+  const rail = DS.mk('path', {d: `M72,${Y} L1204,${Y}`, fill: 'none', stroke: 'none'}, ov);
+  const cut = (C[2][0] + C[2][1] - 72) / (1204 - 72);
+  DS.flow(rail, {n: 5, period: 6, size: 8, colors: (k, i) => k < cut ? DS.RAW[i % 4] : DS.COL.blue});
+});
+</script>
+</body>
+</html>
