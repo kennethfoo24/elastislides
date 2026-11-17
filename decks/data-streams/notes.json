@@ -1,0 +1,5 @@
+{
+  "01-rail.html": "- One nginx access log line, followed from collection to deletion.\n- Elastic Agent, managed by Fleet, tails access.log and ships to logs-nginx.access-default (type, dataset, namespace).\n- The index template's component templates set mappings and settings, including the default ingest pipeline.\n- The pipeline parses, enriches and runs your @custom hook.\n- Writes land only on the newest backing index; reads span all of them.\n- ILM rolls over, ages through warm, cold and frozen, then deletes. SLM snapshots to harborview-backups.",
+  "02-iso.html": "- Same flow as an isometric scene: raw multi-colour data turns uniform blue once the pipeline has shaped it.\n- Writes hit the active backing index; reads span all of them.\n- The rolled-over index steps down through warm, cold and frozen to delete, with an SLM snapshot on the side.",
+  "03-metro.html": "- Five stops on one line: collect, template, pipeline, stream, lifecycle.\n- The track only enters the newest backing index: that is the write index.\n- Rollover makes -000001 read-only; from there it is snapshotted and aged out."
+}

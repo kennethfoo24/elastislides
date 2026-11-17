@@ -1,0 +1,16 @@
+/* data-streams deck: shared bits on top of style/eweb.css */
+.ov{position:absolute;left:0;top:0;width:1280px;height:720px;overflow:visible;z-index:3;pointer-events:none}
+.ov text{font-family:var(--mono)}
+.ico{display:inline-block;font-style:normal;line-height:0}
+.ico svg{width:100%;height:100%;display:block}
+/* staggered entrance: style="--d:.6s" */
+.fx{animation:ds-in .55s cubic-bezier(.2,.7,.2,1) var(--d,0s) both}
+@keyframes ds-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.fxs{animation:ds-pop .5s cubic-bezier(.3,1.5,.5,1) var(--d,0s) both;transform-box:fill-box;transform-origin:center}
+@keyframes ds-pop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:none}}
+/* the one element that pulses: the active write index */
+.glow{animation:ds-in .55s cubic-bezier(.2,.7,.2,1) var(--d,0s) both,ds-glow 2.4s ease-in-out 2s infinite}
+@keyframes ds-glow{0%,100%{box-shadow:0 0 0 0 rgba(11,100,221,0)}50%{box-shadow:0 0 0 5px rgba(11,100,221,.12)}}
+.ico.red{background:#E0352B;border-radius:6px}
+.ico.red svg{padding:0}
+html.ds-static .glow{animation:ds-in .55s cubic-bezier(.2,.7,.2,1) var(--d,0s) both}

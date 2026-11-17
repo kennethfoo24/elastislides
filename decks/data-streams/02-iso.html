@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Data stream end to end · isometric</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="ds.css">
+<style>
+h1{font-size:42px;letter-spacing:-1.4px}
+#sc{left:0;top:0;width:1280px;height:720px}
+.cap{position:absolute;top:186px;width:196px;border-top:1px solid var(--ink);padding-top:10px;z-index:3}
+.cap .tag{color:var(--blue);font-size:10.5px}
+.cap h2{font:600 17px/1.15 var(--sans);letter-spacing:-.3px;margin-top:6px;color:var(--ink)}
+.cap p{font:500 11px var(--mono);color:var(--grey);margin-top:5px;white-space:nowrap}
+.cap p b{color:var(--ink);font-weight:600}
+.ml{position:absolute;z-index:4;font:600 10.5px var(--mono);letter-spacing:.04em;color:var(--ink);white-space:nowrap;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff}
+.ml small{display:block;font-weight:400;color:var(--char);font-size:10px;letter-spacing:.02em;margin-top:2px}
+.ml.c{translate:-50% 0;text-align:center}
+.ml.r{translate:-100% 0;text-align:right}
+.steps{position:absolute;z-index:4;font:500 10.5px var(--mono);color:var(--grey);line-height:1.75}
+.steps div{transition:color .25s}
+.steps div.on{color:var(--blue);font-weight:600}
+.steps i{font-style:normal;color:var(--grey-l);margin-right:6px}
+.nginx{display:inline-flex;align-items:center;gap:5px}
+.nginx .ico{width:12px;height:12px}
+.end{position:absolute;z-index:4;text-align:center;translate:-50% 0}
+.end .ico{display:block;margin:0 auto}
+.end .n{font:600 12.5px var(--sans);color:var(--ink);margin-top:6px;white-space:nowrap}
+.end .s{font:500 10.5px var(--mono);color:var(--grey);margin-top:2px;white-space:nowrap}
+</style>
+</head>
+<body data-foot="Data streams · v2 isometric">
+<div class="z"><div class="eyebrow in1">Data streams · End to end</div><h1 class="in2">Five stages. <span class="b">One stream of data.</span></h1></div>
+
+<div class="cap fx" style="left:52px;--d:.2s"><span class="tag">01 / Collection</span><h2>Elastic Agent</h2><p>Fleet-managed</p></div>
+<div class="cap fx" style="left:272px;--d:.3s"><span class="tag">02 / Index template</span><h2>Custom template</h2><p><b>logs-harborview.app-*</b></p></div>
+<div class="cap fx" style="left:502px;--d:.4s"><span class="tag">03 / Ingest pipeline</span><h2>Managed pipeline</h2><p>parse · enrich · customise</p></div>
+<div class="cap fx" style="left:732px;--d:.5s"><span class="tag">04 / Data stream</span><h2>Append-only stream</h2><p><b>logs-nginx.access-default</b></p></div>
+<div class="cap fx" style="left:962px;width:250px;--d:.6s"><span class="tag">05 / ILM &amp; SLM lifecycle</span><h2>Roll, back up, age out</h2><p>hot · warm · cold · frozen · delete</p></div>
+
+<svg id="sc" class="iso" viewBox="0 0 1280 720"></svg>
+<svg class="ov" id="ov" viewBox="0 0 1280 720"></svg>
+<div id="labels"></div>
+
+<script src="style/eweb.js"></script>
+<script src="style/scenes.js"></script>
+<script src="ds.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+(function(){
+  const OY = 430, svg = document.getElementById('sc'), ov = document.getElementById('ov'), LB = document.getElementById('labels');
+  EW.dots({x: 0, y: 300, w: 1280, h: 260, seed: 12, blobs: 10, thr: .64});
+  const sc = EW.iso(svg, {ox: 0, oy: OY, s: 1});
+  // Q(X, D): scene x,y for screen x = X on the flow axis, D toward the viewer
+  const Q = (X, D) => [X / 1.732 + (D || 0), -X / 1.732 + (D || 0)];
+  const at = (X, w, d, D) => { const [x, y] = Q(X, D); return {x: x - w / 2, y: y - d / 2, w, d}; };
+  const box = (X, w, d, o) => sc.box(Object.assign(at(X, w, d, o.D), o));
+  const lab = (x, y, html, cls, d) => { const e = document.createElement('div'); e.className = 'ml fx ' + (cls || ''); e.style.cssText = `left:${x}px;top:${y}px;--d:${d || 1}s`; e.innerHTML = html; LB.appendChild(e); return e; };
+  const X1 = 150, X2 = 370, X3 = 600, X4 = 830, X5 = 1040;
+
+  [X1, X2, X3, X5].forEach((X, i) => sc.rect(Object.assign(at(X, 104, 104), {delay: .15 + i * .08})));
+
+  // 01 a three-unit server with the agent docked on top
+  [0, 1, 2].forEach(k => box(X1, 54, 54, {z: k * 22, h: 19, c: 'white', delay: .25 + k * .07, drop: 50}));
+  box(X1, 26, 26, {z: 66, h: 18, c: 'blue', delay: .5, drop: 50});
+  lab(X1 + 34, OY - 108, 'Elastic Agent<small>(Fleet)</small>', '', .7);
+  lab(X1 - 22, OY + 46, '<span class="nginx"><i class="ico" data-icon="nginx"></i>access.log</span><small>reads nginx logs</small>', 'c', .6);
+
+  // 02 the template: two component blocks snap together inside a dashed blueprint
+  box(X2, 64, 64, {z: 0, h: 28, c: 'blue', delay: .55, drop: 60});
+  box(X2, 64, 64, {z: 30, h: 28, c: 'teal', delay: .75, drop: 90});
+  box(X2, 78, 78, {h: 68, c: 'white', wire: true, dash: '3 4', stroke: '#0B64DD', delay: .5, drop: 0, snap: false, shadow: false, order: 100});
+  const tp = document.createElement('div'); tp.className = 'steps fx'; tp.style.cssText = `left:${X2 - 62}px;top:${OY + 62}px;--d:.95s;line-height:1.35`;
+  tp.innerHTML = '<div style="margin-bottom:6px"><i style="color:#02BCB7">■</i><b style="color:#1D1E24">Settings</b><br><i></i>shards · replicas · ILM · pipeline</div><div><i style="color:#0B64DD">■</i><b style="color:#1D1E24">Mappings</b><br><i></i>ECS / custom field types</div>';
+  LB.appendChild(tp);
+
+  // 03 the pipeline: a plate with three processors in sequence
+  box(X3, 92, 92, {h: 10, c: 'teal', delay: .7, drop: 60});
+  const proc = [-44, 0, 44].map((dx, k) => box(X3 + dx, 20, 20, {z: 10, h: 22, c: 'white', delay: .85 + k * .08, drop: 50}));
+  const steps = document.createElement('div'); steps.className = 'steps fx'; steps.style.cssText = `left:${X3 - 58}px;top:${OY + 50}px;--d:1s`;
+  steps.innerHTML = '<div><i>1</i>Grok / Dissect</div><div><i>2</i>GeoIP &amp; ECS</div><div><i>3</i>@custom pipeline</div>';
+  LB.appendChild(steps);
+  // light each processor in turn, in step with its name
+  if (!DS.skip) EW.loop(t => { const k = t < 2 ? -1 : Math.floor((t - 2) / .8) % 4;
+    proc.forEach((b, i) => { const on = i === k, f = b.g.children; f[0].setAttribute('fill', on ? '#0B64DD' : '#F5F7FA'); f[1].setAttribute('fill', on ? '#0A4FB0' : '#DDE3EC'); });
+    [...steps.children].forEach((e, i) => e.classList.toggle('on', i === k)); });
+
+  // 05 hot phase: active write index (left) and the rolled-over index (right)
+  const HOT = {top: '#FFFFFF', left: '#FF7E62', right: '#343741'};
+  box(X5, 100, 100, {h: 10, c: HOT, delay: 1.1, drop: 60});
+  const W = 30, i2 = box(X5 - 40, W, W, {z: 10, h: 46, c: 'blue', delay: 1.25, drop: 60}), i1 = box(X5 + 40, W, W, {z: 10, h: 34, c: 'white', delay: 1.2, drop: 60});
+  // warm, cold, frozen step down to the right, then delete
+  const [px, py] = Q(X5 + 40);
+  const tiers = [['#FEC514', '#343741', 16], ['#7FB2F5', '#0A4FB0', 12], ['#D9E8FF', '#98A2B3', 8]];
+  tiers.forEach(([l, r, h], k) => sc.box({x: px + 44 + k * 26, y: py - 12, w: 22, d: 22, h, c: {top: '#FFFFFF', left: l, right: r}, delay: 1.45 + k * .06, drop: 40}));
+  sc.box({x: px + 44 + 3 * 26 + 6, y: py - 12, w: 24, d: 24, h: 24, c: {top: '#FFD9D4', left: '#E0352B', right: '#8F1D16'}, delay: 1.65, drop: 50});
+  sc.run();
+
+  // 04 the data stream: one cylinder, two backing indices
+  const cy = DS.cyl(ov, {x: X4 - 84, y: OY - 62, w: 168, h: 58, segs: ['-000001', '-000002'], font: 10.5});
+  cy.g.classList.add('fx'); cy.g.style.setProperty('--d', '.95s');
+  const s2 = cy.seg(1), A = (p, o) => DS.arrow(ov, p, o);
+  // flow axis arrows between stages
+  A([[X1 + 56, OY + 22], [X2 - 66, OY + 22]], {delay: .55, dur: .35});
+  lab((X1 + X2) / 2 + 12, OY + 34, 'logs-nginx.access-default', 'c', .7);
+  A([[X2 + 50, OY + 18], [X3 - 80, OY + 18]], {delay: .8, dur: .25});
+  // writes go to the newest backing index only
+  const wa = A([[X3 + 72, OY - 92], [s2.c, OY - 92], [s2.c, OY - 66]], {delay: 1.05, dur: .4, c: DS.COL.blue, w: 2});
+  lab(X3 + 80, OY - 112, '<span style="color:#0B64DD">WRITES</span>', '', 1.2);
+  // reads span every backing index
+  const by = OY + 8, bl = cy.x0 - 8, br = s2.b + 8;
+  A([[bl, by - 6], [bl, by], [br, by], [br, by - 6]], {delay: 1.3, dur: .4, head: 0, r: 0, w: 1.2});
+  A([[X4, OY + 60], [X4, by + 2]], {delay: 1.4, dur: .25, head: 6});
+  lab(X4 + 10, OY + 40, 'READS', '', 1.45);
+  lab(X4, OY + 64, '<i class="ico" data-icon="search" style="width:20px;height:20px"></i>', 'c', 1.4);
+  // 04 -> 05
+  A([[br + 10, OY - 33], [X5 - 92, OY - 33]], {delay: 1.2, dur: .25});
+
+  // 05 labels and arrows, from the drawn solids
+  const P = sc.P, top2 = P(i2.x + W / 2, i2.y + W / 2, 56), top1 = P(i1.x + W / 2, i1.y + W / 2, 44);
+  const ay = top2[1] - 22;
+  A([[top1[0] - 6, top1[1] - 4], [top1[0] - 6, ay], [top2[0] + 6, ay], [top2[0] + 6, top2[1] - 4]], {delay: 1.45, dur: .35, r: 8, head: 6, w: 1.3});
+  lab((top1[0] + top2[0]) / 2, ay - 18, 'ROLLOVER', 'c', 1.5);
+  const LY = OY - 150;
+  A([[top2[0] - 8, LY + 30], [top2[0] - 8, top2[1] - 3]], {delay: 1.35, dur: .2, head: 0, w: 1});
+  A([[top1[0] + 8, LY + 30], [top1[0] + 8, top1[1] - 3]], {delay: 1.35, dur: .2, head: 0, w: 1});
+  lab(top2[0] - 8 + 4, LY, '.ds-…-000002<small style="color:#0B64DD;font-weight:600">ACTIVE WRITE · R/W</small>', 'r', 1.4);
+  lab(top1[0] + 8 - 4, LY, '.ds-…-000001<small>READ-ONLY</small>', '', 1.4);
+  lab(X5 - 96, OY + 50, '<span style="color:#FF7E62">■</span> HOT PHASE', '', 1.2);
+  const t0 = P(px + 44, py + 10, 0), del = P(px + 44 + 3 * 26 + 18, py + 12, 0);
+  lab(t0[0] - 40, t0[1] + 46, 'WARM · COLD · FROZEN', '', 1.6);
+  const dl = document.createElement('div'); dl.className = 'end fx'; dl.style.cssText = `left:${Math.min(del[0] + 4, 1172)}px;top:${del[1] + 40}px;--d:1.7s`;
+  dl.innerHTML = '<div class="n" style="color:#E0352B">Delete phase</div><div class="s">retention expired</div>'; LB.appendChild(dl);
+  // -000001 branches: down to the snapshot repository
+  const b1 = P(i1.x + W, i1.y + W, 10);
+  const cl = document.createElement('div'); cl.className = 'end fx'; cl.style.cssText = `left:${b1[0]}px;top:${OY + 124}px;--d:1.6s`;
+  cl.innerHTML = '<i class="ico" data-icon="cloud" style="width:54px;height:40px"></i><div class="n">SLM snapshot</div><div class="s">harborview-backups</div>'; LB.appendChild(cl);
+  A([[b1[0], b1[1] + 2], [b1[0], OY + 122]], {delay: 1.55, dur: .3, c: DS.COL.blue});
+  DS.icons();
+
+  // raw cubes in, uniform blue after the pipeline
+  EW.S.stream(sc, {from: [...Q(X1 + 40), 0], to: [...Q(X4 - 100), 0], convertAt: .78, rate: 3, speed: 120, size: 11, delay: 1.9});
+  DS.flow(wa.p, {n: 2, period: 1.6, delay: 2.2});
+})();
+</script>
+</body>
+</html>

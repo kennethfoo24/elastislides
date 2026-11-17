@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Data stream end to end · metro line</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="ds.css">
+<style>
+h1{font-size:42px;letter-spacing:-1.4px}
+.cd{position:absolute;background:#fff;border:1px solid var(--ink);z-index:2;padding:12px 14px}
+.cd .hd{font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:7px}
+.cd .hd::before{content:'';width:8px;height:8px;background:var(--acc)}
+.cd .t{font:600 14px/1.2 var(--sans);letter-spacing:-.2px;color:var(--ink);margin-top:8px}
+.k1{--acc:var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.k2{--acc:var(--blue);box-shadow:6px 6px 0 var(--blue)}
+.k3{--acc:var(--teal-d);box-shadow:6px 6px 0 var(--teal)}
+.k5{--acc:var(--orange);box-shadow:6px 6px 0 var(--orange)}
+.s1{left:70px;top:236px;width:160px;height:164px}
+.s1 .file{position:absolute;left:14px;top:36px;width:130px;height:26px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;gap:6px;font:500 11px var(--mono);color:var(--ink)}
+.s1 .file .ico{width:13px;height:13px}
+.s1 .srv{position:absolute;left:14px;top:84px;width:44px;height:50px}
+.s1 .nm{position:absolute;left:70px;top:92px;font:600 13px/1.25 var(--sans);color:var(--ink)}
+.s1 .nm small{display:block;font:500 10.5px var(--mono);letter-spacing:.06em;color:var(--grey)}
+.s2{left:262px;top:478px;width:244px;height:180px}
+.pat{display:inline-block;margin-top:6px;font:600 11px var(--mono);color:var(--blue);border:1px solid var(--blue);padding:3px 7px}
+.pz{position:absolute;top:92px;width:104px;height:74px;border:1px solid var(--ink);padding:7px 9px;background:#fff}
+.pz .n{font:600 12.5px var(--sans);color:var(--ink)}
+.pz .s{font:400 10.5px/1.3 var(--sans);color:var(--char);margin-top:2px}
+.pz .k{position:absolute;right:6px;top:6px;font:600 9.5px var(--mono);color:var(--grey-l)}
+.pzA{left:14px;border-top:4px solid var(--blue);animation:pzA .6s cubic-bezier(.3,1.5,.5,1) .8s both}
+.pzB{left:124px;border-top:4px solid var(--teal-d);animation:pzB .6s cubic-bezier(.3,1.5,.5,1) .9s both}
+.pzA::after{content:'';position:absolute;right:-9px;top:30px;width:9px;height:14px;background:#fff;border:1px solid var(--ink);border-left:0;border-radius:0 7px 7px 0}
+@keyframes pzA{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
+@keyframes pzB{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+.s3{left:516px;top:222px;width:192px;height:178px}
+.chp{position:absolute;left:14px;width:162px;height:28px;border:1px solid var(--ink);background:#fff;display:flex;align-items:center;gap:8px;padding-left:9px;font:500 11px var(--mono);color:var(--ink);animation:hl 3s linear 2s infinite}
+.chp i{font-style:normal;color:var(--grey-l);font-weight:600}
+.c1{top:60px}.c2{top:98px;animation-delay:2.4s}.c3{top:136px;animation-delay:2.8s}
+@keyframes hl{0%,30%,100%{background:#fff;border-color:var(--ink);color:var(--ink)}6%,22%{background:var(--blue-l);border-color:var(--blue);color:var(--blue)}}
+html.ds-static .chp{animation:none}
+.pill{position:absolute;z-index:4;height:24px;padding:0 10px;display:flex;align-items:center;background:#fff;border:1px solid var(--ink);border-radius:12px;font:600 10.5px var(--mono);color:var(--ink);white-space:nowrap;translate:-50% -50%}
+.dsn{position:absolute;left:744px;top:360px;width:200px}
+.dsn .hd{font:600 10.5px var(--mono);letter-spacing:.08em;color:var(--ink);display:flex;align-items:center;gap:7px}
+.dsn .hd::before{content:'';width:8px;height:8px;background:var(--blue)}
+.dsn .n{font:600 11px var(--mono);color:var(--blue);margin-top:4px}
+.lbl{position:absolute;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;z-index:4}
+.s5{left:976px;top:290px;width:252px;height:372px}
+.zone{position:absolute;left:12px;top:44px;width:144px;height:178px;border:1px dashed var(--ink)}
+.zone .h{position:absolute;left:9px;top:8px;font:600 10px var(--mono);letter-spacing:.08em;color:var(--orange)}
+.ix{position:absolute;left:10px;width:122px;height:46px;border:1px solid var(--ink);background:#fff;padding:7px 8px}
+.ix .n{font:600 11px var(--mono);color:var(--ink)}
+.ix .s{font:600 9px var(--mono);letter-spacing:.02em;color:var(--grey);margin-top:4px;white-space:nowrap}
+.ix2{top:30px;border:1.5px solid var(--blue)}.ix2 .s{color:var(--blue)}
+.ix1{top:120px}
+.tiers{position:absolute;left:166px;top:175px;width:66px}
+.tiers div{height:26px;border:1px solid var(--ink);border-top-width:0;background:#fff;display:flex;align-items:center;gap:6px;padding-left:8px;font:600 9.5px var(--mono);letter-spacing:.05em;color:var(--ink)}
+.tiers div:first-child{border-top-width:1px}
+.tiers div::before{content:'';width:7px;height:7px}
+.tw::before{background:var(--yellow)}.tc::before{background:#7FB2F5}.tf::before{background:#D9E8FF;outline:1px solid #7FB2F5}
+.end{position:absolute;text-align:center;width:130px}
+.end .ico{display:block;margin:0 auto}
+.end .n{font:600 12px var(--sans);color:var(--ink);margin-top:6px}
+.end .s{font:500 10px var(--mono);color:var(--grey);margin-top:2px}
+.snap{left:19px;top:266px}.snap .ico{width:50px;height:38px}
+.del{left:134px;top:282px}
+.del .s{letter-spacing:-.02em}.del .ico{width:32px;height:32px;background:#E0352B;border-radius:6px}
+.del .n{color:#E0352B}
+.q{position:absolute;left:827px;top:604px;width:24px;height:24px}
+</style>
+</head>
+<body data-foot="Data streams · v3 metro line">
+<div class="z"><div class="eyebrow in1">Data streams · End to end</div><h1 class="in2">From access.log to retention. <span class="b">Five stops.</span></h1></div>
+
+<div class="cd k1 s1 fx" style="--d:.3s" id="s1">
+  <div class="hd">Collection</div>
+  <div class="file" id="file"><i class="ico" data-icon="nginx"></i>nginx access.log</div>
+  <i class="ico srv" id="srv" data-icon="server"></i>
+  <div class="nm">Elastic Agent<small>FLEET</small></div>
+</div>
+
+<div class="cd k2 s2 fx" style="--d:.55s" id="s2">
+  <div class="hd">Index template</div>
+  <div class="t" style="margin-top:6px">Custom index template <span class="pat">logs-harborview.app-*</span></div>
+  <div class="pz pzA"><span class="k">A</span><div class="n">Mappings</div><div class="s">ECS / custom field types</div></div>
+  <div class="pz pzB"><span class="k">B</span><div class="n">Settings</div><div class="s">Shards, replicas, ILM &amp; default pipeline</div></div>
+</div>
+
+<div class="cd k3 s3 fx" style="--d:.8s" id="s3">
+  <div class="hd">Ingest pipeline</div>
+  <div class="t" style="font-size:13px;margin-top:6px;white-space:nowrap">Managed ingest pipeline</div>
+  <div class="chp c1" id="c1"><i>1</i>Grok / Dissect</div>
+  <div class="chp c2" id="c2"><i>2</i>GeoIP &amp; ECS</div>
+  <div class="chp c3" id="c3"><i>3</i>@custom pipeline</div>
+</div>
+
+<div class="dsn fx" style="--d:1s"><div class="hd">DATA STREAM</div><div class="n">logs-nginx.access-default</div></div>
+<div class="lbl fx" style="left:840px;top:416px;color:var(--blue);--d:1.3s">Writes</div>
+<div class="lbl fx" style="left:850px;top:584px;color:var(--ink);--d:1.45s">Reads</div>
+<i class="ico q fx" style="--d:1.4s" data-icon="search"></i>
+
+<div class="cd k5 s5 fx" style="--d:1.15s" id="s5">
+  <div class="hd">ILM &amp; SLM lifecycle</div>
+  <div class="zone"><div class="h">HOT PHASE</div>
+    <div class="ix ix2 glow" style="--d:1.3s" id="ix2"><div class="n">.ds-…-000002</div><div class="s">ACTIVE WRITE · R/W</div></div>
+    <div class="ix ix1" id="ix1"><div class="n">.ds-…-000001</div><div class="s">READ-ONLY</div></div>
+  </div>
+  <div class="tiers fx" style="--d:1.5s" id="tiers"><div class="tw">WARM</div><div class="tc">COLD</div><div class="tf">FROZEN</div></div>
+  <div class="end snap fx" style="--d:1.6s" id="snap"><i class="ico" data-icon="cloud"></i><div class="n">SLM snapshot</div><div class="s">harborview-backups</div></div>
+  <div class="end del fx" style="--d:1.7s" id="del"><i class="ico" data-icon="trash"></i><div class="n">Delete phase</div><div class="s">retention expired</div></div>
+</div>
+<div class="lbl fx" id="roll" style="color:var(--grey);font-size:10px;--d:1.45s">Rollover</div>
+<div class="pill fx" style="left:266px;top:440px;--d:.8s">logs-nginx.access-default</div>
+
+<svg class="ov" id="ov" viewBox="0 0 1280 720"></svg>
+
+<script src="style/eweb.js"></script>
+<script src="ds.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+DS.icons();
+DS.ready(() => {
+  const ov = document.getElementById('ov'), B = DS.box, A = (p, o) => DS.arrow(ov, p, o), Y = 440;
+  const ST = [[150, '1', '#1D1E24'], [384, '2', '#0B64DD'], [612, '3', '#02BCB7'], [780, '4', '#0B64DD']];
+  const cy = DS.cyl(ov, {x: 756, y: 470, w: 164, h: 60, segs: ['-000001', '-000002']});
+  cy.g.classList.add('fx'); cy.g.style.setProperty('--d', '1.05s');
+  const s2c = cy.seg(1).c;
+  // the track: thick, one direction, stops at each station
+  const T = {w: 3, head: 9, c: '#1D1E24'};
+  const t1 = A([[ST[0][0] + 16, Y], [ST[1][0] - 17, Y]], Object.assign({delay: .5, dur: .4}, T));
+  const t2 = A([[ST[1][0] + 16, Y], [ST[2][0] - 17, Y]], Object.assign({delay: .75, dur: .35}, T));
+  const t3 = A([[ST[2][0] + 16, Y], [ST[3][0] - 17, Y]], Object.assign({delay: .95, dur: .25}, T));
+  const t4 = A([[ST[3][0] + 16, Y], [s2c, Y], [s2c, 468]], Object.assign({delay: 1.1, dur: .35, r: 12}, T, {c: DS.COL.blue}));
+  // stems from cards to stations
+  const s1 = B('#s1'), s2 = B('#s2'), s3 = B('#s3'), s5 = B('#s5');
+  A([[ST[0][0], s1.b], [ST[0][0], Y - 16]], {delay: .5, dur: .15, head: 0, w: 1});
+  A([[ST[1][0], Y + 16], [ST[1][0], s2.t]], {delay: .7, dur: .15, head: 0, w: 1});
+  A([[ST[2][0], s3.b], [ST[2][0], Y - 16]], {delay: .9, dur: .15, head: 0, w: 1});
+  ST.forEach(([x, n, c], i) => { const g = DS.mk('g', {class: 'fxs', style: `--d:${.35 + i * .2}s`}, ov);
+    DS.mk('circle', {cx: x, cy: Y, r: 15, fill: c, stroke: '#1D1E24', 'stroke-width': 1.5}, g);
+    const t = DS.mk('text', {x, y: Y + 4, 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 600, fill: '#fff'}, g); t.textContent = n; });
+  // 01 file -> agent
+  const fl = B('#file'), sv = B('#srv');
+  A([[sv.cx, fl.b], [sv.cx, sv.t - 2]], {delay: .5, dur: .2, head: 5, w: 1.2});
+  // 03 chips in order
+  const c1 = B('#c1'), c2 = B('#c2'), c3 = B('#c3');
+  A([[c1.l + 80, c1.b], [c1.l + 80, c2.t]], {delay: 1, dur: .15, head: 5, w: 1.2});
+  A([[c2.l + 80, c2.b], [c2.l + 80, c3.t]], {delay: 1.1, dur: .15, head: 5, w: 1.2});
+  // reads span every backing index
+  const by = 542, bl = cy.x0 - 8, br = cy.seg(1).b + 8;
+  A([[bl, by - 6], [bl, by], [br, by], [br, by - 6]], {delay: 1.35, dur: .4, head: 0, r: 0, w: 1.2});
+  A([[839, 600], [839, by + 2]], {delay: 1.45, dur: .25, head: 6});
+  // station 5: from the stream into the lifecycle
+  A([[br + 10, 500], [s5.l, 500]], {delay: 1.2, dur: .2});
+  const sg = DS.mk('g', {class: 'fxs', style: '--d:1.2s'}, ov);
+  DS.mk('circle', {cx: s5.l, cy: 500, r: 15, fill: '#FF7E62', stroke: '#1D1E24', 'stroke-width': 1.5}, sg);
+  const t5 = DS.mk('text', {x: s5.l, y: 504, 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 600, fill: '#fff'}, sg); t5.textContent = '5';
+  // rollover and branches
+  const i1 = B('#ix1'), i2 = B('#ix2'), tr = B('#tiers'), sn = B('#snap'), dl = B('#del');
+  A([[i1.l + 40, i1.t], [i1.l + 40, i2.b]], {delay: 1.4, dur: .25});
+  A([[i1.r, i1.cy], [tr.l, i1.cy]], {delay: 1.5, dur: .2});
+  const rl = document.getElementById('roll'); rl.style.left = (i1.l + 50) + 'px'; rl.style.top = ((i2.b + i1.t) / 2 - 7) + 'px';
+  A([[tr.cx, tr.b], [tr.cx, dl.t]], {delay: 1.6, dur: .2});
+  A([[i1.cx, i1.b], [i1.cx, sn.t]], {delay: 1.55, dur: .3, c: DS.COL.blue});
+  // data on the track: raw before the pipeline, blue after
+  DS.flow(t1.p, {colors: DS.RAW, n: 3, period: 2.6, size: 8});
+  DS.flow(t2.p, {colors: DS.RAW, n: 2, period: 2, size: 8, phase: .3});
+  DS.flow(t3.p, {n: 1, period: 1.2, size: 8, phase: .6});
+  DS.flow(t4.p, {n: 2, period: 1.8, size: 8, phase: .2});
+});
+</script>
+</body>
+</html>
