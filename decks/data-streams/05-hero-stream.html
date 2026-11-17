@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Data stream end to end · hero stream</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="ds.css">
+<style>
+h1{font-size:42px;letter-spacing:-1.4px}
+.tg{position:absolute;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);display:flex;gap:7px;z-index:3}
+.tg i{font-style:normal;color:var(--blue)}
+.pn{position:absolute;background:var(--bg);z-index:2;padding:10px 12px}
+.pn .t{font:600 13.5px var(--sans);letter-spacing:-.2px;color:var(--ink);white-space:nowrap}
+.s1{left:72px;top:218px;width:128px;height:154px;text-align:center}
+.s1 .file{margin:2px auto 0;width:104px;height:24px;border:1px solid var(--ink);background:#fff;display:flex;align-items:center;justify-content:center;gap:6px;font:500 10.5px var(--mono)}
+.s1 .file .ico{width:12px;height:12px}
+.s1 .srv{display:block;width:40px;height:46px;margin:14px auto 0}
+.s1 .nm{font:600 12.5px var(--sans);margin-top:6px}
+.s1 .nm small{display:block;font:500 10px var(--mono);letter-spacing:.06em;color:var(--grey);margin-top:1px}
+.a1{position:absolute;left:200px;width:160px;text-align:center;font:600 10px var(--mono);color:var(--ink);white-space:nowrap;z-index:3}
+.s2{left:360px;top:218px;width:252px;height:154px}
+.pat{display:inline-block;margin-top:5px;font:600 10.5px var(--mono);color:var(--blue);border:1px solid var(--blue);background:#fff;padding:3px 7px}
+.ct{position:absolute;top:68px;width:108px;height:76px;background:#fff;border:1px solid var(--ink);padding:6px 8px}
+.ct .k{font:600 9px var(--mono);letter-spacing:.08em;color:var(--grey-l)}
+.ct .n{font:600 12px var(--sans);color:var(--ink)}
+.ct .s{font:400 10px/1.3 var(--sans);color:var(--char);margin-top:1px}
+.ctA{left:12px;border-left:4px solid var(--blue);animation:cA .55s cubic-bezier(.3,1.5,.5,1) .75s both}
+.ctB{left:126px;border-left:4px solid var(--teal-d);animation:cB .55s cubic-bezier(.3,1.5,.5,1) .85s both}
+@keyframes cA{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+@keyframes cB{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.s3{left:640px;top:218px;width:176px;height:154px}
+.chp{position:absolute;left:12px;width:152px;height:26px;border:1px solid var(--ink);background:#fff;display:flex;align-items:center;gap:7px;padding-left:8px;font:500 10.5px var(--mono);color:var(--ink);animation:hl 3s linear 2s infinite}
+.chp i{font-style:normal;color:var(--grey-l);font-weight:600}
+.c1{top:42px}.c2{top:78px;animation-delay:2.4s}.c3{top:114px;animation-delay:2.8s}
+@keyframes hl{0%,30%,100%{background:#fff;border-color:var(--ink);color:var(--ink)}6%,22%{background:var(--blue-l);border-color:var(--blue);color:var(--blue)}}
+html.ds-static .chp{animation:none}
+.dsn{position:absolute;left:244px;top:394px;z-index:3}
+.dsn .n{font:600 17px var(--mono);color:var(--ink);letter-spacing:-.2px;margin-top:4px}
+.sg{position:absolute;z-index:4;font:600 12px var(--mono);color:var(--ink)}
+.sg small{display:block;font:600 9.5px var(--mono);letter-spacing:.08em;color:var(--grey);margin-top:3px}
+.sg.on{color:var(--blue)}.sg.on small{color:var(--blue)}
+.lbl{position:absolute;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;z-index:4}
+.zone{position:absolute;left:930px;top:214px;width:158px;height:186px;border:1px dashed var(--ink);z-index:1}
+.zone .h{position:absolute;left:10px;top:8px;font:600 10px var(--mono);letter-spacing:.08em;color:var(--ink);display:flex;align-items:center;gap:6px}
+.zone .h::before{content:'';width:8px;height:8px;background:var(--orange)}
+.ix{position:absolute;left:940px;width:138px;height:46px;border:1px solid var(--ink);background:#fff;padding:7px 9px;z-index:2}
+.ix .n{font:600 11px var(--mono);color:var(--ink)}
+.ix .s{font:600 9px var(--mono);letter-spacing:.03em;color:var(--grey);margin-top:4px;white-space:nowrap}
+.ix2{top:242px;border:1.5px solid var(--blue)}.ix2 .s{color:var(--blue)}
+.ix1{top:334px}
+.tiers{position:absolute;left:1112px;top:344px;width:84px;z-index:2}
+.tiers div{height:27px;border:1px solid var(--ink);border-top-width:0;background:#fff;display:flex;align-items:center;gap:7px;padding-left:9px;font:600 10px var(--mono);letter-spacing:.06em}
+.tiers div:first-child{border-top-width:1px}
+.tiers div::before{content:'';width:7px;height:7px}
+.tw::before{background:var(--yellow)}.tc::before{background:#7FB2F5}.tf::before{background:#D9E8FF;outline:1px solid #7FB2F5}
+.end{position:absolute;text-align:center;width:140px;z-index:2}
+.end .ico{display:block;margin:0 auto}
+.end .n{font:600 12px var(--sans);color:var(--ink);margin-top:6px}
+.end .s{font:500 10px var(--mono);color:var(--grey);margin-top:2px}
+.snap{left:939px;top:452px}.snap .ico{width:52px;height:40px}
+.del{left:1084px;top:462px}.del .ico{width:34px;height:34px;background:#E0352B;border-radius:6px}
+.del .n{color:#E0352B}
+.q{position:absolute;left:558px;top:606px;width:24px;height:24px}
+</style>
+</head>
+<body data-foot="Data streams · v5 hero stream">
+<div class="z"><div class="eyebrow in1">Data streams · End to end</div><h1 class="in2">Writes hit one index. <span class="b">Reads see them all.</span></h1></div>
+
+<div class="tg fx" style="left:72px;top:196px;--d:.2s"><i>01</i>Collection</div>
+<div class="tg fx" style="left:360px;top:196px;--d:.3s"><i>02</i>Index template</div>
+<div class="tg fx" style="left:640px;top:196px;--d:.4s"><i>03</i>Ingest pipeline</div>
+<div class="tg fx" style="left:930px;top:196px;--d:.6s"><i>05</i>ILM &amp; SLM lifecycle</div>
+
+<div class="pn s1 fx" style="--d:.25s">
+  <div class="file" id="file"><i class="ico" data-icon="nginx"></i>access.log</div>
+  <i class="ico srv" id="srv" data-icon="server"></i>
+  <div class="nm">Elastic Agent<small>FLEET</small></div>
+</div>
+<div class="a1 fx" style="top:270px;--d:.6s">logs-nginx.access-default</div>
+
+<div class="pn s2 fx" style="--d:.45s">
+  <div class="t">Custom index template</div>
+  <span class="pat">logs-harborview.app-*</span>
+  <div class="ct ctA"><div class="k">COMPONENT A</div><div class="n">Mappings</div><div class="s">ECS / custom field types</div></div>
+  <div class="ct ctB"><div class="k">COMPONENT B</div><div class="n">Settings</div><div class="s">Shards, replicas, ILM &amp; default pipeline</div></div>
+</div>
+
+<div class="pn s3 fx" style="--d:.65s">
+  <div class="t">Managed ingest pipeline</div>
+  <div class="chp c1" id="c1"><i>1</i>Grok / Dissect</div>
+  <div class="chp c2" id="c2"><i>2</i>GeoIP &amp; ECS</div>
+  <div class="chp c3" id="c3"><i>3</i>@custom pipeline</div>
+</div>
+
+<div class="dsn fx" style="--d:.9s"><div class="tg" style="position:static"><i>04</i>Data stream</div><div class="n">logs-nginx.access-default</div></div>
+<div class="sg fx" id="g1" style="--d:1.2s">-000001<small>READ-ONLY · SEALED</small></div>
+<div class="sg on fx" id="g2" style="--d:1.25s">-000002<small>WRITE INDEX</small></div>
+<div class="lbl fx" style="left:748px;top:392px;color:var(--blue);--d:1.2s">Writes</div>
+<div class="lbl fx" style="left:582px;top:582px;color:var(--ink);--d:1.45s">Reads</div>
+<i class="ico q fx" style="--d:1.4s" data-icon="search"></i>
+
+<div class="zone fx" style="--d:1.25s"><div class="h">HOT PHASE</div></div>
+<div class="ix ix2 fx glow" style="--d:1.3s" id="ix2"><div class="n">.ds-…-000002</div><div class="s">ACTIVE WRITE · R/W</div></div>
+<div class="ix ix1 fx" style="--d:1.3s" id="ix1"><div class="n">.ds-…-000001</div><div class="s">READ-ONLY</div></div>
+<div class="lbl fx" id="roll" style="color:var(--grey);font-size:10px;--d:1.45s">Rollover</div>
+<div class="tiers fx" style="--d:1.5s" id="tiers"><div class="tw">WARM</div><div class="tc">COLD</div><div class="tf">FROZEN</div></div>
+<div class="end snap fx" style="--d:1.6s" id="snap"><i class="ico" data-icon="cloud"></i><div class="n">SLM snapshot</div><div class="s">harborview-backups</div></div>
+<div class="end del fx" style="--d:1.7s" id="del"><i class="ico" data-icon="trash"></i><div class="n">Delete phase</div><div class="s">retention expired</div></div>
+
+<svg class="ov" id="ov" viewBox="0 0 1280 720"></svg>
+
+<script src="style/eweb.js"></script>
+<script src="ds.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+DS.icons();
+DS.ready(() => {
+  const ov = document.getElementById('ov'), B = DS.box, A = (p, o) => DS.arrow(ov, p, o), mk = DS.mk;
+  // the hero: one big cylinder, two backing indices
+  const cy = DS.cyl(ov, {x: 240, y: 436, w: 664, h: 100, segs: ['', '']});
+  cy.g.classList.add('fx'); cy.g.style.setProperty('--d', '.95s');
+  const S1 = cy.seg(0), S2 = cy.seg(1);
+  const g1 = document.getElementById('g1'), g2 = document.getElementById('g2');
+  g1.style.left = (S1.a + cy.rx + 14) + 'px'; g1.style.top = '452px';
+  g2.style.left = (S2.a + cy.rx + 14) + 'px'; g2.style.top = '452px';
+  // documents: -000001 is full, -000002 fills as writes land
+  const cols = 24, rows = 3, sz = 8, gap = 3.2, gx = s => s.a + cy.rx + 16, gy = 492;
+  const docs = mk('g', {class: 'fx', style: '--d:1.15s'}, ov);
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) mk('rect', {x: gx(S1) + c * (sz + gap), y: gy + r * (sz + gap), width: sz, height: sz, fill: '#B5BFCE'}, docs);
+  const live = [];
+  for (let c = 0; c < cols; c++) for (let r = rows - 1; r >= 0; r--) live.push(mk('rect', {x: gx(S2) + c * (sz + gap), y: gy + r * (sz + gap), width: sz, height: sz, fill: '#0B64DD', opacity: 0}, docs));
+  const keep = Math.round(live.length * .55), start = Math.round(live.length * .2);
+  if (DS.skip) live.slice(0, keep).forEach(e => e.setAttribute('opacity', 1));
+  else EW.loop(t => { const n = t < 1.3 ? 0 : Math.min(keep, start + Math.floor((t - 1.3) * 3)); live.forEach((e, i) => e.setAttribute('opacity', i < n ? 1 : 0)); });
+  // 01 -> 02 -> 03
+  const s1 = B('.s1'), s2 = B('.s2'), s3 = B('.s3'), y = 296, fl = B('#file'), sv = B('#srv');
+  A([[sv.cx, fl.b], [sv.cx, sv.t - 2]], {delay: .45, dur: .2, head: 5, w: 1.2});
+  const a1 = A([[s1.r, y], [s2.l, y]], {delay: .55, dur: .4});
+  const a2 = A([[s2.r, y], [s3.l, y]], {delay: .8, dur: .2});
+  const c1 = B('#c1'), c2 = B('#c2'), c3 = B('#c3');
+  // 03 -> writes: straight down into the newest backing index only
+  const wa = A([[S2.c - 6, s3.b], [S2.c - 6, 432]], {delay: 1.05, dur: .3, c: DS.COL.blue, w: 2.2, head: 9});
+  // reads span every backing index
+  const by = 552, bl = cy.x0 - 10, br = S2.b + cy.rx + 4;
+  A([[bl, by - 7], [bl, by], [br, by], [br, by - 7]], {delay: 1.3, dur: .5, head: 0, r: 0, w: 1.3});
+  A([[570, 602], [570, by + 2]], {delay: 1.45, dur: .25, head: 6});
+  // 04 -> 05: the backing indices are what ILM manages
+  const z = B('.zone'), i1 = B('#ix1'), i2 = B('#ix2'), tr = B('#tiers'), sn = B('#snap'), dl = B('#del');
+  A([[br + 4, 486], [914, 486], [914, 312], [z.l, 312]], {delay: 1.2, dur: .35, r: 10});
+  A([[978, i1.t], [978, i2.b]], {delay: 1.4, dur: .25});
+  const rl = document.getElementById('roll'); rl.style.left = '988px'; rl.style.top = ((i2.b + i1.t) / 2 - 7) + 'px';
+  A([[i1.r, i1.cy], [tr.l, i1.cy]], {delay: 1.5, dur: .2});
+  A([[tr.cx, tr.b], [tr.cx, dl.t]], {delay: 1.6, dur: .25});
+  A([[i1.cx, i1.b], [i1.cx, sn.t]], {delay: 1.55, dur: .3, c: DS.COL.blue});
+  // data moving: raw before the pipeline, blue into the write index
+  DS.flow(a1.p, {colors: DS.RAW, n: 3, period: 2.4});
+  DS.flow(a2.p, {colors: DS.RAW, n: 1, period: 1.1, phase: .4});
+  DS.flow(wa.p, {n: 2, period: 1.3, size: 8});
+});
+</script>
+</body>
+</html>

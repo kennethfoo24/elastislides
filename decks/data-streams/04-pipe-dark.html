@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Data stream end to end · dark pipe</title>
+<link rel="stylesheet" href="style/eweb.css">
+<link rel="stylesheet" href="ds.css">
+<style>
+body.ink{background:#0B1220}
+h1{font-size:42px;letter-spacing:-1.4px;color:#fff}
+h1 .b{color:#5FA2FF}
+.eyebrow{color:#98A2B3}.eyebrow::before{background:#5FA2FF}
+.ew-foot{color:#69707D}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(95,162,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(95,162,255,.06) 1px,transparent 1px);background-size:24px 24px;z-index:0}
+.sl{position:absolute;top:206px;font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#DDE3EC;display:flex;gap:8px;align-items:center}
+.sl i{font-style:normal;color:#5FA2FF}
+.rail{position:absolute;left:72px;top:226px;width:1150px;height:1px;background:#273249}
+.t{position:absolute;font:600 14px var(--sans);color:#fff;letter-spacing:-.2px;z-index:4}
+.m{position:absolute;font:600 10.5px var(--mono);letter-spacing:.04em;color:#DDE3EC;white-space:nowrap;z-index:4}
+.m.g{color:#98A2B3;font-weight:500}
+.m.b{color:#5FA2FF}
+.m.c{translate:-50% 0}
+.file{position:absolute;left:72px;top:300px;width:104px;height:26px;border:1px solid #3A4766;background:#121B2E;display:flex;align-items:center;justify-content:center;gap:6px;font:500 11px var(--mono);color:#DDE3EC;z-index:4}
+.file .ico{width:13px;height:13px}
+.srv{position:absolute;left:96px;top:388px;width:56px;height:64px;z-index:4}
+.frame{position:absolute;left:320px;top:296px;width:170px;height:252px;border:1px dashed #5FA2FF;z-index:1}
+.blk{position:absolute;left:332px;width:146px;height:76px;background:#121B2E;border:1px solid #3A4766;padding:9px 11px;z-index:4}
+.blk .k{font:500 9.5px var(--mono);letter-spacing:.08em;color:#98A2B3}
+.blk .n{font:600 13px var(--sans);color:#fff;margin-top:2px}
+.blk .s{font:400 11px/1.3 var(--sans);color:#B5BFCE}
+.bA{top:326px;border-top:3px solid #5FA2FF;animation:bA .6s cubic-bezier(.3,1.5,.5,1) .7s both}
+.bB{top:452px;border-bottom:3px solid #48EFCF;animation:bB .6s cubic-bezier(.3,1.5,.5,1) .8s both}
+@keyframes bA{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:none}}
+@keyframes bB{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+.pat{position:absolute;left:320px;top:270px;font:600 11px var(--mono);color:#5FA2FF;z-index:4}
+.zone{position:absolute;left:962px;top:298px;width:152px;height:176px;border:1px dashed #FF7E62;z-index:1}
+.zone .h{position:absolute;left:10px;top:8px;font:600 10px var(--mono);letter-spacing:.08em;color:#FF7E62}
+.ix{position:absolute;left:972px;width:132px;height:46px;border:1px solid #3A4766;background:#121B2E;padding:7px 9px;z-index:4}
+.ix .n{font:600 11px var(--mono);color:#fff}
+.ix .s{font:600 9px var(--mono);letter-spacing:.03em;color:#98A2B3;margin-top:4px;white-space:nowrap}
+.ix2{top:326px;border:1.5px solid #5FA2FF}.ix2 .s{color:#5FA2FF}
+.ix1{top:412px}
+.glow{animation:ds-in .55s cubic-bezier(.2,.7,.2,1) var(--d,0s) both,dg 2.4s ease-in-out 2s infinite}
+@keyframes dg{0%,100%{box-shadow:0 0 0 0 rgba(95,162,255,0)}50%{box-shadow:0 0 14px 2px rgba(95,162,255,.45)}}
+html.ds-static .glow{animation:ds-in .55s both}
+.tiers{position:absolute;left:1136px;top:422px;width:80px;z-index:4}
+.tiers div{height:26px;border:1px solid #3A4766;border-top-width:0;background:#121B2E;display:flex;align-items:center;gap:7px;padding-left:9px;font:600 10px var(--mono);letter-spacing:.06em;color:#DDE3EC}
+.tiers div:first-child{border-top-width:1px}
+.tiers div::before{content:'';width:7px;height:7px}
+.tw::before{background:#FEC514}.tc::before{background:#7FB2F5}.tf::before{background:#D9E8FF}
+.end{position:absolute;text-align:center;width:150px;z-index:4}
+.end .ico{display:block;margin:0 auto}
+.end .n{font:600 12.5px var(--sans);color:#fff;margin-top:8px}
+.end .s{font:500 10.5px var(--mono);color:#98A2B3;margin-top:2px}
+.snap{left:963px;top:522px}.snap .ico{width:54px;height:40px}
+.del{left:1101px;top:534px}.del .ico{width:36px;height:36px;background:#E0352B;border-radius:6px;box-shadow:0 0 18px rgba(224,53,43,.45)}
+.del .n{color:#FF6B5F}
+.q{position:absolute;left:822px;top:540px;width:24px;height:24px;z-index:4}
+.q svg *{stroke:#DDE3EC}.q svg circle{fill:#0B1220}
+</style>
+</head>
+<body class="ink" data-foot="Data streams · v4 dark pipe">
+<div class="grid"></div>
+<div class="z"><div class="eyebrow in1">Data streams · End to end</div><h1 class="in2">Every log line. <span class="b">One governed path.</span></h1></div>
+
+<div class="rail fx" style="--d:.2s"></div>
+<div class="sl fx" style="left:72px;--d:.25s"><i>01</i>Collection</div>
+<div class="sl fx" style="left:320px;--d:.35s"><i>02</i>Index template</div>
+<div class="sl fx" style="left:522px;--d:.45s"><i>03</i>Ingest pipeline</div>
+<div class="sl fx" style="left:742px;--d:.55s"><i>04</i>Data stream</div>
+<div class="sl fx" style="left:962px;--d:.65s"><i>05</i>ILM &amp; SLM lifecycle</div>
+
+<div class="file fx" style="--d:.3s" id="file"><i class="ico" data-icon="nginx"></i>access.log</div>
+<i class="ico srv fx" style="--d:.35s" id="srv" data-icon="server"></i>
+<div class="m c fx" style="left:124px;top:462px;--d:.45s">Elastic Agent</div>
+<div class="m g c fx" style="left:124px;top:478px;--d:.5s">FLEET</div>
+<div class="m fx" style="left:166px;top:392px;--d:.7s;font-size:10px">logs-nginx.access-default</div>
+
+<div class="pat fx" style="--d:.55s">Custom index template · logs-harborview.app-*</div>
+<div class="frame fx" style="--d:.55s"></div>
+<div class="blk bA"><div class="k">COMPONENT A</div><div class="n">Mappings</div><div class="s">ECS / custom field types</div></div>
+<div class="blk bB"><div class="k">COMPONENT B</div><div class="n">Settings</div><div class="s">Shards, replicas, ILM &amp; default pipeline</div></div>
+
+<div class="t fx" style="left:522px;top:300px;--d:.85s">Managed ingest pipeline</div>
+<div class="m c fx" style="left:556px;top:376px;--d:1s">Grok / Dissect</div>
+<div class="m c fx" style="left:620px;top:452px;--d:1.05s">GeoIP &amp; ECS</div>
+<div class="m c fx" style="left:684px;top:376px;--d:1.1s">@custom</div>
+
+<div class="m b fx" style="left:742px;top:300px;--d:1s">logs-nginx.access-default</div>
+<div class="m b fx" style="left:890px;top:356px;--d:1.3s;letter-spacing:.08em">WRITES</div>
+<div class="m fx" style="left:858px;top:520px;--d:1.45s;letter-spacing:.08em">READS</div>
+<i class="ico q fx" style="--d:1.4s" data-icon="search"></i>
+
+<div class="zone fx" style="--d:1.2s"><div class="h">HOT PHASE</div></div>
+<div class="ix ix2 glow" style="--d:1.3s" id="ix2"><div class="n">.ds-…-000002</div><div class="s">ACTIVE WRITE · R/W</div></div>
+<div class="ix ix1 fx" style="--d:1.25s" id="ix1"><div class="n">.ds-…-000001</div><div class="s">READ-ONLY</div></div>
+<div class="m g fx" style="left:1012px;top:384px;--d:1.45s;letter-spacing:.08em">ROLLOVER</div>
+<div class="tiers fx" style="--d:1.5s" id="tiers"><div class="tw">WARM</div><div class="tc">COLD</div><div class="tf">FROZEN</div></div>
+<div class="end snap fx" style="--d:1.6s" id="snap"><i class="ico" data-icon="cloud"></i><div class="n">SLM snapshot</div><div class="s">harborview-backups</div></div>
+<div class="end del fx" style="--d:1.7s" id="del"><i class="ico" data-icon="trash"></i><div class="n">Delete phase</div><div class="s">retention expired</div></div>
+
+<svg class="ov" id="ov" viewBox="0 0 1280 720" style="z-index:2"></svg>
+<svg class="ov" id="ov2" viewBox="0 0 1280 720" style="z-index:5"></svg>
+
+<script src="style/eweb.js"></script>
+<script src="ds.js"></script>
+<script src="js/fuckslides.js"></script>
+<script>
+DS.icons();
+DS.ready(() => {
+  const ov = document.getElementById('ov'), ov2 = document.getElementById('ov2'), B = DS.box, Y = 420, L = '#DDE3EC', BL = '#5FA2FF';
+  const A = (p, o) => DS.arrow(ov2, p, Object.assign({c: L}, o));
+  // cylinder: the data stream, drawn dark
+  const cy = DS.cyl(ov, {x: 744, y: Y - 30, w: 170, h: 60, segs: ['-000001', '-000002']});
+  cy.g.querySelectorAll('path,ellipse').forEach((e, i) => { e.setAttribute('stroke', '#5F6E8F'); e.setAttribute('fill', e.parentNode.classList.contains('on') ? '#16305C' : '#151D30'); });
+  cy.g.querySelector('ellipse').setAttribute('fill', '#1E2A44');
+  cy.g.querySelectorAll('text').forEach(t => t.setAttribute('fill', t.parentNode.classList.contains('on') ? BL : '#98A2B3'));
+  cy.g.classList.add('fx'); cy.g.style.setProperty('--d', '1.05s');
+  const s2 = cy.seg(1);
+  // the pipe: one continuous path that skips -000001 and lands in the newest backing index
+  const pts = [[160, Y], [s2.c - 0, Y], ];
+  const route = [[156, Y], [726, Y], [726, Y - 72], [s2.c, Y - 72], [s2.c, Y - 32]];
+  const d = DS.d(route, 18);
+  const pipe = DS.mk('g', {class: 'fx', style: '--d:.4s'}, ov);
+  DS.mk('path', {d, fill: 'none', stroke: '#3A4766', 'stroke-width': 26, 'stroke-linejoin': 'round'}, pipe);
+  DS.mk('path', {d, fill: 'none', stroke: '#141E33', 'stroke-width': 23, 'stroke-linejoin': 'round'}, pipe);
+  const core = DS.mk('path', {d, fill: 'none', stroke: 'rgba(95,162,255,.35)', 'stroke-width': 2, 'stroke-dasharray': '2 10', 'stroke-linejoin': 'round'}, pipe);
+  if (!DS.skip) core.animate([{strokeDashoffset: 24}, {strokeDashoffset: 0}], {duration: 900, iterations: Infinity});
+  // the end of the pipe pours into -000002
+  const tipY = Y - 32;
+  DS.mk('polygon', {points: `${s2.c - 9},${tipY - 6} ${s2.c + 9},${tipY - 6} ${s2.c},${tipY + 3}`, fill: BL, class: 'fx', style: '--d:1.3s'}, ov2);
+  // 03 valves on the pipe, lit in turn
+  const valves = [556, 620, 684].map((x, i) => { const r = DS.mk('rect', {x: x - 11, y: Y - 22, width: 22, height: 44, rx: 4, fill: '#0B1220', stroke: '#48EFCF', 'stroke-width': 1.5, class: 'fxs', style: `--d:${.9 + i * .08}s`}, ov2); return r; });
+  if (!DS.skip) EW.loop(t => { const k = t < 2 ? -1 : Math.floor((t - 2) / .7) % 4; valves.forEach((v, i) => v.setAttribute('fill', i === k ? '#48EFCF' : '#0B1220')); });
+  // 01 file to agent, agent into pipe
+  const fl = B('#file'), sv = B('#srv');
+  A([[sv.cx, fl.b], [sv.cx, sv.t - 2]], {delay: .5, dur: .25, head: 5, w: 1.2});
+  // reads span every backing index
+  const by = Y + 42, bl = cy.x0 - 8, br = s2.b + 8;
+  A([[bl, by - 6], [bl, by], [br, by], [br, by - 6]], {delay: 1.35, dur: .4, head: 0, r: 0, w: 1.2});
+  A([[834, 536], [834, by + 2]], {delay: 1.45, dur: .25, head: 6});
+  // 04 -> 05 and the lifecycle
+  const z = B('.zone'), i1 = B('#ix1'), i2 = B('#ix2'), tr = B('#tiers'), sn = B('#snap'), dl = B('#del');
+  A([[br + 14, Y], [z.l, Y]], {delay: 1.2, dur: .2});
+  A([[1000, i1.t], [1000, i2.b]], {delay: 1.4, dur: .25});
+  A([[i1.r, i1.cy], [tr.l, i1.cy]], {delay: 1.5, dur: .2});
+  A([[tr.cx, tr.b], [tr.cx, dl.t]], {delay: 1.6, dur: .25});
+  A([[i1.cx, i1.b], [i1.cx, sn.t]], {delay: 1.55, dur: .3, c: BL});
+  // data in the pipe: raw until the last valve, blue after
+  const pp = DS.mk('path', {d, fill: 'none', stroke: 'none'}, ov2), PL = pp.getTotalLength();
+  const cut = 700 - 156;
+  DS.flow(pp, {n: 6, period: 4.2, size: 9, stroke: '#0B1220', colors: (k, i) => k * PL < cut ? DS.RAW[i % 4] : BL});
+});
+</script>
+</body>
+</html>

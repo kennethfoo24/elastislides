@@ -128,14 +128,14 @@ h1{font-size:42px;letter-spacing:-1.4px}
   lab(top1[0] + 8 - 4, LY, '.ds-…-000001<small>READ-ONLY</small>', '', 1.4);
   lab(X5 - 96, OY + 50, '<span style="color:#FF7E62">■</span> HOT PHASE', '', 1.2);
   const t0 = P(px + 44, py + 10, 0), del = P(px + 44 + 3 * 26 + 18, py + 12, 0);
-  lab(t0[0] - 40, t0[1] + 46, 'WARM · COLD · FROZEN', '', 1.6);
-  const dl = document.createElement('div'); dl.className = 'end fx'; dl.style.cssText = `left:${Math.min(del[0] + 4, 1172)}px;top:${del[1] + 40}px;--d:1.7s`;
+  lab(P(i1.x + W, i1.y + W, 10)[0] + 10, OY + 86, 'WARM · COLD · FROZEN', '', 1.6);
+  const dl = document.createElement('div'); dl.className = 'end fx'; dl.style.cssText = `left:${Math.min(del[0] + 4, 1172)}px;top:${OY + 114}px;--d:1.7s`;
   dl.innerHTML = '<div class="n" style="color:#E0352B">Delete phase</div><div class="s">retention expired</div>'; LB.appendChild(dl);
   // -000001 branches: down to the snapshot repository
   const b1 = P(i1.x + W, i1.y + W, 10);
-  const cl = document.createElement('div'); cl.className = 'end fx'; cl.style.cssText = `left:${b1[0]}px;top:${OY + 124}px;--d:1.6s`;
+  const cl = document.createElement('div'); cl.className = 'end fx'; cl.style.cssText = `left:${b1[0]}px;top:${OY + 130}px;--d:1.6s`;
   cl.innerHTML = '<i class="ico" data-icon="cloud" style="width:54px;height:40px"></i><div class="n">SLM snapshot</div><div class="s">harborview-backups</div>'; LB.appendChild(cl);
-  A([[b1[0], b1[1] + 2], [b1[0], OY + 122]], {delay: 1.55, dur: .3, c: DS.COL.blue});
+  A([[b1[0], b1[1] + 2], [b1[0], OY + 128]], {delay: 1.55, dur: .3, c: DS.COL.blue});
   DS.icons();
 
   // raw cubes in, uniform blue after the pipeline

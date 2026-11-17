@@ -9,6 +9,8 @@ module.exports = {
     '01-rail.html',
     '02-iso.html',
     '03-metro.html',
+    '04-pipe-dark.html',
+    '05-hero-stream.html',
   ],
 
   // Human-readable labels for the overview panel (must match slides array length)
@@ -16,6 +18,8 @@ module.exports = {
     'Data stream end to end · v1 rail',
     'Data stream end to end · v2 isometric',
     'Data stream end to end · v3 metro line',
+    'Data stream end to end · v4 dark pipe',
+    'Data stream end to end · v5 hero stream',
   ],
 
   // density: { default: 3 },  // content-density dial (1–5), on by default; `false` hides it. Author with data-d / data-dmax
